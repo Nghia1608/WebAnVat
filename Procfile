@@ -1,1 +1,1 @@
-web:sh setup.sh && steamlit run app.py
+web:node index.js
