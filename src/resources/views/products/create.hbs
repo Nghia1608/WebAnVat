@@ -1,0 +1,24 @@
+{{>headerAdmin}}
+
+<div class="mt-4">
+    <h3>Thêm sản phẩm mới</h3>
+    <form method="POST" action="/products/store">
+    <div class="form-group">
+        <label for="productsName">Tên sản phẩm</label>
+        <input type="text" class="form-control" id="tenSanPham" name="tenSanPham"placeholder="Tên sản phẩm">
+    </div>
+    <div class="form-group">
+        <label for="moTa">Mô tả sản phẩm</label>
+        <input type="text" class="form-control" id="moTa" name="moTa"placeholder="Mô tả sản phẩm">
+    </div>
+    <div class="form-group">
+        <label for="moTa">Hình ảnh</label>
+        <input type="text" class="form-control" id="image" name="image"placeholder="Liên kết hình ảnh">
+    </div>
+    <div class="form-group">
+        <label for="tinhTrang">Tình trạng</label>
+        <input type="text" class="form-control" id="tinhTrang"name="tinhTrang"placeholder="Trình trạng sản phẩm">
+    </div>
+    <button type="submit" class="btn btn-primary">Thêm mới</button>
+    </form>
+</div>

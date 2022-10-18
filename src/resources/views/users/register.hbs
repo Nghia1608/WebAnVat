@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Đăng Ký</title>
+    <link rel="stylesheet" href="/css/cssUsers/register.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+   </head>
+<body>
+    <div class="title">Đăng Ký</div>
+    <div class="content">
+      <form action="#">
+        <div class="user-details">
+          <div class="input-box">
+            <span class="details">Họ và tên</span>
+            <input type="text" class="form-control" id="ho" name="moTa" placeholder="Nhập họ và tên" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Tên đăng nhập</span>
+            <input type="text" placeholder="Nhập tên đăng nhập" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Email</span>
+            <input type="text" placeholder="Nhập email của bạn" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Số điện thoại</span>
+            <input type="text" placeholder="Nhập số điện thoại" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Mật khẩu</span>
+            <input type="text" placeholder="Nhập mật khẩu" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Xác nhận mật khẩu</span>
+            <input type="text" placeholder="Nhập lại mật khẩu" required>
+          </div>
+        </div>
+        <div class="button">
+          <input type="submit" value="Đăng Ký">
+        </div>
+      </form>
+    </div>
+ <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // Mong muốn của chúng ta
+      Validator({
+        form: '#form-1',
+        formGroupSelector: '.form-group',
+        errorSelector: '.form-message',
+        rules: [
+          Validator.isRequired('#fullname', 'Vui lòng nhập tên đầy đủ của bạn'),
+          Validator.isEmail('#email'),
+          Validator.minLength('#password', 6),
+          Validator.isRequired('#password_confirmation'),
+          Validator.isConfirmed('#password_confirmation', function () {
+            return document.querySelector('#form-1 #password').value;
+          }, 'Mật khẩu nhập lại không chính xác')
+        ],
+        onSubmit: function (data) {
+          // Call API
+          console.log(data);
+        }
+      });
+    });
+
+  </script>
+</body>
+</html>
