@@ -3,7 +3,6 @@ const express = require('express');
 const morgan = require('morgan');
 const handlebars = require('express-handlebars');
 const app = express();
-const port = 3000;
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 
@@ -43,7 +42,8 @@ app.set('views', path.join(__dirname,'resources\\views'));
 //routes init
 route(app)
 
+let port = process.env.PORT || 8080;
 
-app.listen(process.env.PORT, () => {
+app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${PORT}`)
 })
