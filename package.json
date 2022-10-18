@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "beautiful": "",
-    "start": "nodemon --exec babel-node src/index.js",
+    "start": "nodemon --inspect src/index.js",
     "watch": "sass -w src/resources/scss/ --output src/public/css/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
