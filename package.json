@@ -2,10 +2,8 @@
   "name": "test-nodejs",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
-  "engines": {
-    "node": "^16.13.1"
-  },
+  "main": "index.js",
+ 
   "scripts": {
     "beautiful": "",
     "start": "nodemon --inspect src/index.js",
