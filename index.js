@@ -24,7 +24,7 @@ app.use(
   }),
 );
 app.use(express.json());
-app.use(morgan('combined'));
+//app.use(morgan('combined'));
 app.use(methodOverride('_method'));
 
 app.engine('hbs', handlebars.engine({
