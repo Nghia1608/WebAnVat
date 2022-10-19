@@ -6,7 +6,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 
-const route = require('./routes');
+const route = require('./src/routes');
 const db = require('./config/db')
 
 //Connect to DB
