@@ -28,13 +28,13 @@ header{
   margin-bottom: 60px;
   font-family: 'Montserrat', sans-serif;
 }
-.input-field, form .button{
+.form-group, form .button{
   margin: 25px 0;
   position: relative;
   height: 50px;
   width: 100%;
 }
-.input-field input{
+.form-group input{
   height: 100%;
   width: 100%;
   border: 1px solid silver;
@@ -46,12 +46,12 @@ header{
 input:focus{
   border: 1px solid #1DA1F2;
 }
-.input-field label, span.show{
+.form-group label, span.show{
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
 }
-.input-field label{
+.form-group label{
   left: 15px;
   pointer-events: none;
   color: grey;

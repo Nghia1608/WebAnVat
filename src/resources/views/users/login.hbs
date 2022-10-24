@@ -4,28 +4,96 @@
       <meta charset="utf-8">
       <title>Đăng Nhập</title>
         <link rel="stylesheet" href="/css/cssUsers/login.css">
-
+      <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="187781956356-mrd5857ues2agin14gn1h4gifmf1g79u.apps.googleusercontent.com">
    </head>
    <body>
          <header>Đăng Nhập</header>
-         <form>
-            <div class="input-field">
-               <input type="text" required>
-               <label>Tên tài khoản</label>
+         <form method="POST" action ="/users/confirmLogin";>
+            <div class="form-group">
+                  <input type="text" class="form-control" id="username" name="username">
+                  <label>Tên tài khoản</label>
+            
             </div>
-            <div class="input-field">
-               <input class="pswrd" type="password" required>
+            <div class="form-group">
+               <input class="pswrd" type="password" required class="form-control" id="password" name="password">
                <span class="show">SHOW</span>
                <label>Mật khẩu</label>
             </div>
             <div class="button">
                <div class="inner"></div>
-               <button>Đăng Nhập</button>
+             <button onclick="login()"class="btn btn-primary">Đăng nhập</button>
             </div>
          </form>
          <div class="signup">
             Chưa có tài khoản ? <a href="#">Đăng ký ngay</a>
          </div>
+         <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+         
+      <script src="https://apis.google.com/js/platform.js" async defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+      <script>
+         function setCookie(cname, cvalue, exdays) {
+         const d = new Date();
+         d.setTime(d.getTime() + (exdays*24*60*60*1000));
+         let expires = "expires="+ d.toUTCString();
+         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+         }
+
+         function getCookie(cname) {
+         let name = cname + "=";
+         let decodedCookie = decodeURIComponent(document.cookie);
+         let ca = decodedCookie.split(';');
+         for(let i = 0; i <ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+               c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+               return c.substring(name.length, c.length);
+            }
+         }
+         return "";
+         }
+            function login(){
+               $.ajax({
+                  url:'users/confirmLogin'
+                  type : 'POST',
+                  data :{
+                     username : $('#username').val(),
+                     password : $('#password').val()
+                  }
+               }).then(data=>{
+                  setCookie('token',data.token,1)
+               }).catch(error=>{
+                  console.log(error)
+               })
+            }
+      </script>
+      <script>
+            function onSignIn(googleUser) {
+            // Useful data for your client-side scripts:
+            var profile = googleUser.getBasicProfile();
+            console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+            console.log('Full Name: ' + profile.getName());
+            console.log('Given Name: ' + profile.getGivenName());
+            console.log('Family Name: ' + profile.getFamilyName());
+            console.log("Image URL: " + profile.getImageUrl());
+            console.log("Email: " + profile.getEmail());
+
+            //var id_token = googleUser.getAuthResponse().id_token;
+            //console.log("ID Token: " + id_token);
+            res.redirect('/');
+            function onSuccess(googleUser) {
+            console.log('Logged in as: ' + googleUser.getBasicProfile().getName());        
+            redirect('/')
+            }
+            function onFailure(error) {
+               console.log(error);
+            redirect('/')
+            } 
+            };
+         </script>
       <script>
          var input = document.querySelector('.pswrd');
          var show = document.querySelector('.show');

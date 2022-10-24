@@ -1,0 +1,24 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Nunito',sans-serif;
+}   
+body{
+    background: rgb(244, 194, 102)
+}
+.menu{
+    background: rgba(255, 255, 255, 0.588)
+}
+a{
+    flex-basis: 20%;
+    min-width: 100px;
+}
+footer{
+    text-align: center;
+    background-color: #323;
+    color: #fff;
+    padding: 2px;
+    bottom: 0;
+    width: 73%;
+    position: fixed;
+}

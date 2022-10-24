@@ -2,50 +2,38 @@
 
 <div class="mt-4">
   <h2> 
-    Danh sách sản phẩm
+    Danh sách tài khoản
   </h2>
-    <a href="/products/create">Thêm sản phẩm mới</a>
+    <a href="/users/register">Thêm tài khoản mới</a>
     <table class="table">
         <thead>
             <tr>
             <th scope="col">STT</th>
-            <th scope="col">Tên sản phẩm</th>
-            <th scope="col">Mô tả</th>
+            <th scope="col">Username</th>
+            <th scope="col">Họ tên</th>
+            <th scope="col">Quyền</th>
             <th scope="col" colspan="2">Tình trạng</th>
             </tr>
         </thead>
         <tbody>
-            {{#each products}}
+            {{#each users}}
             <tr>
             <th scope="row">{{sum @index 1}}</th>
-            <td>{{this.tenSanPham}}</td>
-            <td>{{this.moTa}}</td>
-            <td>{{this.tinhTrang}}</td>
+            <td>{{this.username}}</td>
+            <td>{{this.hoTen}}</td>
+            <td>{{this.quyen}}</td>
             <td>
-                <a href="/products/{{this._id}}/edit" class="btn btn-link">Sửa</a>
+                <a href="/users/{{this._id}}/edit" class="btn btn-link">Sửa</a>
                 <a id="btn-select"href="" class="btn btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModal">Xóa</a>
 
             </td>
-            </tr>
-            {{else}}
-            <tr>
-              <td colspan="4"class="text-center">
-                <h3>
-                Bạn chưa đăng sản phẩm nào !
-              <a href="/products/create">Thêm sản phẩm mới</a>
-                </h3>
-
-
-              </td>
             </tr>
             {{/each}}
 
         </tbody>
 
     </table>
-    {{#if deletedProducts}}
-    <a href="/admin/trashProducts">Thùng rác [{{deletedProducts}}]</a>
-    {{/if}}
+
 </div>
 <!--Confirm Delete Button -->
 
@@ -59,7 +47,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Bạn có chắc muốn xóa sản phẩm ?</p>
+        <p>Bạn có chắc muốn xóa tài khoản ?</p>
       </div>
       <div class="modal-footer">
         <a id="count-down">Wait for Available</a>
@@ -105,7 +93,7 @@
         id = button.data('id')
         });
         btnDelete.onclick = function(){
-            deleteForm.action = '/products/'+id + '?_method=DELETE';
+            deleteForm.action = '/users/'+id + 'delete?_method=DELETE';
             deleteForm.submit();
         }
     })

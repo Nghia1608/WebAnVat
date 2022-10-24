@@ -2,7 +2,7 @@ const Products = require('../models/Products');
 const {mongooseToObject}= require('../../util/mongoose');
 
 
-class ProductController{
+const ProductController={
 
 
     // Method Show - Hien thi san pham
@@ -16,13 +16,13 @@ class ProductController{
                 }); 
             })
             .catch(next); 
-    }
+    },
 
     // [Get] src/routes/product/create  goi form Create
 
     create(req,res,next){
         res.render('products/create');
-    }
+    },
     // [Post] src/routes/product/store  nhan du lieu tu form Create
 
     store(req,res,next){
@@ -31,11 +31,12 @@ class ProductController{
         product.save()
             .then(()=>{
                 res.redirect('/admin/storedProducts');
-                alert('Thêm sản phẩm thành công !')
+                alert('Thêm sản phẩm thành công');
+                window.location = '/admin/storedProducts';
             })
             .catch(error=>{
             })
-    }
+    },
     //[GET]
     edit(req,res,next){
         Products.findById(req.params.id)         
@@ -44,25 +45,25 @@ class ProductController{
 
                 })) 
             .catch(next);                    
-    }
+    },
     //[PUT]
     update(req,res,next){
         Products.updateOne({_id : req.params.id},req.body)
             .then(()=>res.redirect('/admin/storedProducts'))
             .catch(next);
-    }
+    },
     //[SOFT DELETE]
     softDelete(req,res,next){
         Products.delete({_id : req.params.id})
             .then(()=>res.redirect('back'))
             .catch(next);                  
-    }
+    },
     //[RESTORE]
     restore(req,res,next){
         Products.restore({_id : req.params.id})
             .then(()=>res.redirect('back'))
             .catch(next);                  
-    }
+    },
     //[DELETE]
     delete(req,res,next){
         Products.deleteOne({_id : req.params.id})
@@ -70,4 +71,4 @@ class ProductController{
             .catch(next);                  
     }
 }
-module.exports = new ProductController;
+module.exports = ProductController;

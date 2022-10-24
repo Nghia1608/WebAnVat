@@ -5,10 +5,11 @@ const handlebars = require('express-handlebars');
 const app = express();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-
+const jwt = require('jsonwebtoken')
 const route = require('./src/routes');
 const db = require('./config/db')
-
+const cookieparser = require('cookie-parser')
+app.user(cookieparser)
 //Connect to DB
 db.connect();
 

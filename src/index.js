@@ -8,7 +8,7 @@ const methodOverride = require('method-override');
 
 const route = require('./routes');
 const db = require('./config/db')
-
+const cookie = require('cookie-parser')
 //Connect to DB
 db.connect();
 
@@ -23,6 +23,7 @@ app.use(
       extended: true,
   }),
 );
+
 app.use(express.json());
 app.use(morgan('combined'));
 app.use(methodOverride('_method'));
@@ -33,6 +34,7 @@ app.engine('hbs', handlebars.engine({
     sum : (a,b) => a + b,
   }
 }));
+app.use(cookie())
 
 
 app.set('view engine', 'hbs');

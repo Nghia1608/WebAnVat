@@ -1,0 +1,24 @@
+{{>headerAdmin}}
+
+<div class="mt-4">
+    <h3>Sửa đổi thông tin tài khoản</h3>
+    <form method="POST" action="/users/{{users._id}}?_method=PUT">
+    <div class="form-group">
+        <label for="usersName">Tên tài khoản</label>
+        <input type="text" class="form-control" value="{{users.username}}" id="tenSanPham" name="tenSanPham"placeholder="Tên tài khoản" disabled>
+    </div>
+    <div class="form-group">
+        <label for="usersName">Mật khẩu</label>
+        <input class="pswrd" type="password"value="{{users.password}}" required class="form-control" id="password" name="password">
+    </div>
+        <div class="form-group">
+        <label for="usersName">Xác nhận Mật khẩu</label>
+        <input class="pswrd" type="password"value="{{users.password}}" required class="form-control" id="password" name="password">
+    </div>
+    <div class="form-group">
+        <label for="moTa">Quyền</label>
+        <input type="text" class="form-control" value="{{users.quyen}}" id="quyen" name="quyen"placeholder="Quyền tài khoản">
+    </div>
+    <button type="submit" class="btn btn-primary">Lưu sửa đổi</button>
+    </form>
+</div>

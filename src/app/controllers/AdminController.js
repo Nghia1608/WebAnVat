@@ -1,21 +1,22 @@
 const Products = require('../models/Products');
 const {mongooseToObject, multipleMongooseToObject}= require('../../util/mongoose');
-class AdminController{
+const AdminController={
     // [Post] src/routes/product/store  nhan du lieu tu form Create
 
     storedProducts(req,res,next){
-        Products.find({})
-            .then((products)=>{
+        Promise.all([Products.find({}),Products.countDocumentsDeleted()])
+            .then(([products,deletedProducts])=>{
                 res.render('admin/storedProducts',{
+                    deletedProducts,
                     products : multipleMongooseToObject(products),
 
                 }); 
             })
             .catch(next); 
-    }
+    },
     home(req,res,next){
         res.render('admin/home');
-    }
+    },
 
     trashProducts(req,res,next){
         Products.findDeleted({})
@@ -28,4 +29,4 @@ class AdminController{
             .catch(next); 
     }
 }
-module.exports = new AdminController;
+module.exports =  AdminController;
