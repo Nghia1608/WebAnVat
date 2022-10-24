@@ -93,7 +93,8 @@
         id = button.data('id')
         });
         btnDelete.onclick = function(){
-            deleteForm.action = '/users/'+id + 'delete?_method=DELETE';
+            deleteForm.action = '/users/'+id + '/delete?_method=DELETE';
+
             deleteForm.submit();
         }
     })
