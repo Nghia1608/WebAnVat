@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const AuthController = require('../app/controllers/AuthController')
 
-const { verifyToken } = require("../app/controllers/VerifyToken");
+const { verifyToken } = require("../app/controllers/Middleware");
 
 //REGISTER
 router.get('/register',AuthController.register);

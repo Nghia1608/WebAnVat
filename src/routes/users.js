@@ -6,7 +6,7 @@ const {
     verifyToken,
     verifyTokenAndAdmin,
     verifyTokenAndUserAuthorization,
-  } = require("../app/controllers/verifyToken");
+  } = require("../app/controllers/Middleware");
 
 // router.get('/register',UserController.register);
 // router.post('/registerUser',UserController.registerUser);
@@ -18,7 +18,7 @@ const {
 router.get('/:id/edit',verifyTokenAndUserAuthorization,UserController.edit);
 router.put('/:id',verifyTokenAndUserAuthorization,UserController.update);
 router.delete('/:id/delete',verifyTokenAndUserAuthorization,UserController.delete);
-router.get('/storedUsers',verifyToken,UserController.storedUsers);
+router.get('/storedUsers',verifyTokenAndAdmin,UserController.storedUsers);
 
 module.exports = router;
 
