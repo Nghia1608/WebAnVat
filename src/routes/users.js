@@ -1,18 +1,24 @@
 const express = require('express');
 const router = express.Router();
-
 const UserController = require('../app/controllers/UserController')
 
-router.get('/register',UserController.register);
-router.get('/login',UserController.login);
-router.post('/confirmLogin',UserController.confirmLogin);
-router.get('/private/:token',UserController.private);
+const {
+    verifyToken,
+    verifyTokenAndAdmin,
+    verifyTokenAndUserAuthorization,
+  } = require("../app/controllers/verifyToken");
 
-router.post('/registerUser',UserController.registerUser);
+// router.get('/register',UserController.register);
+// router.post('/registerUser',UserController.registerUser);
 
-router.get('/storedUsers',UserController.storedUsers);
-router.get('/:id/edit',UserController.edit);
-router.put('/:id',UserController.update);
-router.delete('/:id/delete',UserController.delete);
+// router.get('/login',UserController.login);
+// router.post('/confirmLogin',UserController.confirmLogin);
+
+
+router.get('/:id/edit',verifyTokenAndUserAuthorization,UserController.edit);
+router.put('/:id',verifyTokenAndUserAuthorization,UserController.update);
+router.delete('/:id/delete',verifyTokenAndUserAuthorization,UserController.delete);
+router.get('/storedUsers',verifyToken,UserController.storedUsers);
 
 module.exports = router;
+

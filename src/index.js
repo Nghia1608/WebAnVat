@@ -5,7 +5,7 @@ const handlebars = require('express-handlebars');
 const app = express();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-
+require("dotenv").config();
 const route = require('./routes');
 const db = require('./config/db')
 const cookie = require('cookie-parser')
@@ -23,7 +23,6 @@ app.use(
       extended: true,
   }),
 );
-
 app.use(express.json());
 app.use(morgan('combined'));
 app.use(methodOverride('_method'));

@@ -9,7 +9,7 @@
    </head>
    <body>
          <header>Đăng Nhập</header>
-         <form method="POST" action ="/users/confirmLogin";>
+         <form method="POST" action ="/auth/confirmLogin";>
             <div class="form-group">
                   <input type="text" class="form-control" id="username" name="username">
                   <label>Tên tài khoản</label>
@@ -57,7 +57,7 @@
          }
             function login(){
                $.ajax({
-                  url:'users/confirmLogin'
+                  url:'auth/confirmLogin'
                   type : 'POST',
                   data :{
                      username : $('#username').val(),
