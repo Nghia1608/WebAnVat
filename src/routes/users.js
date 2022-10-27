@@ -18,6 +18,10 @@ const {
 router.get('/:id/edit',verifyTokenAndUserAuthorization,UserController.edit);
 router.put('/:id',verifyTokenAndUserAuthorization,UserController.update);
 router.delete('/:id/delete',verifyTokenAndUserAuthorization,UserController.delete);
+
+router.delete('/:id/delete',verifyTokenAndUserAuthorization,UserController.delete);
+
+
 router.get('/storedUsers',verifyTokenAndAdmin,UserController.storedUsers);
 
 module.exports = router;

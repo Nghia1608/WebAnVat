@@ -3,6 +3,7 @@
 
 <div class="mt-4">
     <div class="row">
+
         {{#each products}}
         <div class="col-sm-6 col-lg-4">
             <div class="card card-products-item">
@@ -16,7 +17,12 @@
                 </a>
                     <p class="card-text">{{this.moTa}}</p>
                     <p class="card-status">{{this.tinhTrang}}</p>
-                    <a href="/products/{{this.slug}}" class="btn btn-primary">Đặt hàng</a>
+                    <p class="card-status">Còn lại : {{this.soLuongCon}}</p>
+
+                    <a href="/products/{{this.slug}}" class="btn btn-primary">Chi tiết</a>
+                    <button type="submit" class="btn btn-primary">Thêm vào giỏ hàng</button>
+
+
                 </div>
             </div>
         </div>

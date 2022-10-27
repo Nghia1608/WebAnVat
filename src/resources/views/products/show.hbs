@@ -1,6 +1,8 @@
 {{>headerUser}}
 
 <div class="mt-4">
+    <form method="POST" action="/products/{{products._id}}?_method=POST">
+
     <div class="row">
         <div class="col-lg-9">
             <h2>{{products.tenSanPham}}</h2>
@@ -8,7 +10,8 @@
             <p>{{products.moTaChiTiet}}</p>
         </div>
         <div class="col-lg-3">
-            <button> Mua ngay</button>
+            <button id="btn-add"  type="submit" class="btn btn-primary">Thêm vào giỏ hàng</button>
         </div>
     </div>
+    </form>
 </div>

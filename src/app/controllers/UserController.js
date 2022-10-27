@@ -10,7 +10,7 @@ const UserController = {
 
     //GET
     login(req,res,next){    //form dang nhap
-        res.render('users/login');
+        res.render('/users/login');
     },
     //POST
     confirmLogin :async(req,res,next)=>{     //check dang nhap
@@ -41,7 +41,7 @@ const UserController = {
         },                  
     // GET 
     register :async(req,res,next)=>{
-        res.render('users/register');
+        res.render('/users/register');
     },
 
     //POST 
@@ -68,7 +68,7 @@ const UserController = {
       storedUsers(req,res,next){
         Users.find()
             .then((users)=>{
-                res.render('users/storedUsers',{
+                res.render('/users/storedUsers',{
                     users : multipleMongooseToObject(users),
 
                 }); 
@@ -78,7 +78,7 @@ const UserController = {
     edit(req,res,next){
         
         Users.findById(req.params.id)         
-            .then(users=>res.render('users/editUser',{
+            .then(users=>res.render('/users/editUser',{
                     users : mongooseToObject(users)
 
                 })) 

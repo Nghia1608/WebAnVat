@@ -12,6 +12,7 @@ const Product = new Schema({
     moTa :{type :String,maxLength : 500},
     maLoai :{type :String,maxLength:20},
     tinhTrang :{type :String,maxLength:20},
+    soLuongCon:{type :String,maxLength:20},
     slug : {type:String ,slug :'tenSanPham',require:true,unique:true},
   },{
     timestamps : true,

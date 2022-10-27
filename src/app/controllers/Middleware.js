@@ -14,7 +14,7 @@ const verifyToken = (req, res, next) => {
       next();
     });
   } else {
-    res.redirect('auth/login')
+    res.redirect('/auth/login')
   }
 };
 

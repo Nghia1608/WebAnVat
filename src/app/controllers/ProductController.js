@@ -1,5 +1,8 @@
 const Products = require('../models/Products');
+const ProductsInCart = require('../models/UsersCart');
+
 const {mongooseToObject}= require('../../util/mongoose');
+const UsersCart = require('../models/UsersCart');
 
 
 const ProductController={
@@ -69,6 +72,22 @@ const ProductController={
         Products.deleteOne({_id : req.params.id})
             .then(()=>res.redirect('back'))
             .catch(next);                  
-    }
+    },
+
+    //them san pham vao gio hang
+    //POST
+    storeProductToCart(req,res,next){
+        //update
+
+        //store
+        const formData = req.body;
+        const product = new UsersCart(formData); //models/products
+        product.save()
+            .then(()=>{
+                res.redirect('/');
+            })
+            .catch(error=>{
+            })
+    },
 }
 module.exports = ProductController;
