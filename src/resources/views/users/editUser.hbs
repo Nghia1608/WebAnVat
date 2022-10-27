@@ -15,9 +15,15 @@
         <label for="usersName">Xác nhận mật khẩu</label>
         <input type="text" class="form-control" value="{{users.password}}" id="confirmPassword" name="confirmPassword"placeholder="Xác nhận mật khẩu" >
     </div>
-    <div class="form-group">
-        <label for="moTa">Quyền</label>
-        <input type="text" class="form-control" value="{{users.quyen}}" id="quyen" name="quyen"placeholder="Quyền tài khoản">
+    <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Phân quyền
+    </button>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">Admin</a></li>
+        <li><a class="dropdown-item" href="#">Mod</a></li>
+        <li><a class="dropdown-item" href="#">Khách</a></li>
+    </ul>
     </div>
     <button type="submit" class="btn btn-primary">Lưu sửa đổi</button>
     </form>

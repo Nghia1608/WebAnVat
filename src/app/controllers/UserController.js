@@ -76,6 +76,7 @@ const UserController = {
             .catch(next); 
     },        //[GET]
     edit(req,res,next){
+        
         Users.findById(req.params.id)         
             .then(users=>res.render('users/editUser',{
                     users : mongooseToObject(users)
@@ -84,9 +85,18 @@ const UserController = {
             .catch(next);                    
     },
     //[PUT]
-    update(req,res,next){
+    update : async (req,res,next)=>{
+        const salt = await bcrypt.genSaltSync(10);
+        const hashed = await bcrypt.hashSync(req.body.password.toString(), salt);
+
+        req.body.password = hashed;
+
+        //luu thông tin từ form
+        
         Users.updateOne({_id : req.params.id},req.body)
-            .then(()=>res.redirect('/users/storedUsers'))
+            .then(()=>{
+                res.redirect('/users/storedUsers')
+            })
             .catch(next);
     },
     delete(req,res,next){

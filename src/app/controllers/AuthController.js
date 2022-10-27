@@ -1,6 +1,7 @@
 const Users = require('../models/Users');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { json } = require('express');
 
 let refreshTokens = [];
 
@@ -24,7 +25,9 @@ confirmLogin :async(req,res,next)=>{     //check dang nhap
         const accessToken = AuthController.generateAccessToken(user);
         //Generate refresh token
         const refreshToken = AuthController.generateRefreshToken(user);
+
         refreshTokens.push(refreshToken);
+
         //STORE REFRESH TOKEN IN COOKIE
         res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
@@ -33,12 +36,18 @@ confirmLogin :async(req,res,next)=>{     //check dang nhap
         sameSite: "strict",
         });
         const { password, ...others } = user._doc;
-        res.status(200).json({ ...others, accessToken, refreshToken });
+        if(json.quyen=='Admin'){
+            res.redirect('/admin');        
+
+        }else{
+            res.redirect('/');        
+
+        }
     }
     },                  
 // GET 
 register :async(req,res,next)=>{
-    res.render('auth/register');
+    res.render('users/register');
 },
 
 //POST 
@@ -56,6 +65,7 @@ registerUser: async (req, res) => {
     user.save()
         .then(()=>{
             res.redirect('/auth/login');
+
         })
         .catch(error=>{
         })

@@ -3,15 +3,19 @@ const router = express.Router();
 
 const AdminController = require('../app/controllers/AdminController')
 const productsController = require('../app/controllers/ProductController')
+const {
+    verifyToken,
+    verifyTokenAndAdmin,
+    verifyTokenAndUserAuthorization,
+  } = require("../app/controllers/Middleware");
+
+router.get('/storedProducts',verifyTokenAndAdmin,AdminController.storedProducts);
+router.post('/store',verifyTokenAndAdmin,productsController.store);
+
+router.get('/trashProducts',verifyTokenAndAdmin,AdminController.trashProducts);
 
 
-router.get('/storedProducts',AdminController.storedProducts);
-router.post('/store',productsController.store);
-
-router.get('/trashProducts',AdminController.trashProducts);
-
-
-router.get('/',AdminController.home);
+router.get('/',verifyTokenAndAdmin,AdminController.home);
 
 
 

@@ -24,8 +24,20 @@
         <a class="nav-link disabled" href="#">Giỏ hàng</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="/users/login">Đăng nhập</a>
+        <a class="nav-link disabled" href="/auth/login">Đăng nhập</a>
       </li>
+      <li class="nav-item dropdown" id="afterLogin">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            QQ j day
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Đồ khô</a>
+          <a class="dropdown-item" href="#">Đồ khô 2</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Coming soon</a>
+        </div>
+      </li
+          
     </ul>
     
   </div>
@@ -35,3 +47,15 @@
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
+    <script>
+      function show(req,res,next){
+            document.getElementById("afterLogin").hidden = true;
+            console.log('test user',req.body.username)
+            if(req.body.username){
+              document.getElementById("afterLogin").hidden = false;
+              document.getElementById("navbarDropdown").innerHTML = req.body.username;
+            }
+              
+          }
+          show(req,res,next);
+    </script>

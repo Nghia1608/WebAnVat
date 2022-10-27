@@ -4,7 +4,6 @@ const verifyToken = (req, res, next) => {
   //ACCESS TOKEN FROM HEADER, REFRESH TOKEN FROM COOKIE
   const token = req.headers.token;
   const refreshToken = req.cookies.refreshToken;
-  console.log('tokenneeee',refreshToken);
   if (refreshToken) {
     const accessToken = refreshToken;
     jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
@@ -15,7 +14,7 @@ const verifyToken = (req, res, next) => {
       next();
     });
   } else {
-    res.status(401).json("You're not authenticated");
+    res.redirect('auth/login')
   }
 };
 
