@@ -107,34 +107,17 @@ const UserController = {
             .then(()=>res.redirect('back'))
             .catch(next);                  
     },
-    verifyToken(req,res,next){
-        //ACCESS TOKEN FROM HEADER, REFRESH TOKEN FROM COOKIE
-        const token = req.headers.token;
-        const refreshToken = req.cookies.refreshToken;
-        if (refreshToken) {
-          const accessToken = refreshToken;
-          jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
-            if (err) {
-              res.status(403).json("Token is not valid!");
-            }
-            req.user = user;
-            next();
-          });
-        } else {
-          res.redirect('/auth/login')
-        }
-      },
+
     cart(req,res,next){
-        //lay token
-        const refreshToken = req.cookies.refreshToken;
-        if (refreshToken) {
-          const accessToken = refreshToken;
-          jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user,cart) => {
-            if (err) {
-              res.status(403).json("Token is not valid!");
-            }
-            req.user = user;
-            req.cart = cart;
+        // const refreshToken = req.cookies.refreshToken;
+        // if (refreshToken) {
+        //   const accessToken = refreshToken;
+        //   jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user,cart) => {
+        //     if (err) {
+        //       res.status(403).json("Token is not valid!");
+        //     }
+        //     req.user = user;
+        //     req.cart = cart;
 
             ProductsInCart.find({username : req.user.username})
                 .then((carts)=>{
@@ -143,13 +126,9 @@ const UserController = {
                     }); 
                 })
                 .catch(next);
-            // if (req.user.id === req.params.id|| req.user.quyen=='Admin') {
-            //   next();
-            // } else {
-            //   res.status(403).json("You're not allowed to do that!");
-            // }
-          });
-        }
+
+//});
+       // }
     
     },
 }

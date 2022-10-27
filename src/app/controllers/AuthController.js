@@ -36,7 +36,7 @@ confirmLogin :async(req,res,next)=>{     //check dang nhap
         sameSite: "strict",
         });
         const { password, ...others } = user._doc;
-        if(json.quyen=='Admin'){
+        if(req.body.quyen=='Admin'){
             res.redirect('/admin');        
 
         }else{
@@ -135,6 +135,8 @@ registerUser: async (req, res) => {
     refreshTokens = refreshTokens.filter((token) => token !== req.body.token);
     res.clearCookie("refreshToken");
     res.status(200).json("Logged out successfully!");
+    res.redirect('/auth/login');
+
   },
 };
 
