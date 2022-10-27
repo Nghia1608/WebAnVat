@@ -81,7 +81,14 @@ const ProductController={
 
         //store
         const formData = req.body;
-        const product = new UsersCart(formData); //models/products
+        const product = new ProductsInCart(formData); //models/products
+        // tt ca nhan
+        product.username = req.user.username;
+        product.hoTen = req.user.username;
+        product.sdt = req.user.username;
+        //tt san pham
+
+        //
         product.save()
             .then(()=>{
                 res.redirect('/');
