@@ -1,4 +1,7 @@
 const Users = require('../models/Users');
+const Products = require('../models/Products');
+const ProductsInCart = require('../models/UsersCart');
+
 const { response } = require('express');
 const jwt = require('jsonwebtoken')
 const cookieparser = require('cookie-parser')
@@ -68,7 +71,7 @@ const UserController = {
       storedUsers(req,res,next){
         Users.find()
             .then((users)=>{
-                res.render('/users/storedUsers',{
+                res.render('users/storedUsers',{
                     users : multipleMongooseToObject(users),
 
                 }); 
@@ -78,7 +81,7 @@ const UserController = {
     edit(req,res,next){
         
         Users.findById(req.params.id)         
-            .then(users=>res.render('/users/editUser',{
+            .then(users=>res.render('users/editUser',{
                     users : mongooseToObject(users)
 
                 })) 
@@ -95,7 +98,7 @@ const UserController = {
         
         Users.updateOne({_id : req.params.id},req.body)
             .then(()=>{
-                res.redirect('/users/storedUsers')
+                res.redirect('users/storedUsers')
             })
             .catch(next);
     },
@@ -103,6 +106,51 @@ const UserController = {
         Users.deleteOne({_id : req.params.id})
             .then(()=>res.redirect('back'))
             .catch(next);                  
-    }
+    },
+    verifyToken(req,res,next){
+        //ACCESS TOKEN FROM HEADER, REFRESH TOKEN FROM COOKIE
+        const token = req.headers.token;
+        const refreshToken = req.cookies.refreshToken;
+        if (refreshToken) {
+          const accessToken = refreshToken;
+          jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
+            if (err) {
+              res.status(403).json("Token is not valid!");
+            }
+            req.user = user;
+            next();
+          });
+        } else {
+          res.redirect('/auth/login')
+        }
+      },
+    cart(req,res,next){
+        //lay token
+        const refreshToken = req.cookies.refreshToken;
+        if (refreshToken) {
+          const accessToken = refreshToken;
+          jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user,cart) => {
+            if (err) {
+              res.status(403).json("Token is not valid!");
+            }
+            req.user = user;
+            req.cart = cart;
+
+            ProductsInCart.find({username : req.user.username})
+                .then((carts)=>{
+                    res.render('users/cart',{
+                        carts : multipleMongooseToObject(carts),
+                    }); 
+                })
+                .catch(next);
+            // if (req.user.id === req.params.id|| req.user.quyen=='Admin') {
+            //   next();
+            // } else {
+            //   res.status(403).json("You're not allowed to do that!");
+            // }
+          });
+        }
+    
+    },
 }
 module.exports = UserController;

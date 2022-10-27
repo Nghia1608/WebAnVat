@@ -78,6 +78,7 @@ registerUser: async (req, res) => {
       {
         id: user.id,
         quyen: user.quyen,
+        username : user.username
       },
       process.env.JWT_ACCESS_KEY,
       { expiresIn: "30s" }
@@ -89,6 +90,8 @@ registerUser: async (req, res) => {
       {
         id: user.id,
         quyen: user.quyen,
+        username : user.username
+
       },
       process.env.JWT_REFRESH_KEY,
       { expiresIn: "365d" }

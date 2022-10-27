@@ -20,6 +20,7 @@ router.put('/:id',verifyTokenAndUserAuthorization,UserController.update);
 router.delete('/:id/delete',verifyTokenAndUserAuthorization,UserController.delete);
 
 router.delete('/:id/delete',verifyTokenAndUserAuthorization,UserController.delete);
+router.get('/cart',verifyTokenAndUserAuthorization,UserController.cart);
 
 
 router.get('/storedUsers',verifyTokenAndAdmin,UserController.storedUsers);
