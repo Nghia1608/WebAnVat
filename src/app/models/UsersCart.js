@@ -12,7 +12,7 @@ const Cart = new Schema({
     sdt :{type :String,maxLength:12,require:true},
     // tt don hang
     tenSanPham :{type :String ,maxLength : 100},
-    soLuong :{type :String ,maxLength : 100},
+    soLuong :{type :String ,maxLength :3},
     image :{type :String,maxLength:255},
     idSanPham :{type :String ,maxLength : 100},
   },{

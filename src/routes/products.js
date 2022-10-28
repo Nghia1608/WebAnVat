@@ -22,6 +22,8 @@ router.delete('/:id/delete',verifyTokenAndAdmin,productsController.delete);
 router.delete('/:id',verifyTokenAndAdmin,productsController.softDelete);
 
 router.post('/:id',verifyToken,productsController.storeProductToCart);
+router.put('/:id/updateCart',verifyToken,productsController.updateCart);
+router.delete('/:id/deleteCart',verifyToken,productsController.deleteCart);
 
 
 router.get('/:slug',productsController.show);

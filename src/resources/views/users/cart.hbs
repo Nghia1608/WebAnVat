@@ -5,6 +5,8 @@
     Giỏ hàng của bạn
   </h2>
     <table class="table">
+    <form id="restore-product-form"name="restore-product-form" method="POST">
+
         <thead>
             <tr>
             <th scope="col">STT</th>
@@ -16,85 +18,108 @@
         <tbody>
             {{#each carts}}
             <tr>
+              
             <th scope="row">{{sum @index 1}}</th>
             <td>{{this.tenSanPham}}</td>
-            <td>{{this.soLuong}}</td>
-            <td><img src="{{this.image}}" class="card-img-top" alt="{{this.image}}"></td>        
+            <td>
+            <input type="number" min="1" max="20"class="form-control" value="{{this.soLuong}}" id="soLuong" name="soLuong"placeholder="Chọn số lượng mua">
+            
+            <td>
+              <img src="{{this.image}}" class="card-img-top" alt="{{this.image}}"></td>        
 
 
             <td>
-                <a href="/users/{{this._id}}/edit" class="btn btn-link">Sửa</a>
-                <a id="btn-select"href="" class="btn btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModal">Xóa</a>
+
+                <a id="btn-select"href="" class="btn btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModalRestore">Cập nhật</a>
+                <a id="btn-select"href="" class="btn btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModalDelete">Xóa</a>
+
 
             </td>
             </tr>
             {{/each}}
 
         </tbody>
-
+    </form>
     </table>
 
 </div>
-<!--Confirm Delete Button -->
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--Form Xóa-->
+
+<div class="modal fade" id="exampleModalRestore" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Xác nhận xóa</h5>
+        <h5 class="modal-title">Xác nhận cập nhật</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p>Bạn có chắc muốn xóa tài khoản ?</p>
+        <p>Bạn có chắc muốn cập nhật sản phẩm ?</p>
       </div>
       <div class="modal-footer">
-        <a id="count-down">Wait for Available</a>
-        <button id="btn-delete" type="button" class="btn btn-danger">Xác nhận xóa</button>
+        <button id="btn-restore" type="button" class="btn btn-danger">Xác nhận</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Confirm Delete Button -->
+
+<div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xác nhận xóa khỏi giỏ hàng</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc muốn xóa sản phẩm khỏi giỏ hàng?</p>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-delete" type="button" class="btn btn-danger">Xác nhận</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
       </div>
     </div>
   </div>
 </div>
 
-<!--Form Xóa-->
-    <form name="delete-product-form" method="POST">
-
-<!--Disable Delete Button trong 10s-->
-<script>
-      var btnselect = document.getElementById('btn-select');
-      var countdown = document.getElementById('count-down');
-
-       btnselect.onclick =  function() {
-            document.getElementById("btn-delete").disabled = true;
-            setTimeout(function() {
-                document.getElementById("btn-delete").disabled = false;
-            }, 10000);
-            document.getElementById("count-down").hidden = false;
-            setTimeout(function() {
-                document.getElementById("count-down").hidden = true;
-            }, 10000);
-        }
-        
-</script>
-
-
 <!--Event xóa-->
 <script>
     document.addEventListener('DOMContentLoaded',function(){
-        var id;
+        var idDelete;
+        var idRestore;
+        var restoreForm = document.getElementById('restore-product-form');
 
-        var deleteForm = document.forms['delete-product-form'];
+        var deleteForm = document.getElementById('restore-product-form');
         var btnDelete = document.getElementById('btn-delete');
+        var btnRestore = document.getElementById('btn-restore');
 
-        $('#exampleModal').on('show.bs.modal', function (event) {
+
+
+
+
+        $('#exampleModalRestore').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) 
-        id = button.data('id')
-        });
-        btnDelete.onclick = function(){
-            deleteForm.action = '/users/'+id + '/delete?_method=DELETE';
+        idRestore = button.data('id')
 
+        });
+
+        $('#exampleModalDelete').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) 
+        idDelete = button.data('id')
+        });
+
+        btnRestore.onclick = function(){
+            restoreForm.action = '/products/'+idRestore + '/updateCart?_method=PUT';
+            restoreForm.submit(); 
+
+        }
+        btnDelete.onclick = function(){
+            deleteForm.action = '/products/'+idDelete + '/deleteCart?_method=DELETE';
             deleteForm.submit();
         }
     })

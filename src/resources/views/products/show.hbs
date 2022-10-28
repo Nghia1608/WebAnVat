@@ -11,7 +11,7 @@
         </div>
         <div class="form-group">
             <label for="soLuong">Chọn số lượng</label>
-            <input type="text" class="form-control" value="1" id="soLuong" name="soLuong"placeholder="Chọn số lượng mua">
+            <input type="number" class="form-control" value="1" min="1" max="20"id="soLuong" name="soLuong"placeholder="Chọn số lượng mua">
             {{!-- HIDDEn --}}
             <input type="text" class="form-control" value="{{products._id}}" id="idSanPham" name="idSanPham" hidden>
             <input type="text" class="form-control" value="{{products.image}}" id="image" name="image" hidden>

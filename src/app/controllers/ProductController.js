@@ -77,24 +77,30 @@ const ProductController={
     //them san pham vao gio hang
     //POST
     storeProductToCart(req,res,next){
-        //update
 
-        //store
         const formData = req.body;
         const product = new ProductsInCart(formData); //models/products
         // tt ca nhan
         product.username = req.user.username;
         product.hoTen = req.user.username;
         product.sdt = req.user.username;
-        //tt san pham
 
-        //
         product.save()
             .then(()=>{
                 res.redirect('/');
             })
             .catch(error=>{
             })
+    },
+    updateCart(req,res,next){
+        ProductsInCart.updateOne({_id : req.params.id},req.body)
+            .then(()=>res.redirect('/users/cart'))
+            .catch(next);
+    },
+    deleteCart(req,res,next){
+        ProductsInCart.deleteOne({_id : req.params.id})
+            .then(()=>res.redirect('/users/cart'))
+            .catch(next);                  
     },
 }
 module.exports = ProductController;
