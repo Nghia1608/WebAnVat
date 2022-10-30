@@ -93,25 +93,19 @@ const ProductController={
 
         ProductsInCart.find({username : req.user.username })
         .then(()=>{
-            ProductsInCart.find({idSanPham :req.body._id})
-            .then(()=>{
-                console.log('test ok')
-            })
-            .catch(()=>{    // san pham chua
-                const formData = req.body;
-                const product = new ProductsInCart(formData); //models/products
-                // tt ca nhan
-                product.username = req.user.username;
-                product.hoTen = req.user.username;
-                product.sdt = req.user.username;
-        
-                product.save()
-                    .then(()=>{
-                        res.redirect('/');
-                    })
-                    .catch(error=>{
-                    })
-            });
+            const formData = req.body;
+            const product = new ProductsInCart(formData); //models/products
+            // tt ca nhan
+            product.username = req.user.username;
+            product.hoTen = req.user.username;
+            product.sdt = req.user.username;
+    
+            product.save()
+                .then(()=>{
+                    res.redirect('/');
+                })
+                .catch(error=>{
+                })
         })
         // san pham da co => update so luong
     },

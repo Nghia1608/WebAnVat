@@ -12,6 +12,7 @@
             <th scope="col">STT</th>
             <th scope="col">Tên sản phẩm</th>
             <th scope="col">Số lượng</th>
+            <th scope="col">Giá tiền</th>
             <th scope="col" colspan="2">Hình ảnh</th>
             </tr>
         </thead>
@@ -22,8 +23,11 @@
             <th scope="row">{{sum @index 1}}</th>
             <td>{{this.tenSanPham}}</td>
             <td>
-            <input type="number" min="1" max="20"class="form-control" value="{{this.soLuong}}" id="soLuong" name="soLuong"placeholder="Chọn số lượng mua">
-            
+            <input  type="number" min="1" max="20"class="form-control" value="{{this.soLuong}}" id="soLuong" name="soLuong"placeholder="Chọn số lượng mua">
+            <td >
+            <h4 id="tongGiaTien" name="tongGiaTien" >  </h4>
+
+            </td>
             <td>
               <img src="{{this.image}}" class="card-img-top" alt="{{this.image}}"></td>        
 
@@ -36,10 +40,10 @@
 
             </td>
             </tr>
+            <input type="text" class="form-control" value="{{this.tongTien}}" id="tongTien" name="tongTien" hidden>
+
             {{/each}}
-<div class="form-group">
-        <label for="tongTien">tongTien</label>
-        <input type="number" class="form-control" id="tongTien" value="" name="tongTien"disabled>
+
         </tbody>
         
     </div>
@@ -128,4 +132,16 @@
         }
     })
 
+    var giaTienSanPham = (document.getElementById("tongTien").value / document.getElementById("soLuong").value)
+
+    number = document.getElementById("tongTien").value
+    document.getElementById("tongGiaTien").innerHTML = number.toLocaleString() + "  VND";
+
+    document.getElementById("soLuong").onchange= function(){
+        soLuongDaChon = document.getElementById("soLuong").value 
+        document.getElementById("tongGiaTien").innerHTML =(giaTienSanPham*soLuongDaChon).toLocaleString() +"  VND";
+//
+        document.getElementById("tongTien").value = (giaTienSanPham*soLuongDaChon);
+        console.log("tong tien ne"+document.getElementById("tongTien").value)
+    }
 </script>

@@ -15,6 +15,7 @@ const Cart = new Schema({
     soLuong :{type :String ,maxLength :3},
     image :{type :String,maxLength:255},
     idSanPham :{type :String ,maxLength : 100},
+    tongTien : {type :String ,maxLength : 100},
   },{
     timestamps : true,
   });
