@@ -13,6 +13,7 @@ const AuthController = {
 //POST
 confirmLogin :async(req,res,next)=>{     //check dang nhap
     const user = await Users.findOne({ username: req.body.username });
+
     const validPassword = await bcrypt.compare(
         req.body.password,
         user.password

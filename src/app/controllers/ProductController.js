@@ -1,4 +1,5 @@
 const Products = require('../models/Products');
+
 const ProductsInCart = require('../models/UsersCart');
 
 const {mongooseToObject}= require('../../util/mongoose');
@@ -19,6 +20,16 @@ const ProductController={
                 }); 
             })
             .catch(next); 
+
+            // Promise.all([Products.findOne({}),ProductsDetails.findOne({})])
+            // .then(([products,productsdetails])=>{
+            //     res.render('products/show',{
+            //         products,productsdetails : mongooseToObject(products,productsdetails),
+
+
+            //     }); 
+            // })
+            // .catch(next); 
     },
 
     // [Get] src/routes/product/create  goi form Create
@@ -78,19 +89,31 @@ const ProductController={
     //POST
     storeProductToCart(req,res,next){
 
-        const formData = req.body;
-        const product = new ProductsInCart(formData); //models/products
-        // tt ca nhan
-        product.username = req.user.username;
-        product.hoTen = req.user.username;
-        product.sdt = req.user.username;
+        // san pham da co 
 
-        product.save()
+        ProductsInCart.find({username : req.user.username })
+        .then(()=>{
+            ProductsInCart.find({idSanPham :req.body._id})
             .then(()=>{
-                res.redirect('/');
+                console.log('test ok')
             })
-            .catch(error=>{
-            })
+            .catch(()=>{    // san pham chua
+                const formData = req.body;
+                const product = new ProductsInCart(formData); //models/products
+                // tt ca nhan
+                product.username = req.user.username;
+                product.hoTen = req.user.username;
+                product.sdt = req.user.username;
+        
+                product.save()
+                    .then(()=>{
+                        res.redirect('/');
+                    })
+                    .catch(error=>{
+                    })
+            });
+        })
+        // san pham da co => update so luong
     },
     updateCart(req,res,next){
         ProductsInCart.updateOne({_id : req.params.id},req.body)

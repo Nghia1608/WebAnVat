@@ -14,6 +14,7 @@ const Product = new Schema({
     tinhTrang :{type :String,maxLength:20},
     soLuongCon:{type :String,maxLength:20},
     slug : {type:String ,slug :'tenSanPham',require:true,unique:true},
+    giaTien :{type :String,maxLength:20},
   },{
     timestamps : true,
   });

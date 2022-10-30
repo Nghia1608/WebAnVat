@@ -28,12 +28,12 @@
       </li>
         <li class="nav-item">
 
-        <a class="nav-link disabled"href="/auth/logout">Đăng xuất</a>
+        <a id="afterLogin"class="nav-link disabled"href="/auth/logout">Đăng xuất</a>
       </li>
-      <li class="nav-item dropdown" id="afterLogin">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <li class="nav-item dropdown">
+          <li class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             QQ j day
-          </a>
+          </li>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="/users/{{this._id}}/edit">Đổi mật khẩu</a>
           <a class="dropdown-item" href="#">Đồ khô 2</a>
@@ -55,35 +55,16 @@
       
       window.onload = function(req,res,next){
             document.getElementById("afterLogin").hidden = true;
-            verifyToken(req, res, () => {
-              if (req.user.id || req.params.id) {
-                console.log('test user',req.user.username)
 
-                document.getElementById("afterLogin").hidden = false;
-                document.getElementById("navbarDropdown").innerHTML = req.body.username;
-                next();
-              } else {
-                res.status(403).json("You're not allowed to do that!");
+
+               
+
+
+                  req.user = user;
+                   if (req.user.username) {
+                      document.getElementById("afterLogin").hidden = false;
+                      document.getElementById("afterLogin").innerHTML = `${req.user.username}`;
               }
-            });              
           }
-
-          const verifyToken = (req, res, next) => {
-          //ACCESS TOKEN FROM HEADER, REFRESH TOKEN FROM COOKIE
-          const refreshToken = req.cookies.refreshToken;
-          if (refreshToken) {
-            const accessToken = refreshToken;
-            jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
-              if (err) {
-                res.status(403).json("Token is not valid!");
-              }
-              req.user = user;
-              next();
-            });
-          } else {
-            res.redirect('auth/login')
-          }
-        };
-
     </script>
 
