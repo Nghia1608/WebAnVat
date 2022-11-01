@@ -1,8 +1,8 @@
 const Products = require('../models/Products');
-
+const ProductsCategory = require('../models/ProductsCategory');
 const ProductsInCart = require('../models/UsersCart');
 
-const {mongooseToObject}= require('../../util/mongoose');
+const {mongooseToObject,multipleMongooseToObject}= require('../../util/mongoose');
 const UsersCart = require('../models/UsersCart');
 
 
@@ -31,7 +31,17 @@ const ProductController={
             // })
             // .catch(next); 
     },
+    // caterogy(req,res,next){
+    //         Products.find({maLoai : req.params.id},req.body)
+    //                     .then(products =>{
+    //                         res.render('products/category',{
+    //                             products : multipleMongooseToObject(products),
+    //                         });
+    //                     })
+    //                     .catch(next)
 
+
+    // },
     // [Get] src/routes/product/create  goi form Create
 
     create(req,res,next){

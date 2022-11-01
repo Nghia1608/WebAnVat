@@ -9,6 +9,8 @@ const {
     verifyTokenAndUserAuthorization,
   } = require("../app/controllers/Middleware");
 
+
+
 router.get('/create',verifyTokenAndAdmin,productsController.create);
 router.post('/store',verifyTokenAndAdmin,productsController.store);
 
@@ -25,6 +27,7 @@ router.post('/:id',verifyToken,productsController.storeProductToCart);
 router.put('/:id/updateCart',verifyToken,productsController.updateCart);
 router.delete('/:id/deleteCart',verifyToken,productsController.deleteCart);
 
+//router.get('/category/:id',productsController.caterogy);
 
 router.get('/:slug',productsController.show);
 

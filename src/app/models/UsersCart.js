@@ -3,6 +3,7 @@ const slug = require('mongoose-slug-generator');
 const mongooseDelete = require('mongoose-delete');
 
 
+mongoose.plugin(slug);
 
 const Schema = mongoose.Schema;
 const Cart = new Schema({
@@ -16,6 +17,8 @@ const Cart = new Schema({
     image :{type :String,maxLength:255},
     idSanPham :{type :String ,maxLength : 100},
     tongTien : {type :String ,maxLength : 100},
+    slug : {type :String ,slug : 'tongTien',require:true,unique:true},
+    idtest : {type :String,maxLength : 100 },
   },{
     timestamps : true,
   });

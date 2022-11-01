@@ -1,5 +1,4 @@
 {{>headerUser}}
-
 <div class="mt-4">
   <h2> 
     Giỏ hàng của bạn
@@ -17,15 +16,16 @@
             </tr>
         </thead>
         <tbody>
+
             {{#each carts}}
             <tr>
-              
+
             <th scope="row">{{sum @index 1}}</th>
-            <td>{{this.tenSanPham}}</td>
+            <td id="Test">{{this.tenSanPham}}</td>
             <td>
-            <input  type="number" min="1" max="20"class="form-control" value="{{this.soLuong}}" id="soLuong" name="soLuong"placeholder="Chọn số lượng mua">
+            <input type="number" min="1" max="20"class="form-control" value="{{this.soLuong}}" id="soLuong{{this.slug}}" name="soLuong{{this.slug}}"placeholder="Chọn số lượng mua">
             <td >
-            <h4 id="tongGiaTien" name="tongGiaTien" >  </h4>
+            <h4 class="tongGiaTien"id="tongGiaTien{{this.slug}}" name="tongGiaTien{{this.slug}}" >{{this.tongTien}}  </h4>
 
             </td>
             <td>
@@ -37,11 +37,33 @@
                 <a id="btn-select"href="" class="btn btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModalRestore">Cập nhật</a>
                 <a id="btn-select"href="" class="btn btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModalDelete">Xóa</a>
 
-
             </td>
-            </tr>
-            <input type="text" class="form-control" value="{{this.tongTien}}" id="tongTien" name="tongTien" hidden>
+                        <input type="text" class="form-control" value="{{this.tongTien}}" id="tongTien{{this.slug}}" name="tongTien{{this.slug}}" hidden>
 
+            </tr>
+<script>
+  //get ID
+    var tempID = {{this.slug}}   //lay id la khong chay//tongTien moi chay
+    test1 = "636164b2a6415820ec3b9e72"
+     tongGiaTien1{{this.slug}} = "tongGiaTien"+tempID
+     tongTien1{{this.slug}} = "tongTien"+tempID
+     soLuong1{{this.slug}} = "soLuong"+tempID
+//  
+  var number = {{this.tongTien}}
+    var giaTienSanPham = (document.getElementById(tongTien1{{this.slug}}).value / document.getElementById(soLuong1{{this.slug}}).value)
+
+    var number = document.getElementById(tongTien1{{this.slug}}).value
+
+    document.getElementById(tongGiaTien1{{this.slug}}).innerHTML = number.toLocaleString() + "  VND";
+        var soLuongDaChon = document.getElementById(soLuong1{{this.slug}}).value 
+        document.getElementById(tongGiaTien1{{this.slug}}).innerHTML =(giaTienSanPham*soLuongDaChon).toLocaleString() +"  VND";
+    
+    document.getElementById(soLuong1{{this.slug}}).onchange= function(){
+        soLuongDaChon = document.getElementById(soLuong1{{this.slug}}).value 
+        document.getElementById(tongGiaTien1{{this.slug}}).innerHTML =(giaTienSanPham*soLuongDaChon).toLocaleString() +"  VND";
+        document.getElementById(tongTien1{{this.slug}}).value = (giaTienSanPham*soLuongDaChon);
+    }
+  </script>
             {{/each}}
 
         </tbody>
@@ -49,6 +71,7 @@
     </div>
     </form>
     </table>
+
 
 </div>
 
@@ -132,16 +155,5 @@
         }
     })
 
-    var giaTienSanPham = (document.getElementById("tongTien").value / document.getElementById("soLuong").value)
 
-    number = document.getElementById("tongTien").value
-    document.getElementById("tongGiaTien").innerHTML = number.toLocaleString() + "  VND";
-
-    document.getElementById("soLuong").onchange= function(){
-        soLuongDaChon = document.getElementById("soLuong").value 
-        document.getElementById("tongGiaTien").innerHTML =(giaTienSanPham*soLuongDaChon).toLocaleString() +"  VND";
-//
-        document.getElementById("tongTien").value = (giaTienSanPham*soLuongDaChon);
-        console.log("tong tien ne"+document.getElementById("tongTien").value)
-    }
 </script>

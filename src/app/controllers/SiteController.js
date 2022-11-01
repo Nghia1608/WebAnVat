@@ -1,4 +1,6 @@
 const Products = require('../models/Products');
+const ProductsCategory = require('../models/ProductsCategory');
+
 const {multipleMongooseToObject}= require('../../util/mongoose');
 
 const SiteController={
@@ -13,7 +15,10 @@ const SiteController={
                 });
             })
             .catch(next)
+
+
     },
+
     products(req,res,next){
 
         Products.find({})
@@ -23,6 +28,8 @@ const SiteController={
                 });
             })
             .catch(next)
+
+
     },
     // 
     search(req,res){

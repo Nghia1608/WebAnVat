@@ -14,8 +14,10 @@
           Danh mục sản phẩm
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Đồ khô</a>
-          <a class="dropdown-item" href="#">Đồ khô 2</a>
+          {{#each productsCategory}}
+
+          <a class="dropdown-item" href="/products/category/{{this._id}}">{{this._id}}</a>
+          {{/each}}
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Coming soon</a>
         </div>
