@@ -4,7 +4,6 @@
     Giỏ hàng của bạn
   </h2>
     <table class="table">
-    <form id="restore-product-form"name="restore-product-form" method="POST">
 
         <thead>
             <tr>
@@ -16,8 +15,10 @@
             </tr>
         </thead>
         <tbody>
+    <form id="restore-product-form"name="restore-product-form" method="POST">
 
             {{#each carts}}
+
             <tr>
 
             <th scope="row">{{sum @index 1}}</th>
@@ -41,35 +42,37 @@
                         <input type="text" class="form-control" value="{{this.tongTien}}" id="tongTien{{this.slug}}" name="tongTien{{this.slug}}" hidden>
 
             </tr>
+
 <script>
   //get ID
     var tempID = {{this.slug}}   //lay id la khong chay//tongTien moi chay
-    test1 = "636164b2a6415820ec3b9e72"
      tongGiaTien1{{this.slug}} = "tongGiaTien"+tempID
      tongTien1{{this.slug}} = "tongTien"+tempID
      soLuong1{{this.slug}} = "soLuong"+tempID
 //  
   var number = {{this.tongTien}}
-    var giaTienSanPham = (document.getElementById(tongTien1{{this.slug}}).value / document.getElementById(soLuong1{{this.slug}}).value)
+    var giaTienSanPham{{this.slug}} = (document.getElementById(tongTien1{{this.slug}}).value / document.getElementById(soLuong1{{this.slug}}).value)
 
     var number = document.getElementById(tongTien1{{this.slug}}).value
 
     document.getElementById(tongGiaTien1{{this.slug}}).innerHTML = number.toLocaleString() + "  VND";
         var soLuongDaChon = document.getElementById(soLuong1{{this.slug}}).value 
-        document.getElementById(tongGiaTien1{{this.slug}}).innerHTML =(giaTienSanPham*soLuongDaChon).toLocaleString() +"  VND";
+        document.getElementById(tongGiaTien1{{this.slug}}).innerHTML =(giaTienSanPham{{this.slug}}*soLuongDaChon).toLocaleString() +"  VND";
     
     document.getElementById(soLuong1{{this.slug}}).onchange= function(){
         soLuongDaChon = document.getElementById(soLuong1{{this.slug}}).value 
-        document.getElementById(tongGiaTien1{{this.slug}}).innerHTML =(giaTienSanPham*soLuongDaChon).toLocaleString() +"  VND";
-        document.getElementById(tongTien1{{this.slug}}).value = (giaTienSanPham*soLuongDaChon);
+        document.getElementById(tongGiaTien1{{this.slug}}).innerHTML =(giaTienSanPham{{this.slug}}*soLuongDaChon).toLocaleString() +"  VND";
+        document.getElementById(tongTien1{{this.slug}}).value = (giaTienSanPham{{this.slug}}*soLuongDaChon);
     }
   </script>
+
             {{/each}}
+    </form>
 
         </tbody>
         
     </div>
-    </form>
+
     </table>
 
 

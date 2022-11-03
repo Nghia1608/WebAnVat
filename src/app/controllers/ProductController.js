@@ -117,7 +117,13 @@ const ProductController={
                 .catch(error=>{
                 })
         })
+        
         // san pham da co => update so luong
+    },
+    updateSoLuong(req,res,next){
+        Products.updateOne({_id : req.params.id},req.body)
+            .then(()=>res.redirect('/admin/storedProducts'))
+            .catch(next);
     },
     updateCart(req,res,next){
         ProductsInCart.updateOne({_id : req.params.id},req.body)
