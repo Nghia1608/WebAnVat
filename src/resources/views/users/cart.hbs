@@ -24,7 +24,7 @@
             <th scope="row">{{sum @index 1}}</th>
             <td id="Test">{{this.tenSanPham}}</td>
             <td>
-            <input type="number" min="1" max="20"class="form-control" value="{{this.soLuong}}" id="soLuong{{this.slug}}" name="soLuong{{this.slug}}"placeholder="Chọn số lượng mua">
+            <input type="number" min="1" max="20"class="form-control" value="{{this.soLuong}}" id="soLuong{{this.slug}}" name="soLuong{{this._id}}"placeholder="Chọn số lượng mua">
             <td >
             <h4 class="tongGiaTien"id="tongGiaTien{{this.slug}}" name="tongGiaTien{{this.slug}}" >{{this.tongTien}}  </h4>
 
@@ -39,7 +39,7 @@
                 <a id="btn-select"href="" class="btn btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModalDelete">Xóa</a>
 
             </td>
-                        <input type="text" class="form-control" value="{{this.tongTien}}" id="tongTien{{this.slug}}" name="tongTien{{this.slug}}" hidden>
+                        <input type="text" class="form-control" value="{{this.tongTien}}" id="tongTien{{this.slug}}" name="tongTien{{this._id}}" hidden>
 
             </tr>
 

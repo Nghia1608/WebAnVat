@@ -121,13 +121,27 @@ const ProductController={
         // san pham da co => update so luong
     },
     updateSoLuong(req,res,next){
-        Products.updateOne({_id : req.params.id},req.body)
+        var newValues = { $set: {tongTien: req.body.tongTien, soLuong: req.body.soLuong } };
+        Products.updateOne({_id : req.params.id},newValues)
             .then(()=>res.redirect('/admin/storedProducts'))
             .catch(next);
     },
     updateCart(req,res,next){
-        ProductsInCart.updateOne({_id : req.params.id},req.body)
-            .then(()=>res.redirect('/users/cart'))
+        //so luong va tien theo ID
+         var tempSoLuong = "soLuong"+req.params.id;  //soLuong6367847be736a0b3f32b2d95
+         var tempTongTien = "tongTien"+req.params.id;
+        //
+        var SoLuong = req.body[tempSoLuong];
+        var TongTien = req.body[tempTongTien];
+        newValues = ({ $set: {soLuong :SoLuong, tongTien : TongTien } });
+        //req.params chi lay dc _id
+        //req.body = object
+        ProductsInCart.updateOne({_id : req.params.id},newValues)
+            .then(()=>{
+                res.redirect('/users/cart');
+                //res.send(typeof SoLuong);
+                //.redirect('/users/cart')
+                })
             .catch(next);
     },
     deleteCart(req,res,next){

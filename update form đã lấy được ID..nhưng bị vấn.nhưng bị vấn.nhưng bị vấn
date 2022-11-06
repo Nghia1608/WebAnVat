@@ -1,0 +1,7 @@
+update form đã lấy được ID..nhưng bị vấn đề : 
+luôn lấy giá trị (req.body) của sản phẩm cuối cùng
+
+req.params chỉ lấy được _id
+
+
+1..code nut them gio hang

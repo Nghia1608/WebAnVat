@@ -34,7 +34,7 @@
       </li>
       <li class="nav-item dropdown">
           <li class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            QQ j day
+            Test
           </li>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="/users/{{this._id}}/edit">Đổi mật khẩu</a>
@@ -42,7 +42,11 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Coming soon</a>
         </div>
-      </li
+
+      </li>
+            <li class="nav-item">
+        <a id="logout"class="nav-link disabled" href="/auth/login"></a>
+      </li>
     </ul>
     
   </div>
@@ -65,7 +69,7 @@
                   req.user = user;
                    if (req.user.username) {
                       document.getElementById("afterLogin").hidden = false;
-                      document.getElementById("afterLogin").innerHTML = `${req.user.username}`;
+                      document.getElementById("afterLogin").innerHTML = req.user.username
               }
           }
     </script>
