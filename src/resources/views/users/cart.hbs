@@ -107,9 +107,12 @@
                   //one checkbox
           var idCheckboxItem =  $(`input[id="${"checkbox"+tempID}"]`) ;
           idCheckboxItem.change(function(){
+          tempTongTienGioHang1 = 0;
+
           checkboxItemID = document.getElementById("checkbox"+tempID).checked;
             if(checkboxItemID){
               tempTongTienGioHang = tempTongTienGioHang + parseInt(number);
+
             }
             else{
               tempTongTienGioHang = tempTongTienGioHang - parseInt(number);
