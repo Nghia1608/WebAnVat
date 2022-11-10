@@ -8,6 +8,7 @@
     <table class="table">
       <script>
         var tempTongTienGioHang = 0;
+        var tempTongTienGioHang1 = 0;
         </script>
         <thead>
             <tr>
@@ -52,7 +53,6 @@
                         <input type="text" class="form-control" value="{{this.tongTien}}" id="tongTien{{this.slug}}" name="tongTien{{this._id}}" hidden>
 
             </tr>
-
 <script >
     document.addEventListener('DOMContentLoaded',function(){
 
@@ -76,35 +76,49 @@
         document.getElementById(tongGiaTien1{{this.slug}}).innerHTML =(giaTienSanPham{{this.slug}}*soLuongDaChon).toLocaleString() +"  VND";
         document.getElementById(tongTien1{{this.slug}}).value = (giaTienSanPham{{this.slug}}*soLuongDaChon);
     }
-
+  //checkboxxxxxx
         var checkboxAll = $('#checkboxAll');
-        var productsItemCheckbox = $('input[name="checkboxItem"]')
+        var productsItemCheckbox = $(`input[name="checkboxItem"]`)
 
             //checkbox all change
-        checkboxAll.change(function(){
+          checkboxAll.change(function(){
           var isCheckedAll = $(this).prop('checked');
           productsItemCheckbox.prop('checked',isCheckedAll);
-          //cap nhat tong san pham va tong 
-
-          tempTongTienGioHang = tempTongTienGioHang + parseInt( number);
+          //
+          // cộng dồn tổng tiền sp vào tempTongTienGioHang
           if(isCheckedAll){
-          document.getElementById("tongTienGioHangText").innerHTML = "Tổng tiền :    " + tempTongTienGioHang.toLocaleString()   +"  VNĐ";
-          console.log(typeof tempTongTienGioHang)
+            tempTongTienGioHang1 = tempTongTienGioHang1 + parseInt( number);
+            tempTongTienGioHang = tempTongTienGioHang1;
+            document.getElementById("tongTienGioHangText").innerHTML = "Tổng tiền :    " + tempTongTienGioHang1.toLocaleString()   +"  VNĐ";
           }
           else{
-          document.getElementById("tongTienGioHangText").innerHTML = "Tổng tiền : 0 VNĐ";
-
+            document.getElementById("tongTienGioHangText").innerHTML = "Tổng tiền : 0 VNĐ";
+            tempTongTienGioHang1 = 0;
+            tempTongTienGioHang = 0;
           }
-        });
-        //item checkbox change
+          });//finish
+
+        //One of all item checkbox change
         productsItemCheckbox.change(function(){
-          var isCheckedAll = productsItemCheckbox.length === $('input[name="checkboxItem"]:check').length;
-          checkboxAll.prop('checked',isCheckedAll); 
-          //cap nhat tong san pham va tong tien
-          tempTongTienGioHang += number;
-          document.getElementById("tongTienGioHangText").innerHTML = "Tổng tiền :    " + number.toLocaleString() +"  VNĐ";
-        })  
-    })
+          var isCheckedAll = productsItemCheckbox.length === $('input[name="checkboxItem"]:checked').length;
+          checkboxAll.prop('checked',isCheckedAll);
+        })
+        //Item checkbox + ID chang
+                  //one checkbox
+          var idCheckboxItem =  $(`input[id="${"checkbox"+tempID}"]`) ;
+          idCheckboxItem.change(function(){
+          checkboxItemID = document.getElementById("checkbox"+tempID).checked;
+            if(checkboxItemID){
+              tempTongTienGioHang = tempTongTienGioHang + parseInt(number);
+            }
+            else{
+              tempTongTienGioHang = tempTongTienGioHang - parseInt(number);
+            }
+            document.getElementById("tongTienGioHangText").innerHTML = "Tổng tiền :    " + tempTongTienGioHang.toLocaleString()   +"  VNĐ";
+
+          })
+          })
+
   </script>
 
             {{/each}}
@@ -115,6 +129,7 @@
     </div>
 
     </table>
+
 <div class="form-check">
   <input class="form-check-input" type="checkbox" value="" id="checkboxAll">
   <label class="form-check-label" for="checkboxAll">
@@ -129,6 +144,7 @@
   <input type="text" class="form-control" value="" id="tongTienGioHang" name="tongTienGioHang" hidden>
 
 </div>
+<button id="btnDatHang" type="button" class="btn btn-success">Xác nhận đặt hàng</button>
 
 <!--Form Xóa-->
 
