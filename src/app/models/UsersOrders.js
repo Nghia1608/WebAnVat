@@ -3,17 +3,16 @@ const mongoose = require('mongoose');
 
 
 const Schema = mongoose.Schema;
-const Cart = new Schema({
+const UsersOrder = new Schema({
     //tt user
     username :{type :String ,maxLength : 50,require:true},
-    hoTen :{type :String,maxLength:50,require:true},
-    sdt :{type :String,maxLength:12,require:true},
     // tt don hang
-    tenSanPham :{type :String ,maxLength : 100},
-    soLuong :{type :String ,maxLength :3},
-    image :{type :String,maxLength:255},
-    idSanPham :{type :String ,maxLength : 100},
+    tongTienTruocGiamGia : {type :String ,maxLength : 100},
+    tongTienKhuyenMai : {type :String ,maxLength : 100},
+    hinhThucThanhToan : {type :String ,maxLength : 100},
+    hinhThucMuaHang : {type :String ,maxLength : 100},
     tongTien : {type :String ,maxLength : 100},
+    tinhTrang:  {type :String ,maxLength : 100},
     slug : {type :String ,default : function() {
       return Math.floor(Math.random()*900000000300000000000) + 1000000000000000
     },require:true,unique:true},
@@ -21,4 +20,4 @@ const Cart = new Schema({
     timestamps : true,
   });
 
-module.exports = mongoose.model('carts',Cart);
+module.exports = mongoose.model('UsersOrders',UsersOrder);

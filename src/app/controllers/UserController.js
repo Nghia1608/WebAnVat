@@ -1,6 +1,7 @@
 const Users = require('../models/Users');
 const Products = require('../models/Products');
 const ProductsInCart = require('../models/UsersCart');
+const ProductsInCheckout = require('../models/UsersCart');
 
 const { response } = require('express');
 const jwt = require('jsonwebtoken')
@@ -109,6 +110,19 @@ const UserController = {
     },
 
     cart(req,res,next){
+
+
+            ProductsInCart.find({username : req.user.username})
+                .then((carts)=>{
+                    res.render('users/cart',{
+                        carts : multipleMongooseToObject(carts),
+                    }); 
+                })
+                .catch(next);
+
+    
+    },
+    orderCheckout(req,res,next){
         // const refreshToken = req.cookies.refreshToken;
         // if (refreshToken) {
         //   const accessToken = refreshToken;
