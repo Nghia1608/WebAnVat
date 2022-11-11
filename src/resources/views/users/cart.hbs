@@ -185,12 +185,13 @@
           if(isCheckedAll){
             tempTongTienGioHang1 = tempTongTienGioHang1 + parseInt( number);
             tempTongTienGioHang = tempTongTienGioHang1;
-            tongSanPhamDaChon = tongSanPhamDaChon + 1;
+            tongSanPhamDaChon1 = tongSanPhamDaChon1 + 1;
+            tongSanPhamDaChon = tongSanPhamDaChon1;
             document.getElementById("btnDatHang").disabled = false;
           document.getElementById("formCheckout").hidden = true;
 
 
-            document.getElementById("tongSanPham").innerHTML = "Tổng sản phẩm : " + tongSanPhamDaChon;
+            document.getElementById("tongSanPham").innerHTML = "Tổng sản phẩm : " + tongSanPhamDaChon1;
             document.getElementById("tongTienGioHangText").innerHTML = "Tổng tiền :    " + tempTongTienGioHang1.toLocaleString()   +"  VNĐ";
 
           }
@@ -200,6 +201,7 @@
 
             tempTongTienGioHang1 = 0;
             tempTongTienGioHang = 0;
+            tongSanPhamDaChon1 = 0;
             tongSanPhamDaChon = 0;
           document.getElementById("btnDatHang").disabled = true;
           document.getElementById("formCheckout").hidden = true;
@@ -218,11 +220,12 @@
           var idCheckboxItem =  $(`input[id="${"checkbox"+tempID}"]`) ;
           idCheckboxItem.change(function(){
           tempTongTienGioHang1 = 0;
+          tongSanPhamDaChon1 = 0;
 
           checkboxItemID = document.getElementById("checkbox"+tempID).checked;
             if(checkboxItemID){
               tempTongTienGioHang = tempTongTienGioHang + parseInt(number);
-            tongSanPhamDaChon1 = tongSanPhamDaChon1 + 1;
+            tongSanPhamDaChon = tongSanPhamDaChon + 1;
 
             document.getElementById("btnDatHang").disabled = false;
 
@@ -230,7 +233,7 @@
             }
             else{
               tempTongTienGioHang = tempTongTienGioHang - parseInt(number);
-              tongSanPhamDaChon1 = tongSanPhamDaChon1 - 1;
+              tongSanPhamDaChon = tongSanPhamDaChon - 1;
 
             }
               if(tempTongTienGioHang == 0){
@@ -238,7 +241,7 @@
 
               } 
             document.getElementById("tongTienGioHangText").innerHTML = "Tổng tiền :    " + tempTongTienGioHang.toLocaleString()   +"  VNĐ";
-            document.getElementById("tongSanPham").innerHTML = "Tổng sản phẩm : " + tongSanPhamDaChon1;
+            document.getElementById("tongSanPham").innerHTML = "Tổng sản phẩm : " + tongSanPhamDaChon;
 
           })
           })
@@ -300,9 +303,9 @@
             <input type="text" id="diaChi" name="diaChi" value="{{users.diaChi}}">
 
             <label for="sdt"><i class="fa fa-address-card-o"></i> Số điện thoại</label>
-            <input type="text" id="sdt" name="sdt" value="{{users.diaChi}}">
+            <input type="text" id="adr" name="sdt" value="{{users.diaChi}}">
 
-            <label for="note"><i class="fa fa-address-card-o"></i> Ghi chú</label>
+            <label for="adr"><i class="fa fa-address-card-o"></i> Ghi chú</label>
             <input type="text" id="note" name="note" placeholder="Ghi chú nếu có">
           </div>
         </div>
