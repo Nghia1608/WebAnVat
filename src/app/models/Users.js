@@ -13,6 +13,7 @@ const User = new Schema({
     email :{type :String,maxLength:254,require:true},
     hoTen :{type :String,maxLength:50,require:true},
     sdt :{type :String,maxLength:12,require:true},
+    diaChi :{type :String,maxLength:50,require:true},
 
   },{
     timestamps : true,

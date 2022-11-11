@@ -23,15 +23,18 @@
             <div class="button">
                <div class="inner"></div>
              <button onclick="login()"class="btn btn-primary">Đăng nhập</button>
+
             </div>
+
          </form>
          <div class="signup">
-            Chưa có tài khoản ? <a href="#">Đăng ký ngay</a>
+            Chưa có tài khoản ? <a href="/auth/register">Đăng ký ngay</a>
          </div>
-         <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
          
       <script src="https://apis.google.com/js/platform.js" async defer></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+      <script>         
+
       <script>
          function setCookie(cname, cvalue, exdays) {
          const d = new Date();
@@ -55,8 +58,15 @@
          }
          return "";
          }
+
             function login(){
+
+				var username = document.getElementById("username").value;
+                  localStorage.setItem("username",username);
+
                $.ajax({
+				var username = document.getElementById("username").value;
+                  localStorage.setItem("username",username);
                   url:'auth/confirmLogin'
                   type : 'POST',
                   data :{
@@ -64,36 +74,15 @@
                      password : $('#password').val()
                   }
                }).then(data=>{
+				       username = document.getElementById("username").value;
+                  localStorage.setItem("username",username);
                   setCookie('token',data.token,1)
                }).catch(error=>{
                   console.log(error)
                })
             }
       </script>
-      <script>
-            function onSignIn(googleUser) {
-            // Useful data for your client-side scripts:
-            var profile = googleUser.getBasicProfile();
-            console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-            console.log('Full Name: ' + profile.getName());
-            console.log('Given Name: ' + profile.getGivenName());
-            console.log('Family Name: ' + profile.getFamilyName());
-            console.log("Image URL: " + profile.getImageUrl());
-            console.log("Email: " + profile.getEmail());
 
-            //var id_token = googleUser.getAuthResponse().id_token;
-            //console.log("ID Token: " + id_token);
-            res.redirect('/');
-            function onSuccess(googleUser) {
-            console.log('Logged in as: ' + googleUser.getBasicProfile().getName());        
-            redirect('/')
-            }
-            function onFailure(error) {
-               console.log(error);
-            redirect('/')
-            } 
-            };
-         </script>
       <script>
          var input = document.querySelector('.pswrd');
          var show = document.querySelector('.show');

@@ -1,4 +1,29 @@
-            <h2>Giỏ hàng của bạn</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Colo Shop</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Colo Shop Template">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="/styles/bootstrap4/bootstrap.min.css">
+<link href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/animate.css">
+<link rel="stylesheet" type="text/css" href="/styles/main_styles.css">
+<link rel="stylesheet" type="text/css" href="/styles/responsive.css">
+<link rel="stylesheet" href="/css/cssUsers/cart.css">
+
+</head>
+<body>
+<div class="mt-4">
+
+  <h2> 
+    Giỏ hàng của bạn
+  </h2>
+
+
     <table class="table">
       <script>
         var tempTongTienGioHang = 0;
@@ -155,5 +180,146 @@
 
         </tbody>
         
+    </div>
 
     </table>
+
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="checkboxAll">
+  <label class="form-check-label" for="checkboxAll">
+    Chọn tất cả sản phẩm
+  </label>
+</div>
+
+{{!-- Tong tien ne --}}
+    <h4 class="tongTienGioHang"id="tongSanPham" name="tongSanPham" > Tổng số sản phẩm :  </h4>
+
+    <h4 class="tongTienGioHangText"id="tongTienGioHangText" name="tongTienGioHangText" > Tổng tiền :  </h4>
+
+  <input type="text" class="form-control" value="" id="tongTienGioHang" name="tongTienGioHang" hidden>
+
+</div>
+<button id="btnDatHang" type="button" class="btn btn-success" > Đặt hàng</button>
+
+<script>
+  document.getElementById("btnDatHang").onclick = function(){
+    document.getElementById("formCheckout").hidden = false;
+  }
+  </script>
+
+{{!-- Form checkout --}}
+<div class="row" id="formCheckout" hidden>
+  <div class="col-75">
+    <div class="container">
+
+        <div class="row">
+          <div class="col-50">
+            <h3>Thông tin nhận hàng</h3>
+            <label for="fname"><i class="fa fa-user"></i> Họ tên</label>
+            <input type="text" id="fname" name="firstname" value="">
+            <br>
+            <label for="email"><i class="fa fa-envelope"></i> Email</label>
+            <input type="text" id="email" name="email" placeholder="AnVatNghiaTai@gmai.com">
+            <br>
+
+            <label for="adr"><i class="fa fa-address-card-o"></i> Địa chỉ nhận hàng</label>
+            <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
+
+            <label for="adr"><i class="fa fa-address-card-o"></i> Ghi chú</label>
+            <input type="text" id="note" name="note" placeholder="Ghi chú nếu có">
+          </div>
+        </div>
+
+    </div>
+    <script>
+      </script>
+  </div>
+<button id="btnDatHang" type="button" class="btn btn-success" >Xác nhận đặt hàng</button>
+
+</div>
+
+
+<!--Form Xóa-->
+
+<div class="modal fade" id="exampleModalRestore" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xác nhận cập nhật</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc muốn cập nhật sản phẩm ?</p>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-restore" type="button" class="btn btn-danger">Xác nhận</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Confirm Delete Button -->
+
+<div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xác nhận xóa khỏi giỏ hàng</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc muốn xóa sản phẩm khỏi giỏ hàng?</p>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-delete" type="button" class="btn btn-danger">Xác nhận</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Event xóa-->
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+        var idDelete;
+        var idRestore;
+        var restoreForm = document.getElementById('restore-product-form');
+
+        var deleteForm = document.getElementById('restore-product-form');
+        var btnDelete = document.getElementById('btn-delete');
+        var btnRestore = document.getElementById('btn-restore');
+
+        
+
+//
+        $('#exampleModalRestore').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) 
+        idRestore = button.data('id')
+
+        });
+
+        $('#exampleModalDelete').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) 
+        idDelete = button.data('id')
+        });
+
+
+
+        btnRestore.onclick = function(){
+            restoreForm.action = '/products/'+idRestore + '/updateCart?_method=PUT';
+            restoreForm.submit(); 
+
+        }
+        btnDelete.onclick = function(){
+            deleteForm.action = '/products/'+idDelete + '/deleteCart?_method=DELETE';
+            deleteForm.submit();
+        }
+    })
+
+
+</script>
+</body>

@@ -32,6 +32,8 @@ const UserController = {
             //Generate refresh token
             const refreshToken = AuthController.generateRefreshToken(user);
             refreshTokens.push(refreshToken);
+            //STORE USER to LocalStorage
+
             //STORE REFRESH TOKEN IN COOKIE
             res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
@@ -111,15 +113,15 @@ const UserController = {
 
     cart(req,res,next){
 
-
-            ProductsInCart.find({username : req.user.username})
-                .then((carts)=>{
+                Promise.all([ProductsInCart.find({username : req.user.username}),Users.findOne({username : req.user.username})])
+                .then(([carts,users])=>{
                     res.render('users/cart',{
+                        users : mongooseToObject(users),
                         carts : multipleMongooseToObject(carts),
+    
                     }); 
                 })
-                .catch(next);
-
+                .catch(next); 
     
     },
     orderCheckout(req,res,next){
