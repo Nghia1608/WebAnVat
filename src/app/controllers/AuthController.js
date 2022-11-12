@@ -40,19 +40,14 @@ confirmLogin :async(req,res,next)=>{     //check dang nhap
         sameSite: "strict",
         });
         const { password, ...others } = user._doc;
-        // if(user.quyen=='Admin'){
-        //     res.redirect('/admin');        
+        if(user.quyen=='Admin'){
+            res.redirect('/admin');        
 
-        // }else{
-        //     res.redirect('/');        
+        }else{
+            res.redirect('/');        
 
-        // }
+        }
         
-        Users.findOne({username : req.body.username})         
-        .then(users=>res.redirect('/'),
-            {
-            }) 
-        .catch(next);  
     }
     }
     

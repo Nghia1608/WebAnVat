@@ -1,8 +1,9 @@
 const Products = require('../models/Products');
 const ProductsCategory = require('../models/ProductsCategory');
+const Users = require('../models/Users');
 
-const {multipleMongooseToObject}= require('../../util/mongoose');
 
+const {mongooseToObject, multipleMongooseToObject}= require('../../util/mongoose');
 const SiteController={
 
     // [Get] /
@@ -16,8 +17,8 @@ const SiteController={
             })
             .catch(next)
 
-
     },
+
 
     products(req,res,next){
 
