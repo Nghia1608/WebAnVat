@@ -238,6 +238,7 @@
             }
               if(tempTongTienGioHang == 0){
               document.getElementById("btnDatHang").disabled = true;
+          document.getElementById("formCheckout").hidden = true;
 
               } 
             document.getElementById("tongTienGioHangText").innerHTML = "Tổng tiền :    " + tempTongTienGioHang.toLocaleString()   +"  VNĐ";
@@ -280,6 +281,9 @@
 
 <script>
   document.getElementById("btnDatHang").onclick = function(){
+   temp =  document.getElementById("hoTen").value
+               localStorage.setItem("username",temp)
+
     document.getElementById("formCheckout").hidden = false;
   }
   </script>

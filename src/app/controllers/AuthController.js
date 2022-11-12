@@ -2,6 +2,7 @@ const Users = require('../models/Users');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { json } = require('express');
+const {mongooseToObject, multipleMongooseToObject}= require('../../util/mongoose');
 
 let refreshTokens = [];
 
@@ -13,8 +14,10 @@ const AuthController = {
 //POST
 confirmLogin :async(req,res,next)=>{     //check dang nhap
     const user = await Users.findOne({ username: req.body.username });
-
-    const validPassword = await bcrypt.compare(
+    if(!user){
+      res.redirect('/auth/login');
+    }else{
+      const validPassword = await bcrypt.compare(
         req.body.password,
         user.password
     );
@@ -37,14 +40,22 @@ confirmLogin :async(req,res,next)=>{     //check dang nhap
         sameSite: "strict",
         });
         const { password, ...others } = user._doc;
-        if(req.body.quyen=='Admin'){
-            res.redirect('/admin');        
+        // if(user.quyen=='Admin'){
+        //     res.redirect('/admin');        
 
-        }else{
-            res.redirect('/');        
+        // }else{
+        //     res.redirect('/');        
 
-        }
+        // }
+        
+        Users.findOne({username : req.body.username})         
+        .then(users=>res.redirect('/'),
+            {
+            }) 
+        .catch(next);  
     }
+    }
+    
     },                  
 // GET 
 register :async(req,res,next)=>{
