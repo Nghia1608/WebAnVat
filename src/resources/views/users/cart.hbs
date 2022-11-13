@@ -91,6 +91,7 @@
 
 	</header>
 
+    <form id="restore-product-form"name="restore-product-form" method="POST">
 	
 	<div class="container single_product_container">
 
@@ -116,7 +117,6 @@
             </tr>
         </thead>
         <tbody>
-    <form id="restore-product-form"name="restore-product-form" method="POST">
 
             {{#each carts}}
 
@@ -128,7 +128,10 @@
                   </div>
                 </td>
             <th scope="row">{{sum @index 1}}</th>
-            <td id="Test">{{this.tenSanPham}}</td>
+            <td>
+              <h5>{{this.tenSanPham}}  </h5>
+              
+              </td>
             <td>
             <input type="number" min="1" max="20"class="form-control" value="{{this.soLuong}}" id="soLuong{{this.slug}}" name="soLuong{{this._id}}"placeholder="Chọn số lượng mua">
             <td >
@@ -146,6 +149,8 @@
             </td>
                         <input type="text" class="form-control" value="{{this.tongTien}}" id="tongTien{{this.slug}}" name="tongTien{{this._id}}" hidden>
                         <input type="text" class="form-control" value="" id="tongTienGioHang" name="tongTienGioHang" hidden>
+                        <input type="text" class="form-control" value="{{this.tenSanPham}}" id="tenSP{{this.slug}}" name="tenSP{{this._id}}" hidden>
+
 
             </tr>
 <script >
@@ -156,6 +161,7 @@
      tongGiaTien1{{this.slug}} = "tongGiaTien"+tempID
      tongTien1{{this.slug}} = "tongTien"+tempID
      soLuong1{{this.slug}} = "soLuong"+tempID
+     tenSanPham{{this.slug}} ="tenSP"+tempID
 //  
   var number = {{this.tongTien}}
     var giaTienSanPham{{this.slug}} = (document.getElementById(tongTien1{{this.slug}}).value / document.getElementById(soLuong1{{this.slug}}).value)
@@ -175,7 +181,7 @@
         var checkboxAll = $('#checkboxAll');
         var productsItemCheckbox = $(`input[name="checkboxItem"]`)
         document.getElementById("btnDatHang").disabled = true;
-
+        var itemForListSP = "";
             //checkbox all change
           checkboxAll.change(function(req,res,next){
           var isCheckedAll = $(this).prop('checked');
@@ -193,7 +199,10 @@
 
             document.getElementById("tongSanPham").innerHTML = "Tổng sản phẩm : " + tongSanPhamDaChon1;
             document.getElementById("tongTienGioHangText").innerHTML = "Tổng tiền :    " + tempTongTienGioHang1.toLocaleString()   +"  VNĐ";
-
+            document.getElementById("tongTienGioHang").value = tempTongTienGioHang1;
+            //add tab HTML vao itemForListSP
+           //itemForListSP + document.getElementById(tenSanPham{{this.slug}}).value
+            console.log(document.getElementById(tenSanPham{{this.slug}}).value)
           }
           else{
             document.getElementById("tongTienGioHangText").innerHTML = "Tổng tiền : 0 VNĐ";
@@ -203,6 +212,8 @@
             tempTongTienGioHang = 0;
             tongSanPhamDaChon1 = 0;
             tongSanPhamDaChon = 0;
+            document.getElementById("tongTienGioHang").value = tempTongTienGioHang1;
+
           document.getElementById("btnDatHang").disabled = true;
           document.getElementById("formCheckout").hidden = true;
 
@@ -223,17 +234,20 @@
           tongSanPhamDaChon1 = 0;
 
           checkboxItemID = document.getElementById("checkbox"+tempID).checked;
+
             if(checkboxItemID){
               tempTongTienGioHang = tempTongTienGioHang + parseInt(number);
             tongSanPhamDaChon = tongSanPhamDaChon + 1;
 
             document.getElementById("btnDatHang").disabled = false;
 
+            document.getElementById("tongTienGioHang").value = tempTongTienGioHang;
             
             }
             else{
               tempTongTienGioHang = tempTongTienGioHang - parseInt(number);
               tongSanPhamDaChon = tongSanPhamDaChon - 1;
+            document.getElementById("tongTienGioHang").value = tempTongTienGioHang;
 
             }
               if(tempTongTienGioHang == 0){
@@ -243,15 +257,15 @@
               } 
             document.getElementById("tongTienGioHangText").innerHTML = "Tổng tiền :    " + tempTongTienGioHang.toLocaleString()   +"  VNĐ";
             document.getElementById("tongSanPham").innerHTML = "Tổng sản phẩm : " + tongSanPhamDaChon;
+            document.getElementById("tongTienGioHang").value = tempTongTienGioHang;
+
 
           })
           })
-
 
   </script>
 
             {{/each}}
-    </form>
 
         </tbody>
         
@@ -313,15 +327,49 @@
             <input type="text" id="note" name="note" placeholder="Ghi chú nếu có">
           </div>
         </div>
-<button id="btnDatHang" type="button" class="btn btn-success" >Xác nhận đặt hàng</button>
+<button id="btnDatHang" type="submit" class="btn btn-success" >Xác nhận đặt hàng</button>
 
     </div>
-    <script>
-      </script>
+
+{{!-- Form Check List Products --}}
+  </div>
+  <div class="col-25">
+    <div class="container">
+      <div class="row">
+        <div class="col-50">
+          <h4>Sản phẩm đã chọn
+          <span class="price" style="color:black">
+          <i class="fa fa-shopping-cart">
+            <h5 class="tongTienGioHang"id="tongSanPham" name="tongSanPham">4</h5>  
+          </i>
+            
+          </span>
+        </h4>
+        </div>
+      </div>
+      <div class="row">
+        <div id="listSP" class="col-50">
+
+      <p><a href="#">Product 1</a> <span class="price">$15</span></p>
+      <p><a href="#">Product 2</a> <span class="price">$5</span></p>
+      <p><a href="#">Product 3</a> <span class="price">$8</span></p>
+      <p><a href="#">Product 4</a> <span class="price">$2</span></p>
+      <hr>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-50">
+            <h5 class="tongTienGioHangText"id="tongTienGioHangText" name="tongTienGioHangText"style="color:black" > Tổng tiền :  </h5>
+
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>
 
+    </form>
 
 <!--Form Xóa-->
 

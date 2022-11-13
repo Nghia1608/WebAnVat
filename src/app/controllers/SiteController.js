@@ -8,15 +8,13 @@ const SiteController={
 
     // [Get] /
     index(req,res,next){
-
-        Products.find({})
+            Products.find({})
             .then(products =>{
                 res.render('home',{
                     products : multipleMongooseToObject(products)
                 });
             })
             .catch(next)
-
     },
 
 

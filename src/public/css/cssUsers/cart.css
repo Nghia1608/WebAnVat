@@ -86,7 +86,8 @@
     font-size: 14px;
   }
   .btn:hover {
-    background-color: #45a049;
+    background-color: orange
+    ;
   }
   
   span.price {

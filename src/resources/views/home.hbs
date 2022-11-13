@@ -67,7 +67,7 @@
 								<!-- Currency / Language / My Account -->
 								<li class="account">
 									<a id="username"href="#">
-										Tài khoản
+										Tài khoản {{users.userName}}
 										<i class="fa fa-angle-down"></i>
 									</a>
 									<ul class="account_selection">
@@ -82,10 +82,11 @@
 
 										<script>
 											document.getElementById("login").hidden =false;
-
-											if(localStorage.getItem("username")){
+											if(
+												sessionStorage.getItem("username")
+											){
 												document.getElementById("username").innerHTML ="Xin chào  " + 
-													localStorage.getItem("username");
+													sessionStorage.getItem("username");
 												document.getElementById("changePassword").hidden =false;
 												document.getElementById("login").hidden =true;
 

@@ -18,31 +18,10 @@ const ProductController={
                     products : mongooseToObject(products),
 
                 }); 
+
             })
             .catch(next); 
-
-            // Promise.all([Products.findOne({}),ProductsDetails.findOne({})])
-            // .then(([products,productsdetails])=>{
-            //     res.render('products/show',{
-            //         products,productsdetails : mongooseToObject(products,productsdetails),
-
-
-            //     }); 
-            // })
-            // .catch(next); 
     },
-    // caterogy(req,res,next){
-    //         Products.find({maLoai : req.params.id},req.body)
-    //                     .then(products =>{
-    //                         res.render('products/category',{
-    //                             products : multipleMongooseToObject(products),
-    //                         });
-    //                     })
-    //                     .catch(next)
-
-
-    // },
-    // [Get] src/routes/product/create  goi form Create
 
     create(req,res,next){
         res.render('products/create');
@@ -97,35 +76,27 @@ const ProductController={
 
     //them san pham vao gio hang
     //POST
-    storeProductToCart(req,res,next){
-
-        // san pham da co 
-
-        ProductsInCart.find({username : req.user.username })
+    storeProductToCart(req,res,next){       //chưa ổn
+        //show sp theo id user va id sp
+        Promise.all([ProductsInCart.findOne({username : req.user.username,idSanPham : req.body.idSP})])
         .then(()=>{
             const formData = req.body;
             const product = new ProductsInCart(formData); //models/products
-            // tt ca nhan
             product.username = req.user.username;
             product.hoTen = req.user.username;
             product.sdt = req.user.username;
-    
+            product.idSanPham = req.body.idSP;
             product.save()
                 .then(()=>{
-                    res.redirect('/');
+                    res.redirect('/users/cart');
                 })
-                .catch(error=>{
-                })
+                .catch(next);
         })
-        
-        // san pham da co => update so luong
+        .catch(next);                  
+
+
     },
-    updateSoLuong(req,res,next){
-        var newValues = { $set: {tongTien: req.body.tongTien, soLuong: req.body.soLuong } };
-        Products.updateOne({_id : req.params.id},newValues)
-            .then(()=>res.redirect('/admin/storedProducts'))
-            .catch(next);
-    },
+
     updateCart(req,res,next){
         //so luong va tien theo ID
          var tempSoLuong = "soLuong"+req.params.id;  //soLuong6367847be736a0b3f32b2d95
@@ -139,8 +110,7 @@ const ProductController={
         ProductsInCart.updateOne({_id : req.params.id},newValues)
             .then(()=>{
                 res.redirect('/users/cart');
-                //res.send(typeof SoLuong);
-                //.redirect('/users/cart')
+
                 })
             .catch(next);
     },
