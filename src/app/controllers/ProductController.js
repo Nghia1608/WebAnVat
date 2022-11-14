@@ -78,36 +78,45 @@ const ProductController={
     //them san pham vao gio hang
     //POST
     storeProductToCart(req,res,next){       //chưa ổn
-        //show sp theo id user va id sp
-        // Promise.all([ProductsInCart.findOne({username : req.user.username,idSanPham : req.body.idSP})])
-        // .then(()=>{
-        //     const formData = req.body;
-        //     const product = new ProductsInCart(formData); //models/products
-        //     product.username = req.user.username;
-        //     product.hoTen = req.user.username;
-        //     product.sdt = req.user.username;
-        //     product.idSanPham = req.body.idSP;
-        //     product.save()
-        //         .then(()=>{
-        //             res.redirect('/users/cart');
-        //         })
-        //         .catch(next);
-        // })
-        // .catch(next);                  
-
+        //show sp theo id user va id sp               
         Promise.all([ProductsInCart.findOne({idSanPham : req.body.idSP,username : req.user.username})])
-            .then(([carts,products])=>{
+            .then(([carts])=>{
                     if(carts){
-                        // res.render('products/show',{
-                        //     carts : mongooseToObject(carts),
-                        //     products : multipleMongooseToObject(products),
-                        // }); 
-                        res.status(500).json("da co roi");
+                        
+                        //SP đã có trong giỏ =>cộng dồn số lượng
+                        //Số lượng đã có
+                        let soLuongCurrent = carts.soLuong;
+                        let tongTienCurrent = carts.tongTien;
+
+                        //so lượng cộng thêm
+                        let soLuongAddIn = req.body.soLuong;
+                        let tongTienAddIn = req.body.tongTien;
+                        // tổng sau cộng
+                        soLuongToTal =parseInt(soLuongCurrent) + parseInt(soLuongAddIn);
+                        tongTienToTal = parseInt(tongTienCurrent) + parseInt(tongTienAddIn);
+                        //
+                        newValues = ({ $set: {soLuong :soLuongToTal, tongTien : tongTienToTal } });
+                        
+                        ProductsInCart.updateOne({_id : carts._id},newValues)
+                        .then(()=>{
+                            res.redirect('/users/cart');
+            
+                            })
+                        .catch(next);
                     }else{
-                        res.send("SP nay chua co trong gio hang nha")
-
+                        //SP chưa có trong giỏ =>thêm mới
+                        const formData = req.body;
+                        const product = new ProductsInCart(formData); //models/products
+                        product.username = req.user.username;
+                        product.hoTen = req.user.username;
+                        product.sdt = req.user.username;
+                        product.idSanPham = req.body.idSP;
+                        product.save()
+                            .then(()=>{
+                                res.redirect('/users/cart');
+                            })
+                            .catch(next);
                     }
-
             })
             .catch((next)=>{
                 res.send(next)
