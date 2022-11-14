@@ -1,6 +1,7 @@
 const Products = require('../models/Products');
 const ProductsCategory = require('../models/ProductsCategory');
 const ProductsInCart = require('../models/UsersCart');
+const Users = require('../models/Users');
 
 const {mongooseToObject,multipleMongooseToObject}= require('../../util/mongoose');
 const UsersCart = require('../models/UsersCart');
@@ -14,13 +15,13 @@ const ProductController={
     show(req,res,next){
         Products.findOne({slug : req.params.slug})
             .then((products)=>{
-                res.render('products/show',{
-                    products : mongooseToObject(products),
-
+                    res.render('products/show',{
+                        products : mongooseToObject(products),
                 }); 
-
             })
-            .catch(next); 
+            .catch((next)=>{
+                res.send(next)
+            }); 
     },
 
     create(req,res,next){
@@ -78,23 +79,39 @@ const ProductController={
     //POST
     storeProductToCart(req,res,next){       //chưa ổn
         //show sp theo id user va id sp
-        Promise.all([ProductsInCart.findOne({username : req.user.username,idSanPham : req.body.idSP})])
-        .then(()=>{
-            const formData = req.body;
-            const product = new ProductsInCart(formData); //models/products
-            product.username = req.user.username;
-            product.hoTen = req.user.username;
-            product.sdt = req.user.username;
-            product.idSanPham = req.body.idSP;
-            product.save()
-                .then(()=>{
-                    res.redirect('/users/cart');
-                })
-                .catch(next);
-        })
-        .catch(next);                  
+        // Promise.all([ProductsInCart.findOne({username : req.user.username,idSanPham : req.body.idSP})])
+        // .then(()=>{
+        //     const formData = req.body;
+        //     const product = new ProductsInCart(formData); //models/products
+        //     product.username = req.user.username;
+        //     product.hoTen = req.user.username;
+        //     product.sdt = req.user.username;
+        //     product.idSanPham = req.body.idSP;
+        //     product.save()
+        //         .then(()=>{
+        //             res.redirect('/users/cart');
+        //         })
+        //         .catch(next);
+        // })
+        // .catch(next);                  
 
+        Promise.all([ProductsInCart.findOne({idSanPham : req.body.idSP,username : req.user.username})])
+            .then(([carts,products])=>{
+                    if(carts){
+                        // res.render('products/show',{
+                        //     carts : mongooseToObject(carts),
+                        //     products : multipleMongooseToObject(products),
+                        // }); 
+                        res.status(500).json("da co roi");
+                    }else{
+                        res.send("SP nay chua co trong gio hang nha")
 
+                    }
+
+            })
+            .catch((next)=>{
+                res.send(next)
+            }); 
     },
 
     updateCart(req,res,next){
