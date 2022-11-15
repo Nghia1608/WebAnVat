@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Single Product</title>
+<title>Chi tiết sản phẩm</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Colo Shop Template">
@@ -15,6 +15,10 @@
 <link rel="stylesheet" type="text/css" href="/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
 <link rel="stylesheet" type="text/css" href="/styles/single_styles.css">
 <link rel="stylesheet" type="text/css" href="/styles/single_responsive.css">
+<link rel="stylesheet" type="text/css" href="/css/cssUsers/cart.css">
+
+</head>
+
 </head>
 
 <body>
@@ -23,7 +27,7 @@
 
 	<!-- Header -->
 
-<header class="header trans_300">
+  <header class="header trans_300">
 
 		<!-- Top Navigation -->
 
@@ -31,7 +35,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-6">
-						<div class="top_nav_left">Miễn phí đơn hàng trên 300.000 VNĐ và nhiều ưu đãi</div>
+						<div class="top_nav_left">Miễn phí giao hàng cho đơn hàng trên 300.000 VNĐ và nhiều ưu đãi</div>
 					</div>
 					<div class="col-md-6 text-right">
 						<div class="top_nav_right">
@@ -89,99 +93,131 @@
 
 	
 	<div class="container single_product_container">
-		<div class="row">
-			<div class="col">
+<div class="mt-4">
+  <h3 class="free_delivery d-flex flex-row align-items-center justify-content-center"> 
+    Chi tiết sản phẩm {{products.tenSanPham}}
+  </h3>
 
-				<!-- Breadcrumbs -->
+    <a href="/products/createDetail">Thêm chi tiết sản phẩm {{products.tenSanPham}}</a>
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Size</th>
+            <th scope="col">Số lượng còn</th>
+            <th scope="col">Giá tiền bán ra</th>
+            <th scope="col" colspan="2">Tình trạng</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each productsdetails}}
+            <tr>
+            <th scope="row">{{sum @index 1}}</th>
+            <td>
+                <h5 class="size"id="size{{this.giaTienBanRa}}" name="size{{this.giaTienBanRa}}" >{{this.size}}</h5>
+            </td>
+            <td>
+                <h5 class="soLuongCon"id="soLuongCon{{this.giaTienBanRa}}" name="size{{this.giaTienBanRa}}" >{{this.soLuongCon}}</h5>
+                </td>
+            <td>
+            <h5 class="giaTienBanRa"id="giaTienBanRa{{this.giaTienBanRa}}" name="giaTienBanRa{{this.giaTienBanRa}}" >{{this.giaTienBanRa}}</h5>
+            </td>
+            <td>
+                <a href="/products/{{this._id}}/edit" class="btnUpdate btn-link">Sửa</a>
+                <a id="btn-select"href="" class="btnDelete btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModal">Xóa</a>
 
-				<div class="breadcrumbs d-flex flex-row align-items-center">
+            </td>
+            </tr>
+            <input type="text" class="form-control" value="{{this.giaTienBanRa}}" id="giaTienBanRaSP{{this.giaTienBanRa}}" name="giaTienBanRa{{this.giaTienBanRa}}" hidden>
 
-				</div>
+            <script>
+                //size
+                    var sizeHienThi{{this.giaTienBanRa}} = "size"+{{this.giaTienBanRa}}
+                    document.getElementById(sizeHienThi{{this.giaTienBanRa}}).innerHTML = ({{this.size}}).toLocaleString() + "  g";     
+                //soluong
+                    var soLuongConHienThi{{this.giaTienBanRa}} = "soLuongCon"+{{this.giaTienBanRa}}
+                    document.getElementById(soLuongConHienThi{{this.giaTienBanRa}}).innerHTML = ({{this.soLuongCon}}).toLocaleString();   
+                //giatien
+            var giaTienBanRaHienThi{{this.giaTienBanRa}} = "giaTienBanRa"+{{this.giaTienBanRa}}
+            document.getElementById(giaTienBanRaHienThi{{this.giaTienBanRa}}).innerHTML = ({{this.giaTienBanRa}}).toLocaleString() + "  VND";     
+                </script>
 
-			</div>
-		</div>
-        <form method="POST" action="/products/{{products._id}}?_method=POST">
+            {{/each}}
 
-		<div class="row">
+        </tbody>
 
-			<div class="col-lg-7">
-				<div class="single_product_pics">
-					<div class="row">
-						<div class="col-lg-3 thumbnails_col order-lg-1 order-2">
-							<div class="single_product_thumbnails">
-								<ul>
-									<li><img src="{{products.image}}" alt="" data-image="{{products.image}}"></li>
-									<li class="active"><img src="{{products.image}}" alt="" data-image="{{products.image}}"></li>
-									<li><img src="{{products.image}}" alt="" data-image="{{products.image}}"></li>
-								</ul>
-							</div>
-						</div>
-						<div class="col-lg-9 image_col order-lg-2 order-1">
-							<div class="single_product_image">
-								<div class="single_product_image_background" style="background-image:url({{products.image}})"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-5">
-				<div class="product_details">
-					<div class="product_details_title">
-						<h2>{{products.tenSanPham}}</h2>
-					</div>
-					<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
-						<span class="ti-truck"></span><span>Giao hàng TP.HCM</span>
-					</div>
+    </table>
+</div>
+<!--Confirm Delete Button -->
 
-					<div id="product_price" class="product_price">{{products.giaTien}}</div>
-					<ul class="star_rating">
-						<li><i class="fa fa-star" aria-hidden="true"></i></li>
-						<li><i class="fa fa-star" aria-hidden="true"></i></li>
-						<li><i class="fa fa-star" aria-hidden="true"></i></li>
-						<li><i class="fa fa-star" aria-hidden="true"></i></li>
-						<li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-					</ul>
-					<br>
-					<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
-						<span ></span><span>Chọn size</span>
-					</div>
-					<ul class="star_rating">
-						<button type="button" class="btn btn-light">Light</button>
-						<button type="button" class="btn btn-light">Light2</button>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xác nhận xóa</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc muốn xóa sản phẩm ?</p>
+      </div>
+      <div class="modal-footer">
+        <a id="count-down">Wait for Available</a>
+        <button id="btn-delete" type="button" class="btnDelete1 btn-link">Xác nhận xóa</button>
+        <button type="button" class="btnCancel btn-link" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-					</ul>
+<!--Form Xóa-->
+    <form name="delete-product-form" method="POST">
 
-					<div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
-{{!-- 
-					<label for="soLuong">Chọn size</label>
-					<button type="button" class="btn btn-light">Light</button>
-					
-					<label for="soLuong">Số lượng khả dụng</label>
-					<div id="product_price" class="product_price">SLKD</div> --}}
+<!--Disable Delete Button trong 10s-->
+<script>
+      var btnselect = document.getElementById('btn-select');
+      var countdown = document.getElementById('count-down');
+       btnselect.onclick =  function() {
+            document.getElementById("btn-delete").disabled = true;
+            setTimeout(function() {
+                document.getElementById("btn-delete").disabled = false;
+            }, 10000);
+            document.getElementById("count-down").hidden = false;
+            setTimeout(function() {
+                document.getElementById("count-down").hidden = true;
+            }, 10000);
+        }
+        
+</script>
 
-                    <label for="soLuong">Chọn số lượng</label>
-                    <input type="number" class="form-control" value="1" min="1" max="20"id="soLuong" name="soLuong"placeholder="Chọn số lượng mua">
 
-					</div>
+<!--Event xóa-->
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+        var id;
+        var deleteForm = document.forms['delete-product-form'];
+        var btnDelete = document.getElementById('btn-delete');
+        $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) 
+        id = button.data('id')
+        });
+        btnDelete.onclick = function(){
+            deleteForm.action = '/products/'+id + '?_method=DELETE';
+            deleteForm.submit();
+        }
+    })
+</script>
+    
+  </div>
 
-				</div>
-                <br>
-            
-                <h3 >Tổng tiền :  <h2 id="tongGiaTien" name="tongGiaTien"> </h2> </h3>
 
-            {{!-- HIDDEn --}}
-            <input type="text" class="form-control" value="" id="tongTien" name="tongTien" hidden>
-            <input type="text" class="form-control" value="{{products._id}}" id="idSP" name="idSP" hidden>
-            <input type="text" class="form-control" value="{{products.image}}" id="image" name="image" hidden>
-            <input type="text" class="form-control" value="{{products.tenSanPham}}" id="tenSanPham" name="tenSanPham" hidden>
+{{!-- Tong tien ne --}}
+    
 
-                <button id="btn-add" type="submit" class="red_button add_to_cart_button">Thêm vào giỏ hàng</button>
 
-			</div>
-		</div>
-        </form>
 
-	</div>
+
 
 
 
@@ -270,34 +306,8 @@
 		</div>
 	</footer>
 
-</div>
 
-<script>
-    number = {{products.giaTien}};
-    //temp = {{products.image}};
-    temp1 = "kho-bo"
-    temp2 = "tongGiaTien"+temp1
-    document.getElementById("tongGiaTien").innerHTML = number.toLocaleString() + "  VND";
-    document.getElementById("product_price").innerHTML = number.toLocaleString() + "  VND";
-
-    document.getElementById("tongTien").value = {{products.giaTien}};
-    
-    document.getElementById("soLuong").onchange= function(){
-
-
-        soLuongDaChon = document.getElementById("soLuong").value 
-        number2 = {{products.giaTien}}
-        document.getElementById("tongGiaTien").innerHTML =({{products.giaTien}}*soLuongDaChon).toLocaleString() +"  VND";
-//
-        document.getElementById("tongTien").value = ({{products.giaTien}}*soLuongDaChon);
-        console.log("tong tien ne"+document.getElementById("tongTien").value)
-    }
-</script>
-
-<script>
-    //update so luong san pham
-
-</script>
+	</div>
 
 <script src="/js/jquery-3.2.1.min.js"></script>
 <script src="/styles/bootstrap4/popper.js"></script>
@@ -308,5 +318,3 @@
 <script src="/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="/js/single_custom.js"></script>
 </body>
-
-</html>

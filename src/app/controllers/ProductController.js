@@ -1,4 +1,6 @@
 const Products = require('../models/Products');
+const ProductsDetails = require('../models/ProductsDetail');
+
 const ProductsCategory = require('../models/ProductsCategory');
 const ProductsInCart = require('../models/UsersCart');
 const Users = require('../models/Users');
@@ -31,12 +33,48 @@ const ProductController={
 
     store(req,res,next){
         const formData = req.body;
-        const product = new Products(formData); //models/products
+        const product = new Products(formData); 
+        const productDetail = new ProductsDetails(formData);
+        //save values
+        product.tenSanPham = req.body.tenSanPham;
+        product.image = req.body.image;
+        product.moTa = req.body.moTa;
+        product.maLoai  = req.body.maLoai;
+        product.tinhTrang = req.body.tinhTrang;
+
+        //
         product.save()
             .then(()=>{
                 res.redirect('/admin/storedProducts');
                 alert('Thêm sản phẩm thành công');
-                window.location = '/admin/storedProducts';
+            })
+            .catch(error=>{
+            })
+
+        // const formData = req.body;
+        // const product = new ProductsInCart(formData); //models/products
+        // product.username = req.user.username;
+        // product.hoTen = req.user.username;
+        // product.sdt = req.user.username;
+        // product.idSanPham = req.body.idSP;
+        // product.save()
+        //     .then(()=>{
+        //         res.redirect('/users/cart');
+        //     })
+        //     .catch(next);
+    },
+    storeProductDetails(req,res,next){
+        const formData = req.body;
+        const productDetail = new ProductsDetails(formData);
+
+        // productDetail.giaTienBanRa = req.body.giaTienBanRa;
+        // productDetail.tinhTrang = req.body.tinhTrang;
+        // productDetail.soLuongCon = req.body.soLuongCon;
+
+        productDetail.save()
+            .then(()=>{
+                res.redirect('back');
+                alert('Thêm sản phẩm thành công');
             })
             .catch(error=>{
             })
@@ -49,6 +87,19 @@ const ProductController={
 
                 })) 
             .catch(next);                    
+    },
+    detail(req,res,next){
+        Promise.all([ProductsDetails.find({idProduct : req.params.id}),Products.findOne({_id : req.params.id})]) 
+                .then(([productsdetails,products])=>{
+                        res.render('products/detail',{
+                            products : mongooseToObject(products),
+                            productsdetails : multipleMongooseToObject(productsdetails),
+                    }); 
+                })
+                .catch((next)=>{
+                    res.send(next)
+                }); 
+
     },
     //[PUT]
     update(req,res,next){

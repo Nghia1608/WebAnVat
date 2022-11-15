@@ -6,6 +6,9 @@ const ProductDetail = new Schema({
     soLuongCon :{type :String ,maxLength : 10},
     tinhTrang :{type :String ,maxLength : 10},
     idProduct : {type :String ,maxLength : 100},
+    size : {type :String ,maxLength : 10},
+  },{
+    timestamps : true,
   });
 
 module.exports = mongoose.model('ProductsDetail',ProductDetail);

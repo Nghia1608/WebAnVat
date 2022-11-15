@@ -15,6 +15,8 @@ router.get('/create',verifyTokenAndAdmin,productsController.create);
 router.post('/store',verifyTokenAndAdmin,productsController.store);
 
 router.get('/:id/edit',verifyTokenAndAdmin,productsController.edit);
+router.get('/:id/detail',verifyTokenAndAdmin,productsController.detail);
+
 router.put('/:id',verifyTokenAndAdmin,productsController.update);
 //update so luong san pham trong kho khi đặt hàng
 
