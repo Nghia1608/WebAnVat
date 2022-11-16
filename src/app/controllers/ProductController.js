@@ -104,7 +104,7 @@ const ProductController={
     //[PUT]
     update(req,res,next){
         Products.updateOne({_id : req.params.id},req.body)
-            .then(()=>res.redirect('/admin/storedProducts'))
+            .then(()=>res.redirect('back'))
             .catch(next);
     },
     //[SOFT DELETE]

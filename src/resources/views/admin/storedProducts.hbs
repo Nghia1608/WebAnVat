@@ -103,7 +103,7 @@
             <tr>
             <th scope="col">STT</th>
             <th scope="col">Tên sản phẩm</th>
-            <th scope="col">Mô tả</th>
+            <th scope="col">Phân loại</th>
             <th scope="col" colspan="2">Tình trạng</th>
             </tr>
         </thead>
@@ -112,7 +112,7 @@
             <tr>
             <th scope="row">{{sum @index 1}}</th>
             <td>{{this.tenSanPham}}</td>
-            <td>{{this.moTa}}</td>
+            <td>{{this.maLoai}}</td>
             <td>{{this.tinhTrang}}</td>
             <td>
                 <a href="/products/{{this._id}}/detail" class="btnUpdate btn-link">Chi tiết</a>
