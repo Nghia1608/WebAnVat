@@ -12,7 +12,11 @@ const {
 
 
 router.get('/create',verifyTokenAndAdmin,productsController.create);
+router.get('/:id/createDetail',verifyTokenAndAdmin,productsController.createDetail);
+
 router.post('/store',verifyTokenAndAdmin,productsController.store);
+router.post('/storeDetail',verifyTokenAndAdmin,productsController.storeDetail);
+
 
 router.get('/:id/edit',verifyTokenAndAdmin,productsController.edit);
 router.get('/:id/detail',verifyTokenAndAdmin,productsController.detail);

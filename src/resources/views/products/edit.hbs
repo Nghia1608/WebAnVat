@@ -160,12 +160,12 @@
 					</div>
 					<div class="form-group">
 						<h3 for="phanLoai">Phân loại</h3>
-        				<input type="combobox" class="form-control" value="{{products.tinhTrang}}" id="phanLoai"name="phanLoai"placeholder="Trình trạng sản phẩm" hidden>
+        				<input type="combobox" class="form-control" value="{{products.maLoai}}" id="phanLoai"name="phanLoai"placeholder="Trình trạng sản phẩm" hidden>
 
 						<select id="selectPhanLoai" name="selectPhanLoai">
-						<option id="optPhanLoai0" value="Còn hàng">Đồ khô</option>
-						<option id="optPhanLoai1" value="Tạm hết hàng">Đồ</option>
-						<option id="optPhanLoai2" value="Ngừng kinh doanh">Ngừng kinh doanh</option>
+						<option id="optPhanLoai0" value="kho">Đồ khô</option>
+						<option id="optPhanLoai1" value="comChay">Cơm cháy</option>
+						<option id="optPhanLoai2" value="khac">Khác</option>
 						</select>
 					</div>
 					<div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
@@ -174,10 +174,21 @@
 						var lengthSelect = document.getElementById("selectTinhTrang").length;
 						var temp = document.getElementById("tinhTrang").value;
 						for(var i=0;i<lengthSelect;i++){
-							var idOpt = "opt"+i;
+							var idOpt = "optTinhTrang"+i;
 							var valueOpt = document.getElementById(idOpt).value;
 							if( valueOpt ==temp){
 						document.getElementById("selectTinhTrang").selectedIndex=i;
+
+							}
+						}
+
+						var lengthSelect1 = document.getElementById("selectPhanLoai").length;
+						var temp = document.getElementById("phanLoai").value;
+						for(var i=0;i<lengthSelect1;i++){
+							var idOpt = "optPhanLoai"+i;
+							var valueOpt = document.getElementById(idOpt).value;
+							if( valueOpt ==temp){
+						document.getElementById("selectPhanLoai").selectedIndex=i;
 
 							}
 						}

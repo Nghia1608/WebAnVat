@@ -200,9 +200,9 @@
 					<div class="new_arrivals_sorting">
 						<ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
 							<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">Tất cả</li>
-							<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".women">Khô</li>
-							<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".accessories">Cơm cháy</li>
-							<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".men">Khác</li>
+							<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".kho">Khô</li>
+							<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".comChay">Cơm cháy</li>
+							<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".khac">Khác</li>
 						</ul>
 					</div>
 				</div>
@@ -217,8 +217,8 @@
 
 						<!-- Product 1 -->
         				{{#each products}}
-
-						<div class="product-item men">
+						{{!-- them value vao sau product-item de .. --}}
+						<div class="product-item {{this.maLoai}}">
 							<div class="product discount product_filter">
 								<div class="product_image">
 									<a href="/products/{{this.slug}}">
@@ -230,6 +230,8 @@
 								{{!-- <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>- 20%</span></div> --}}
 								<div class="product_info">
 									<h6 class="product_name"><a href="/products/{{this.slug}}">{{this.tenSanPham}}</a></h6>
+									<div id ="moTa" class="product_price">{{this.tinhTrang}}</div>
+
 									{{!-- <div id ="giaTien1{{this.giaTien}}" class="product_price">{{this.giaTien}}</div> --}}
 											{{!-- <script>
 												var tempID = "giaTien1"+{{this.giaTien}}

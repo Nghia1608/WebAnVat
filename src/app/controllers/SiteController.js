@@ -1,5 +1,4 @@
 const Products = require('../models/Products');
-const ProductsCategory = require('../models/ProductsCategory');
 const Users = require('../models/Users');
 
 
@@ -15,6 +14,17 @@ const SiteController={
                 });
             })
             .catch(next)
+
+            // Promise.all([ProductsCategory.find({}),Products.find({})])
+            // .then(([products,productsCategory])=>{
+            //     res.render('home',{
+            //         products : multipleMongooseToObject(products),
+
+            //     }); 
+            // })
+            // .catch(next);
+            
+
     },
 
 

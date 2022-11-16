@@ -1,7 +1,6 @@
 const Products = require('../models/Products');
 const ProductsDetails = require('../models/ProductsDetail');
 
-const ProductsCategory = require('../models/ProductsCategory');
 const ProductsInCart = require('../models/UsersCart');
 const Users = require('../models/Users');
 
@@ -29,12 +28,29 @@ const ProductController={
     create(req,res,next){
         res.render('products/create');
     },
+    createDetail(req,res,next){
+        // Products.findById(req.params.id)  
+        // .then((products)=>{
+        //         res.render('products/createDetail',{
+        //             products : mongooseToObject(products),
+        //     }); 
+        // })
+        // .catch((next)=>{
+        //     res.send(next)
+        // }); 
+        //res.render('products/createDetail');
+        Products.findById(req.params.id)         
+        .then(products=>res.render('products/createDetail',{
+                products : mongooseToObject(products)
+
+            })) 
+        .catch(next);   
+    },
     // [Post] src/routes/product/store  nhan du lieu tu form Create
 
     store(req,res,next){
         const formData = req.body;
         const product = new Products(formData); 
-        const productDetail = new ProductsDetails(formData);
         //save values
         product.tenSanPham = req.body.tenSanPham;
         product.image = req.body.image;
@@ -63,17 +79,18 @@ const ProductController={
         //     })
         //     .catch(next);
     },
-    storeProductDetails(req,res,next){
+    storeDetail(req,res,next){
         const formData = req.body;
         const productDetail = new ProductsDetails(formData);
 
-        // productDetail.giaTienBanRa = req.body.giaTienBanRa;
-        // productDetail.tinhTrang = req.body.tinhTrang;
-        // productDetail.soLuongCon = req.body.soLuongCon;
+        productDetail.giaTienBanRa = req.body.giaTienBanRa;
+        productDetail.tinhTrang = req.body.tinhTrang;
+        productDetail.soLuongCon = req.body.soLuongCon;
+        productDetail.size = req.body.size;
 
         productDetail.save()
             .then(()=>{
-                res.redirect('back');
+                res.redirect('/admin/storedProducts');
                 alert('Thêm sản phẩm thành công');
             })
             .catch(error=>{
