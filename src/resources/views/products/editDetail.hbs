@@ -1,23 +1,22 @@
 
 <div class="mt-4">
-    <h3>Thêm chi tiết sản phẩm {{products.tenSanPham}}</h3>
-    <form method="POST" action="/products/storeDetail">
+	<form method="POST" action="/products/{{productsdetails._id}}/updateDetail?_method=PUT">
+
     <div class="form-group">
         <label for="giaTienBanRa">Giá tiền bán ra</label>
-        <input type="text" class="form-control"value="" id="giaTienBanRa" name="giaTienBanRa"placeholder="Giá tiền bán ra">
+        <input type="text" class="form-control"value="{{productsdetails.giaTienBanRa}}" id="giaTienBanRa" name="giaTienBanRa"placeholder="Giá tiền bán ra">
     </div>
     <div class="form-group">
         <label for="soLuongCon">Số lượng còn</label>
-        <input type="text" class="form-control" id="soLuongCon" name="soLuongCon"placeholder="Số lượng còn lại">
+        <input type="text" class="form-control" id="soLuongCon"value="{{productsdetails.soLuongCon}}" name="soLuongCon"placeholder="Số lượng còn lại">
     </div>
         <div class="form-group">
         <label for="size">Trọng lượng (g)</label>
-        <input type="text" class="form-control" id="size"name="size"placeholder="Trọng lượng sản phẩm (g)">
+        <input type="text" class="form-control"value="{{productsdetails.size}}" id="size"name="size"placeholder="Trọng lượng sản phẩm (g)">
     </div>
     <div class="form-group">
         <h3 for="tinhTrang">Tình trạng</h3>
-        <input type="combobox" class="form-control" value="{{products.tinhTrang}}" id="tinhTrang"name="tinhTrang"placeholder="Trình trạng sản phẩm" hidden>
-        <input type="combobox" class="form-control" value="{{products._id}}" id="id"name="id"placeholder="Trình trạng sản phẩm" hidden>
+        <input type="combobox" class="form-control" value="{{productsdetails.tinhTrang}}" id="tinhTrang"name="tinhTrang"placeholder="Trình trạng sản phẩm" hidden>
 
         <select id="selectTinhTrang" name="selectTinhTrang">
         <option id="optTinhTrang0" value="Còn hàng">Còn hàng</option>
@@ -25,6 +24,8 @@
         <option id="optTinhTrang2" value="Ngừng kinh doanh">Ngừng kinh doanh</option>
         </select>
     </div>
+        <input type="combobox" class="form-control" value="{{productsdetails.idProduct}}" id="idProduct"name="idProduct"hidden>
+
     <script>
         var lengthSelect = document.getElementById("selectTinhTrang").length;
         var temp = document.getElementById("tinhTrang").value;
@@ -42,8 +43,7 @@
         }
     </script>
     <div class="form-group">
-        <input type="text" class="form-control" value="{{products._id}}" id="idProduct"name="idProduct"hidden>
     </div>
-    <button type="submit" class="btn btn-primary">Thêm mới</button>
+    <button type="submit" class="btn btn-primary">Lưu sửa đổi</button>
     </form>
 </div>

@@ -9,27 +9,32 @@ const {
     verifyTokenAndUserAuthorization,
   } = require("../app/controllers/Middleware");
 
-
-
+//product
 router.get('/create',verifyTokenAndAdmin,productsController.create);
-router.get('/:id/createDetail',verifyTokenAndAdmin,productsController.createDetail);
-
 router.post('/store',verifyTokenAndAdmin,productsController.store);
-router.post('/storeDetail',verifyTokenAndAdmin,productsController.storeDetail);
-
 
 router.get('/:id/edit',verifyTokenAndAdmin,productsController.edit);
-router.get('/:id/detail',verifyTokenAndAdmin,productsController.detail);
-
 router.put('/:id',verifyTokenAndAdmin,productsController.update);
-//update so luong san pham trong kho khi đặt hàng
 
-
+router.delete('/:id',verifyTokenAndAdmin,productsController.softDelete);
 router.patch('/:id/restore',verifyTokenAndAdmin,productsController.restore);
 router.delete('/:id/delete',verifyTokenAndAdmin,productsController.delete);
 
+//product detail
+router.get('/:id/detail',verifyTokenAndAdmin,productsController.showProductDetail);
 
-router.delete('/:id',verifyTokenAndAdmin,productsController.softDelete);
+router.get('/:id/createDetail',verifyTokenAndAdmin,productsController.createDetail);
+router.post('/storeDetail',verifyTokenAndAdmin,productsController.storeDetail);
+
+router.get('/:id/editDetail',verifyTokenAndAdmin,productsController.editDetail);
+router.put('/:id/updateDetail',verifyTokenAndAdmin,productsController.updateDetail);
+
+router.delete('/:id/deleteDetail',verifyTokenAndAdmin,productsController.deleteDetail);
+//update so luong san pham trong kho khi đặt hàng
+
+
+
+
 
 router.post('/:id',verifyToken,productsController.storeProductToCart);
 router.put('/:id/updateCart',verifyToken,productsController.updateCart);
@@ -37,7 +42,7 @@ router.delete('/:id/deleteCart',verifyToken,productsController.deleteCart);
 
 //router.get('/category/:id',productsController.caterogy);
 
-router.get('/:slug',productsController.show);
+router.get('/:id',productsController.show);
 
 
 module.exports = router;

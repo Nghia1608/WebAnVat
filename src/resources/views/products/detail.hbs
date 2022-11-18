@@ -122,8 +122,11 @@
             <td>
             <h5 class="giaTienBanRa"id="giaTienBanRa{{this.giaTienBanRa}}" name="giaTienBanRa{{this.giaTienBanRa}}" >{{this.giaTienBanRa}}</h5>
             </td>
+			<td>
+            <h5 class="tinhTrang"id="tinhTrang{{this.giaTienBanRa}}" name="giaTienBanRa{{this.giaTienBanRa}}" >{{this.tinhTrang}}</h5>
+            </td>
             <td>
-                <a href="/products/{{this._id}}/edit" class="btnUpdate btn-link">Sửa</a>
+                <a href="/products/{{this._id}}/editDetail" class="btnUpdate btn-link">Sửa</a>
                 <a id="btn-select"href="" class="btnDelete btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModal">Xóa</a>
 
             </td>
@@ -203,7 +206,8 @@
         id = button.data('id')
         });
         btnDelete.onclick = function(){
-            deleteForm.action = '/products/'+id + '?_method=DELETE';
+            deleteForm.action = '/products/'+id + '/deleteDetail?_method=DELETE';
+
             deleteForm.submit();
         }
     })
