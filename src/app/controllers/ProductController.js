@@ -171,49 +171,49 @@ const ProductController={
     //POST
     storeProductToCart(req,res,next){       
         //show sp theo id user va id sp               
-        // Promise.all([ProductsInCart.findOne({idSanPham : req.body.idSP,username : req.user.username})])
-        //     .then(([carts])=>{
-        //             if(carts){
+        Promise.all([ProductsInCart.findOne({idSanPham : req.body.idSP,size :req.body.size,username : req.user.username})])
+            .then(([carts])=>{
+                    if(carts){
                         
-        //                 //SP đã có trong giỏ =>cộng dồn số lượng
-        //                 //Số lượng đã có
-        //                 let soLuongCurrent = carts.soLuong;
-        //                 let tongTienCurrent = carts.tongTien;
+                        //SP đã có trong giỏ =>cộng dồn số lượng
+                        //Số lượng đã có
+                        let soLuongCurrent = carts.soLuong;
+                        let tongTienCurrent = carts.tongTien;
 
-        //                 //so lượng cộng thêm
-        //                 let soLuongAddIn = req.body.soLuong;
-        //                 let tongTienAddIn = req.body.tongTien;
-        //                 // tổng sau cộng
-        //                 soLuongToTal =parseInt(soLuongCurrent) + parseInt(soLuongAddIn);
-        //                 tongTienToTal = parseInt(tongTienCurrent) + parseInt(tongTienAddIn);
-        //                 //
-        //                 newValues = ({ $set: {soLuong :soLuongToTal, tongTien : tongTienToTal } });
+                        //so lượng cộng thêm
+                        let soLuongAddIn = req.body.soLuong;
+                        let tongTienAddIn = req.body.tongTien;
+                        // tổng sau cộng
+                        soLuongToTal =parseInt(soLuongCurrent) + parseInt(soLuongAddIn);
+                        tongTienToTal = parseInt(tongTienCurrent) + parseInt(tongTienAddIn);
+                        //
+                        newValues = ({ $set: {soLuong :soLuongToTal, tongTien : tongTienToTal } });
                         
-        //                 ProductsInCart.updateOne({_id : carts._id},newValues)
-        //                 .then(()=>{
-        //                     res.redirect('/users/cart');
+                        ProductsInCart.updateOne({_id : carts._id},newValues)
+                        .then(()=>{
+                            res.redirect('/users/cart');
             
-        //                     })
-        //                 .catch(next);
-        //             }else{
-        //                 //SP chưa có trong giỏ =>thêm mới
-        //                 const formData = req.body;
-        //                 const product = new ProductsInCart(formData);
-        //                 product.username = req.user.username;
-        //                 product.hoTen = req.user.username;
-        //                 product.sdt = req.user.username;
-        //                 product.idSanPham = req.body.idSP;
-        //                 product.save()
-        //                     .then(()=>{
-        //                         res.redirect('/users/cart');
-        //                     })
-        //                     .catch(next);
-        //             }
-        //     })
-        //     .catch((next)=>{
-        //         res.send(next)
-        //     }); 
-        res.send(req.body);
+                            })
+                        .catch(next);
+                    }else{
+                        //SP chưa có trong giỏ =>thêm mới
+                        const formData = req.body;
+                        const product = new ProductsInCart(formData);
+                        product.username = req.user.username;
+                        product.hoTen = req.user.username;
+                        product.sdt = req.user.username;
+                        product.idSanPham = req.body.idSP;
+                        product.save()
+                            .then(()=>{
+                                res.redirect('/users/cart');
+                            })
+                            .catch(next);
+                    }
+            })
+            .catch((next)=>{
+                res.send(next)
+            }); 
+        //res.send(req.body);
     },
 
     updateCart(req,res,next){

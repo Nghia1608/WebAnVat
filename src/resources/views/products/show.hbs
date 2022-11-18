@@ -129,7 +129,7 @@
 				</div>
 			</div>
 			<div class="col-lg-5">
-				{{!-- <input type="text" class="form-control" value="" id="giaTienTamThoi" name="giaTienTamThoi" hidden> --}}
+				{{!-- <input type="text" class="form-control" value="" id="giaTienSizeDaChon" name="giaTienSizeDaChon" hidden> --}}
 
 				<div class="product_details">
 					<div class="product_details_title">
@@ -141,8 +141,8 @@
 					<br>
 					<div>
 						<h3 id="giaTienForShow">Giá tiền : </h3>
-						<input type="text" class="form-control" value="" id="giaTienTamThoi" name="giaTienTamThoi" hidden>
-
+						<input type="text" class="form-control" value="" id="giaTienSizeDaChon"hidden>
+						<input type="text" class="form-control" value="" id="size" name="size" hidden>
 					</div>
 					<br>
 
@@ -157,8 +157,10 @@
 						</thead>
 						<tbody>
 							<script>
-								var idGiaTienTamThoi = "giaTienTamThoi";
-								var giaTienTamThoiTag = document.getElementById("giaTienTamThoi");
+								var idgiaTienSizeDaChon = "giaTienSizeDaChon";
+								var giaTienSizeDaChonTag = document.getElementById("giaTienSizeDaChon");
+								var idSize = "size";
+								var giaTriSize = document.getElementById("size");
 							</script>
 
             			{{#each productsdetails}}
@@ -170,22 +172,27 @@
 									{{this.soLuongCon}}
 								</h5>
 								{{!-- for get Value --}}
-            					<input type="text" class="form-control" value="{{this.giaTienBanRa}}" id="giaTienSize{{this.size}}" name="giaTienSize{{this.size}}" hidden>
+            					<input type="text" class="form-control" value="{{this.giaTienBanRa}}" id="giaTienSize{{this.size}}"  hidden>
+            					<input type="text" class="form-control" value="{{this.size}}" id="giaSize{{this.size}}"  hidden>
+
 							</td>
 							</tr>
 							<script>
 
 								var sizeIdSelected{{this.size}} = "buttonSize"+{{this.size}};
-								var ValueSizeSelected{{this.size}} = "giaTienSize"+{{this.size}};
+								var ValueMoneySizeSelected{{this.size}} = "giaTienSize"+{{this.size}};
+								var ValueSizeSelected{{this.size}} = "giaSize"+{{this.size}};
+								
 								document.getElementById(sizeIdSelected{{this.size}}).onclick = function(){
-									giaTienTamThoiTag.value = document.getElementById(ValueSizeSelected{{this.size}}).value;
+									giaTienSizeDaChonTag.value = document.getElementById(ValueMoneySizeSelected{{this.size}}).value;
+									giaTriSize.value =  document.getElementById(ValueSizeSelected{{this.size}}).value;
 
-									document.getElementById("giaTienForShow").innerHTML = "Giá tiền : " + Number(giaTienTamThoiTag.value).toLocaleString() + "  VND";
-									document.getElementById("giaTienTamThoi").value = Number(giaTienTamThoiTag.value);
+									document.getElementById("giaTienForShow").innerHTML = "Giá tiền : " + Number(giaTienSizeDaChonTag.value).toLocaleString() + "  VND";
+									document.getElementById("giaTienSizeDaChon").value = Number(giaTienSizeDaChonTag.value);
 
 									soLuongDaChon = document.getElementById("soLuong").value 
-									document.getElementById("tongGiaTien").innerHTML =(giaTienTamThoiTag.value*soLuongDaChon).toLocaleString() +"  VND";
-									document.getElementById("tongTien").value = (giaTienTamThoiTag.value*soLuongDaChon);
+									document.getElementById("tongGiaTien").innerHTML =(giaTienSizeDaChonTag.value*soLuongDaChon).toLocaleString() +"  VND";
+									document.getElementById("tongTien").value = (giaTienSizeDaChonTag.value*soLuongDaChon);
 								}
 							</script>
 						{{/each}}
@@ -207,17 +214,19 @@
                 <h4 >Tổng tiền :  <h3 id="tongGiaTien" name="tongGiaTien"> </h3> </h4>
 
             {{!-- HIDDEn to get value for req.body--}}
+			
             <input type="text" class="form-control" value="" id="tongTien" name="tongTien" hidden>
             <input type="text" class="form-control" value="{{products._id}}" id="idSP" name="idSP" hidden>
             <input type="text" class="form-control" value="{{products.tenSanPham}}" id="tenSanPham" name="tenSanPham" hidden>
+            <input type="text" class="form-control" value="{{products.image}}" id="image" name="image" hidden>
 
 			<button id="btn-add" type="submit" class="btnUpdate1 btn-link">Thêm vào giỏ hàng</button>
 
 			<script>
 				document.getElementById("soLuong").onchange= function(){
 					soLuongDaChon = document.getElementById("soLuong").value 
-					document.getElementById("tongGiaTien").innerHTML =(giaTienTamThoiTag.value*soLuongDaChon).toLocaleString() +"  VND";
-					document.getElementById("tongTien").value = (giaTienTamThoiTag.value*soLuongDaChon);
+					document.getElementById("tongGiaTien").innerHTML =(giaTienSizeDaChonTag.value*soLuongDaChon).toLocaleString() +"  VND";
+					document.getElementById("tongTien").value = (giaTienSizeDaChonTag.value*soLuongDaChon);
 					console.log("tong tien ne"+document.getElementById("tongTien").value)
 				}
 			</script>

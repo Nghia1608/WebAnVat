@@ -111,6 +111,8 @@
             <th scope="col"></th>
             <th scope="col">STT</th>
             <th scope="col">Tên sản phẩm</th>
+            <th scope="col">Hình ảnh</th>
+            <th scope="col">Size</th>
             <th scope="col">Số lượng</th>
             <th scope="col">Giá tiền</th>
             <th scope="col" colspan="2">Chỉnh sửa</th>
@@ -129,9 +131,16 @@
                 </td>
             <th scope="row">{{sum @index 1}}</th>
             <td>
-              <h5>{{this.tenSanPham}}  </h5>
+              <h4>{{this.tenSanPham}}  </h4>
               
+            </td>
+            <td>
+                <img class="imageProduct"href="/products/{{this._id}}"  src="{{this.image}}" alt="">
               </td>
+            <td>
+                <h4 class="size"id="size{{this.slug}}"name="size{{this.slug}}" >{{this.size}}  </h4>
+
+            </td>
             <td>
             <input type="number" min="1" max="20"class="form-control" value="{{this.soLuong}}" id="soLuong{{this.slug}}" name="soLuong{{this._id}}"placeholder="Chọn số lượng mua">
             <td >
@@ -147,6 +156,8 @@
                 <a id="btn-select"href="" class="btnDelete btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModalDelete">Xóa</a>
 
             </td>
+                        <input type="text" class="form-control" value="{{this.size}}" id="sizeForSubmit{{this.slug}}"name="size{{this._id}}" hidden>
+
                         <input type="text" class="form-control" value="{{this.tongTien}}" id="tongTien{{this.slug}}" name="tongTien{{this._id}}" hidden>
                         <input type="text" class="form-control" value="" id="tongTienGioHang" name="tongTienGioHang" hidden>
                         <input type="text" class="form-control" value="{{this.tenSanPham}}" id="tenSP{{this.slug}}" name="tenSP{{this._id}}" hidden>
@@ -162,12 +173,16 @@
      tongTien1{{this.slug}} = "tongTien"+tempID
      soLuong1{{this.slug}} = "soLuong"+tempID
      tenSanPham{{this.slug}} ="tenSP"+tempID
+     sizeForSubmit{{this.slug}} = "sizeForSubmit"+tempID
+     size{{this.slug}} ="size"+tempID
 //  
   var number = {{this.tongTien}}
     var giaTienSanPham{{this.slug}} = (document.getElementById(tongTien1{{this.slug}}).value / document.getElementById(soLuong1{{this.slug}}).value)
 
     var number = document.getElementById(tongTien1{{this.slug}}).value
+    var valueSize = document.getElementById(sizeForSubmit{{this.slug}}).value
 
+    document.getElementById(size{{this.slug}}).innerHTML = valueSize.toLocaleString() + "  g";     
     document.getElementById(tongGiaTien1{{this.slug}}).innerHTML = number.toLocaleString() + "  VND";
         var soLuongDaChon = document.getElementById(soLuong1{{this.slug}}).value 
         document.getElementById(tongGiaTien1{{this.slug}}).innerHTML =(giaTienSanPham{{this.slug}}*soLuongDaChon).toLocaleString() +"  VND";

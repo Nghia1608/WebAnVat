@@ -119,7 +119,14 @@ label {
   background-color: orange
   ;
 }
-
+.imageProduct{
+  width:40px;
+  height:40px;
+}
+.imageProduct:hover{
+  height: 400px;
+  width: 400px;
+}
 span.price {
   float: right;
   color: grey;
