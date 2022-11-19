@@ -140,10 +140,10 @@
                 <img class="imageProduct"href="/products/{{this._id}}"  src="{{this.image}}" alt="">
               </td>
             <td>
-                <h4 class="size"id="size{{this.slug}}"name="size{{this.slug}}" >{{this.size}}  </h4>
+                <h4 class="size"id="size{{this.slug}}"name="size" >{{this.size}}  </h4>
             </td>
             <td>
-            <input type="number" min="1" max="20"class="form-control" value="{{this.soLuong}}" id="soLuong{{this.slug}}" name="soLuong{{this._id}}"placeholder="Chọn số lượng mua">
+            <input type="number" min="1" max="20"class="form-control" value="{{this.soLuong}}" id="soLuong{{this.slug}}" name="soLuong"placeholder="Chọn số lượng mua">
             <td >
             <h4 class="tongGiaTien"id="tongGiaTien{{this.slug}}" name="tongGiaTien{{this.slug}}" >{{this.tongTien}}  </h4>
             </td>
@@ -151,11 +151,14 @@
                 <a id="btn-select"href="" class="btnUpdate btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModalRestore">Cập nhật</a>
                 <a id="btn-select"href="" class="btnDelete btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModalDelete">Xóa</a>
             </td>
-                        <input type="text" class="form-control" value="{{this.size}}" id="sizeForSubmit{{this.slug}}"name="size{{this._id}}" hidden>
-                        <input type="text" class="form-control" value="{{this.tongTien}}" id="tongTien{{this.slug}}" name="tongTien{{this._id}}" hidden>
+                        <input type="text" class="form-control" value="{{this.idSanPham}}" id="idSP{{this.slug}}" name="idSanPham" hidden>
+
+                        <input type="text" class="form-control" value="{{this.tenSanPham}}" id="tenSP{{this.slug}}" name="tenSanPham" hidden>
+
+                        <input type="text" class="form-control" value="{{this.size}}" id="sizeForSubmit{{this.slug}}"name="size" hidden>
+                        <input type="text" class="form-control" value="{{this.tongTien}}" id="tongTien{{this.slug}}" name="giaTienBanRa" hidden>
                         <input type="text" class="form-control" value="" id="tongTienGioHang" hidden>
-                        <input type="text" class="form-control" value="{{this.tenSanPham}}" id="tenSP{{this.slug}}" name="tenSP{{this._id}}" hidden>
-                        <input type="text" class="form-control" value="false" id="checked{{this.slug}}" name="checked{{this._id}}" hidden>
+                        <input type="text" class="form-control" value="false" id="checked{{this.slug}}" name="checked" hidden>
 
             </tr>
 <script >
@@ -566,7 +569,7 @@
         }
 
           btnOrder.onclick = function(){
-          orderForm.action = '/users/order?_method=POST';
+          orderForm.action = '/products/order?_method=POST';
           orderForm.submit();
         }
     })
