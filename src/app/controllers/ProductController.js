@@ -14,15 +14,6 @@ const ProductController={
     // Method Show - Hien thi san pham
     // [Get] src/routes/product/show
     show(req,res,next){
-        // Products.findOne({slug : req.params.slug})
-        //     .then((products)=>{
-        //             res.render('products/show',{
-        //                 products : mongooseToObject(products),
-        //         }); 
-        //     })
-        //     .catch((next)=>{
-        //         res.send(next)
-        //     }); 
         Promise.all([ProductsDetails.find({idProduct : req.params.id}),Products.findOne({_id : req.params.id})]) 
         .then(([productsdetails,products])=>{
                 res.render('products/show',{
@@ -84,16 +75,7 @@ const ProductController={
 
                 })) 
             .catch(next);   
-        // Promise.all([ProductsDetails.findById(req.params.id),Products.findOne({_id : req.params.id})]) 
-        // .then(([productsdetails,products])=>{
-        //         res.render('products/editDetail',{
-        //             products : mongooseToObject(products),
-        //             productsdetails : multipleMongooseToObject(productsdetails),
-        //     }); 
-        // })
-        // .catch((next)=>{
-        //     res.send(next)
-        // });                  
+              
     },
 
     //[PUT]
@@ -111,6 +93,30 @@ const ProductController={
     },
     // [Post] src/routes/product/store  nhan du lieu tu form Create
 
+    storedProducts(req,res,next){
+        Promise.all([Products.find({}),Products.countDocumentsDeleted()])
+            .then(([products,deletedProducts])=>{
+                res.render('products/storedProducts',{
+                    deletedProducts,
+                    products : multipleMongooseToObject(products),
+
+                }); 
+            })
+            .catch(next); 
+    },
+
+
+    trashProducts(req,res,next){
+        Products.findDeleted({})
+            .then((products)=>{
+                res.render('products/trashProducts',{
+                    products : multipleMongooseToObject(products),
+
+                }); 
+            })
+            .catch(next); 
+    },
+
     store(req,res,next){
         const formData = req.body;
         const product = new Products(formData); 
@@ -124,7 +130,7 @@ const ProductController={
         //
         product.save()
             .then(()=>{
-                res.redirect('/admin/storedProducts');
+                res.redirect('/products/storedProducts');
                 alert('Thêm sản phẩm thành công');
             })
             .catch(error=>{

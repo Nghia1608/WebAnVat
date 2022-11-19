@@ -10,6 +10,7 @@ const {
   } = require("../app/controllers/Middleware");
 
 //product
+
 router.get('/create',verifyTokenAndAdmin,productsController.create);
 router.post('/store',verifyTokenAndAdmin,productsController.store);
 
@@ -20,6 +21,10 @@ router.delete('/:id',verifyTokenAndAdmin,productsController.softDelete);
 router.patch('/:id/restore',verifyTokenAndAdmin,productsController.restore);
 router.delete('/:id/delete',verifyTokenAndAdmin,productsController.delete);
 
+router.get('/storedProducts',verifyTokenAndAdmin,productsController.storedProducts);
+router.post('/store',verifyTokenAndAdmin,productsController.store);
+
+router.get('/trashProducts',verifyTokenAndAdmin,productsController.trashProducts);
 //product detail
 router.get('/:id/detail',verifyTokenAndAdmin,productsController.showProductDetail);
 

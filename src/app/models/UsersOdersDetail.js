@@ -7,6 +7,7 @@ const UsersOrder = new Schema({
     //
     maHoaDon : {type :String ,maxLength : 100},
     tenSanPham :{type :String ,maxLength : 100},
+    size:{type :String,maxLength:20},
     soLuong:{type :String,maxLength:20},
     giaTien :{type :String,maxLength:100},
   },{

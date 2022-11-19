@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Danh sách sản phẩm</title>
+<title>Sản phẩm đã xóa</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Colo Shop Template">
@@ -93,18 +93,18 @@
 
 	
 	<div class="container single_product_container">
+
 <div class="mt-4">
-  <h2> 
-    Danh sách sản phẩm
-  </h2>
-    <a href="/products/create">Thêm sản phẩm mới</a>
+    <h2>Danh sách sản phẩm đã xóa</h2>
     <table class="table">
         <thead>
             <tr>
             <th scope="col">STT</th>
             <th scope="col">Tên sản phẩm</th>
-            <th scope="col">Phân loại</th>
+            <th scope="col">Mô tả</th>
+
             <th scope="col" colspan="2">Tình trạng</th>
+
             </tr>
         </thead>
         <tbody>
@@ -112,12 +112,11 @@
             <tr>
             <th scope="row">{{sum @index 1}}</th>
             <td>{{this.tenSanPham}}</td>
-            <td>{{this.maLoai}}</td>
+            <td>{{this.moTa}}</td>
             <td>{{this.tinhTrang}}</td>
             <td>
-                <a href="/products/{{this._id}}/detail" class="btnUpdate btn-link">Chi tiết</a>
-                <a href="/products/{{this._id}}/edit" class="btnUpdate btn-link">Sửa</a>
-                <a id="btn-select"href="" class="btnDelete btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModal">Xóa</a>
+                <a id="btn-select"href="" class="btnUpdate btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModalRestore">Khôi phục</a>
+                <a id="btn-select1"href="" class="btnDelete btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModalDelete">Xóa vĩnh viễn</a>
 
             </td>
             </tr>
@@ -125,8 +124,7 @@
             <tr>
               <td colspan="4"class="text-center">
                 <h3>
-                Bạn chưa đăng sản phẩm nào !
-              <a href="/products/create">Thêm sản phẩm mới</a>
+                Bạn chưa xóa sản phẩm nào !
                 </h3>
 
 
@@ -137,73 +135,135 @@
         </tbody>
 
     </table>
-    {{#if deletedProducts}}
-    <a href="/admin/trashProducts">Thùng rác [{{deletedProducts}}]</a>
-    {{/if}}
-</div>
-<!--Confirm Delete Button -->
+    <a href="/products/storedProducts">Quay về</a>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+</div>
+<!--Form Xóa va restore-->
+    <form id="restore-product-form"name="restore-product-form" method="POST">
+<!--Confirm Restore Button -->
+
+<div class="modal fade" id="exampleModalRestore" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Xác nhận xóa</h5>
+        <h5 class="modal-title">Xác nhận khôi phục</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p>Bạn có chắc muốn xóa sản phẩm ?</p>
+        <p>Bạn có chắc muốn khôi phục sản phẩm ?</p>
       </div>
       <div class="modal-footer">
-        <a id="count-down">Wait for Available</a>
-        <button id="btn-delete" type="button" class="btnDelete1 btn-link">Xác nhận xóa</button>
+        <a id="count-down">Vui lòng đợi</a>
+        <button id="btn-Update" type="button" class="btnUpdate1 btn-link">Xác nhận</button>
+        <button type="button" class="btnCancel btn-link" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Confirm Delete Button -->
+
+<div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xác nhận xóa vĩnh viễn</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc muốn xóa vĩnh viễn sản phẩm ?</p>
+      </div>
+      <div class="modal-footer">
+        <a id="count-down1">Vui lòng đợi</a>
+        <button id="btn-Delete" type="button" class="btnDelete1 btn-link">Xác nhận</button>
         <button type="button" class="btnCancel btn-link" data-dismiss="modal">Hủy</button>
       </div>
     </div>
   </div>
 </div>
 
-<!--Form Xóa-->
-    <form name="delete-product-form" method="POST">
 
 <!--Disable Delete Button trong 10s-->
 <script>
       var btnselect = document.getElementById('btn-select');
+      var btnselect1 = document.getElementById('btn-select1');
       var countdown = document.getElementById('count-down');
+      var countdown1 = document.getElementById('count-down1');
+
        btnselect.onclick =  function() {
-            document.getElementById("btn-delete").disabled = true;
+            document.getElementById("btn-Delete").disabled = true;
             setTimeout(function() {
-                document.getElementById("btn-delete").disabled = false;
+                document.getElementById("btn-Delete").disabled = false;
+            }, 10000);
+              document.getElementById("btn-Update").disabled = true;
+            setTimeout(function() {
+                document.getElementById("btn-Update").disabled = false;
             }, 10000);
             document.getElementById("count-down").hidden = false;
             setTimeout(function() {
                 document.getElementById("count-down").hidden = true;
             }, 10000);
         }
-        
+       btnselect1.onclick =  function() {
+            document.getElementById("btn-Delete").disabled = true;
+            setTimeout(function() {
+                document.getElementById("btn-Delete").disabled = false;
+            }, 10000);
+              document.getElementById("btn-Update").disabled = true;
+            setTimeout(function() {
+                document.getElementById("btn-Update").disabled = false;
+            }, 10000);
+            document.getElementById("count-down1").hidden = false;
+            setTimeout(function() {
+                document.getElementById("count-down1").hidden = true;
+            }, 10000);
+        }
 </script>
-
-
-<!--Event xóa-->
+<!--Event xóa,restore-->
 <script>
     document.addEventListener('DOMContentLoaded',function(){
-        var id;
-        var deleteForm = document.forms['delete-product-form'];
-        var btnDelete = document.getElementById('btn-delete');
-        $('#exampleModal').on('show.bs.modal', function (event) {
+        var idDelete;
+        var idRestore;
+        var restoreForm = document.getElementById('restore-product-form');
+
+        var deleteForm = document.getElementById('restore-product-form');
+        var btnDelete = document.getElementById('btn-Delete');
+        var btnRestore = document.getElementById('btn-Update');
+
+
+
+
+
+        $('#exampleModalRestore').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) 
-        id = button.data('id')
+        idRestore = button.data('id')
+
         });
+
+        $('#exampleModalDelete').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) 
+        idDelete = button.data('id')
+        });
+
+        btnRestore.onclick = function(){
+            restoreForm.action = '/products/'+idRestore + '/restore?_method=PATCH';
+            restoreForm.submit(); 
+
+        }
         btnDelete.onclick = function(){
-            deleteForm.action = '/products/'+id + '?_method=DELETE';
+            deleteForm.action = '/products/'+idDelete + '/delete?_method=DELETE';
             deleteForm.submit();
+
+            
         }
     })
-</script>
-    
-  </div>
 
+</script>
+<!--Confirm Delete Button -->
+  </div>
 
 {{!-- Tong tien ne --}}
     

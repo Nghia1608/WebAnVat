@@ -54,40 +54,18 @@ const UserController = {
     },
 
     cart(req,res,next){
+        Promise.all([ProductsInCart.find({username : req.user.username}),Users.findOne({username : req.user.username})])
+        .then(([carts,users])=>{
+            res.render('users/cart',{
+                users : mongooseToObject(users),
+                carts : multipleMongooseToObject(carts),
 
-                Promise.all([ProductsInCart.find({username : req.user.username}),Users.findOne({username : req.user.username})])
-                .then(([carts,users])=>{
-                    res.render('users/cart',{
-                        users : mongooseToObject(users),
-                        carts : multipleMongooseToObject(carts),
-    
-                    }); 
-                })
-                .catch(next); 
-    
+            }); 
+        })
+        .catch(next); 
     },
-    orderCheckout(req,res,next){
-        // const refreshToken = req.cookies.refreshToken;
-        // if (refreshToken) {
-        //   const accessToken = refreshToken;
-        //   jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user,cart) => {
-        //     if (err) {
-        //       res.status(403).json("Token is not valid!");
-        //     }
-        //     req.user = user;
-        //     req.cart = cart;
-
-            ProductsInCart.find({username : req.user.username})
-                .then((carts)=>{
-                    res.render('users/cart',{
-                        carts : multipleMongooseToObject(carts),
-                    }); 
-                })
-                .catch(next);
-
-//});
-       // }
-    
+    order(req,res,next){
+        res.send(req.body)
     },
 }
 module.exports = UserController;

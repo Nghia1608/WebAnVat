@@ -40,14 +40,6 @@ confirmLogin :async(req,res,next)=>{     //check dang nhap
         sameSite: "strict",
         });
         const { password, ...others } = user._doc;
-        if(user.quyen=='Admin'){
-            res.redirect('/admin');        
-
-        }else{
-            res.redirect('/');        
-
-        }
-        
     }
     }
     

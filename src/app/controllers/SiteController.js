@@ -14,17 +14,6 @@ const SiteController={
                 });
             })
             .catch(next)
-
-            // Promise.all([ProductsCategory.find({}),Products.find({})])
-            // .then(([products,productsCategory])=>{
-            //     res.render('home',{
-            //         products : multipleMongooseToObject(products),
-
-            //     }); 
-            // })
-            // .catch(next);
-            
-
     },
 
 
@@ -41,9 +30,16 @@ const SiteController={
 
     },
     // 
-    search(req,res){
-        res.render('search');
-    },
+    search(req,res,next){
+        // Products.find({tenSanPham:"Khô gà lá chanh 2"})
+        // .then(products =>{
+        //     res.render('home',{
+        //         products : multipleMongooseToObject(products)
+        //     });
+        // })
+        // .catch(next)
+        res.send(req.body)
+},
     contact(req,res){
         res.render('contact');
     }
