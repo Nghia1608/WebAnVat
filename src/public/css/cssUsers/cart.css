@@ -115,9 +115,17 @@ label {
   cursor: pointer;
   font-size: 14px;
 }
+
+
 .btn:hover {
   background-color: orange
   ;
+}
+.btn:disabled,
+.btn[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
 }
 .imageProduct{
   width:40px;

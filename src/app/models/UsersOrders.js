@@ -6,8 +6,11 @@ const Schema = mongoose.Schema;
 const UsersOrder = new Schema({
     //tt user
     username :{type :String ,maxLength : 50,require:true},
+    hoTen :{type :String ,maxLength : 50,require:true},
     sdt : {type :String ,maxLength : 20,require:true},
     diaChi : {type :String ,maxLength : 150,require:true},
+    email : {type :String ,maxLength : 150,require:true},
+    note : {type :String ,maxLength : 150,require:true},
     // tt don hang
     // tongTienTruocGiamGia : {type :String ,maxLength : 100},
     // tongTienKhuyenMai : {type :String ,maxLength : 100},

@@ -1,7 +1,8 @@
 const Users = require('../models/Users');
 const Products = require('../models/Products');
 const ProductsInCart = require('../models/UsersCart');
-const ProductsInCheckout = require('../models/UsersCart');
+const ProductsToOrder = require('../models/UsersOrders');
+const ProductsDetailToOrder = require('../models/UsersOrdersDetails');
 
 const { response } = require('express');
 const jwt = require('jsonwebtoken')
@@ -65,6 +66,40 @@ const UserController = {
         .catch(next); 
     },
     order(req,res,next){
+        //so luong va tien theo ID
+    //     var tempSoLuong = "soLuong"+req.params.id;  //soLuong6367847be736a0b3f32b2d95
+    //     var tempTongTien = "tongTien"+req.params.id;
+    //    //
+    //    var SoLuong = req.body[tempSoLuong];
+    //    var TongTien = req.body[tempTongTien];
+    //    newValues = ({ $set: {soLuong :SoLuong, tongTien : TongTien } });
+    //    //req.params chi lay dc _id
+    //    //req.body = object
+    //    const formData = req.body;
+    //    const productOrder = new ProductsToOrder(formData);
+    //    const productOrderDetail = new ProductsDetailToOrder(formData);
+
+    //      //data productOrder table
+    //    productOrder.username = req.body.username;
+    //    productOrder.hoTen = req.body.hoTen;
+    //    productOrder.sdt = req.body.sdt;
+    //    productOrder.email = req.body.email;
+    //    productOrder.diaChi = req.body.diaChi;
+    //    productOrder.note = req.body.diaChi;
+    //    productOrder.hinhThucMuaHang = req.body.hinhThucMuaHang;
+    //    productOrder.tinhTrang = req.body.tinhTrang;
+    
+    //      //data productOrderDetail table
+
+
+
+    //
+    //    product.save()
+    //        .then(()=>{
+    //            res.redirect('/users/cart');
+    //        })
+    //        .catch(next);
+
         res.send(req.body)
     },
 }

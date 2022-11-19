@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-const UsersOrder = new Schema({
+const UsersOrderDetail = new Schema({
     //tt user
     username :{type :String ,maxLength : 50,require:true},
     //
@@ -14,4 +14,4 @@ const UsersOrder = new Schema({
     timestamps : true,
   });
 
-module.exports = mongoose.model('UsersOrdersDetail',UsersOrderDetail);
+module.exports = mongoose.model('UsersOrdersDetails',UsersOrderDetail);
