@@ -74,7 +74,7 @@ const UserController = {
             ,Users.findOne({username : req.user.username})
             ])
         .then(([usersorders,usersordersdetails,users])=>{
-            res.render('users/cart',{
+            res.render('users/purchase',{
                 users : mongooseToObject(users),
                 usersorders : multipleMongooseToObject(usersorders),
                 usersordersdetails : multipleMongooseToObject(usersordersdetails),
