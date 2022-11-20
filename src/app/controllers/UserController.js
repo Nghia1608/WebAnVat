@@ -1,5 +1,6 @@
 const Users = require('../models/Users');
-const Products = require('../models/Products');
+const ProductsDetails = require('../models/ProductsDetail');
+
 const ProductsInCart = require('../models/UsersCart');
 const ProductsToOrder = require('../models/UsersOrders');
 const ProductsDetailToOrder = require('../models/UsersOrdersDetails');
@@ -67,55 +68,20 @@ const UserController = {
         })
         .catch(next); 
     },
-    order(req,res,next){
+    purchase(req,res,next){
+        Promise.all([ProductsToOrder.find({username : req.user.username})
+            ,ProductsDetailToOrder.find({username:req.user.username})
+            ,Users.findOne({username : req.user.username})
+            ])
+        .then(([usersorders,usersordersdetails,users])=>{
+            res.render('users/cart',{
+                users : mongooseToObject(users),
+                usersorders : multipleMongooseToObject(usersorders),
+                usersordersdetails : multipleMongooseToObject(usersordersdetails),
 
-        //res.send(req.body)
-
-       const formData = req.body;
-       const productOrder = new ProductsToOrder(formData);
-
-         //data productOrder table
-       productOrder.username = req.body.username;
-       productOrder.hoTen = req.body.hoTen;
-       productOrder.sdt = req.body.sdt;
-       productOrder.email = req.body.email;
-       productOrder.diaChi = req.body.diaChi;
-       productOrder.note = req.body.note;
-       productOrder.hinhThucMuaHang = req.body.hinhThucMuaHang;
-       productOrder.tinhTrang = req.body.tinhTrang;
-       productOrder.tongTien = req.body.tongTienGioHang;
-
-
-       productOrder.save()
- 
-         //data productOrderDetail table
-        for(var i =0;i<(req.body.idSanPham).length;i++){
-        if((req.body.checked[i])=="true"){
-            const productOrderDetail = new ProductsDetailToOrder(formData);
-            productOrderDetail.username = req.body.username;
-
-            productOrderDetail.idSanPham = req.body.idSanPham[i];
-            productOrderDetail.tenSanPham = req.body.tenSanPham[i];
-            productOrderDetail.size = req.body.size[i];
-            productOrderDetail.soLuong = req.body.soLuong[i];
-            productOrderDetail.giaTienBanRa = req.body.giaTienBanRa[i];
-
-            productOrderDetail.save();
-            // Promise.all([ProductsInCart.findOne({idSanPham : req.body.idSanPham[i],size :req.body.size[i],username : req.body.username})])
-            //         .then(([carts])=>{
-            //             if(carts){
-            //                 ProductsInCart.deleteOne({_id : carts._id})
-
-            //             }else{res.send("khong co")}
-
-            //         })
-            //         .catch(next)
-        }
-
-        }
-
-
-         res.redirect('/users/cart')
+            }); 
+        })
+        .catch(next); 
     },
 }
 module.exports = UserController;

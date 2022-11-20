@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const UsersOrder = new Schema({
     //tt user
-    maHoaDon : {type :String ,maxLength : 100},
+    maHoaDon : {type :String,maxLength : 50 ,require:true},
 
     username :{type :String ,maxLength : 50,require:true},
     hoTen :{type :String ,maxLength : 50,require:true},

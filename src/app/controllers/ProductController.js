@@ -250,67 +250,79 @@ const ProductController={
     },
 
     order(req,res,next){
-       const formData = req.body;
-       const productOrder = new ProductsToOrder(formData);
-         //data productOrder table
-       productOrder.username = req.body.username;
-       productOrder.hoTen = req.body.hoTen;
-       productOrder.sdt = req.body.sdt;
-       productOrder.email = req.body.email;
-       productOrder.diaChi = req.body.diaChi;
-       productOrder.note = req.body.note;
-       productOrder.hinhThucMuaHang = req.body.hinhThucMuaHang;
-       productOrder.tinhTrang = req.body.tinhTrang;
-       productOrder.tongTien = req.body.tongTienGioHang;
-       productOrder.save()
-         //data productOrderDetail table
+        const formData = req.body;
+        const date = new Date();
 
-        for(var i =0;i<(req.body.idSanPham).length;i++){
-        if((req.body.checked[i])=="true"){
-            const productOrderDetail = new ProductsDetailToOrder(formData);
-            productOrderDetail.username = req.body.username;
-            productOrderDetail.idSanPham = req.body.idSanPham[i];
-            productOrderDetail.tenSanPham = req.body.tenSanPham[i];
-            productOrderDetail.size = req.body.size[i];
-            productOrderDetail.soLuong = req.body.soLuong[i];
-            productOrderDetail.giaTienBanRa = req.body.giaTienBanRa[i];
-            productOrderDetail.save();
-            //reduce amout products in DB after order
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
 
-            let tempSL = req.body.soLuong[i];
-            Promise.all([ProductsDetails.findOne({idProduct : req.body.idSanPham[i],size :req.body.size[i]})])
-            .then(async([productsdetails])=>{
-                    if( productsdetails){
-                        //Số lượng đã có
-                        soLuongCurrent = productsdetails.soLuongCon;
-                        //so lượng reduce
-                        soLuongReduce = tempSL;
-                        // tổng sau cộng
-                        soLuongToTal =parseInt(soLuongCurrent) - parseInt(soLuongReduce);
-                        //
-                        tinhTrangTotal = "Còn hàng";
-                        if(soLuongToTal==0){
-                            tinhTrangTotal ="Tạm hết hàng"
-                        }
-                        newValues = ({ $set: {soLuongCon :soLuongToTal,tinhTrang : tinhTrangTotal} });
-                        temp = (productsdetails._id).toString()
-                        await ProductsDetails.updateOne({_id : temp},newValues)
-                    }
-            })
-            //delete products in cart after order
+        // This arrangement can be altered based on how we want the date's format to appear.
+        let currentDate = `${day}-${month}-${year}`;
+        var tempMHD = "HD"+currentDate+Math.floor(Math.random()*9000000);
 
-            Promise.all([ProductsInCart.findOne({idSanPham : req.body.idSanPham[i],size :req.body.size[i],username : req.body.username})])
-            .then(async([carts])=>{
-                if(carts){
-                    let temp = (carts._id).toString();
-                    //res.send(temp)
-                    await ProductsInCart.deleteOne({_id : temp})
-                }
-            })
-        }
-        }
-        res.redirect('/users/cart')
-    },
+        const productOrder = new ProductsToOrder(formData);
+          //data productOrder table
+        productOrder.username = req.body.username;
+        productOrder.hoTen = req.body.hoTen;
+        productOrder.sdt = req.body.sdt;
+        productOrder.email = req.body.email;
+        productOrder.diaChi = req.body.diaChi;
+        productOrder.note = req.body.note;
+        productOrder.hinhThucMuaHang = req.body.hinhThucMuaHang;
+        productOrder.tinhTrang = req.body.tinhTrang;
+        productOrder.tongTien = req.body.tongTienGioHang;
+        productOrder.maHoaDon = tempMHD;
+        productOrder.save()
+          //data productOrderDetail table
+ 
+         for(var i =0;i<(req.body.idSanPham).length;i++){
+         if((req.body.checked[i])=="true"){
+             const productOrderDetail = new ProductsDetailToOrder(formData);
+             productOrderDetail.username = req.body.username;
+             productOrderDetail.idSanPham = req.body.idSanPham[i];
+             productOrderDetail.tenSanPham = req.body.tenSanPham[i];
+             productOrderDetail.size = req.body.size[i];
+             productOrderDetail.soLuong = req.body.soLuong[i];
+             productOrderDetail.giaTienBanRa = req.body.giaTienBanRa[i];
+             productOrderDetail.maHoaDon = tempMHD;
+             productOrderDetail.save();
+             //reduce amout products in DB after order
+ 
+             let tempSL = req.body.soLuong[i];
+             Promise.all([ProductsDetails.findOne({idProduct : req.body.idSanPham[i],size :req.body.size[i]})])
+             .then(async([productsdetails])=>{
+                     if( productsdetails){
+                         //Số lượng đã có
+                         soLuongCurrent = productsdetails.soLuongCon;
+                         //so lượng reduce
+                         soLuongReduce = tempSL;
+                         // tổng sau cộng
+                         soLuongToTal =parseInt(soLuongCurrent) - parseInt(soLuongReduce);
+                         //
+                         tinhTrangTotal = "Còn hàng";
+                         if(soLuongToTal==0){
+                             tinhTrangTotal ="Tạm hết hàng"
+                         }
+                         newValues = ({ $set: {soLuongCon :soLuongToTal,tinhTrang : tinhTrangTotal} });
+                         temp = (productsdetails._id).toString()
+                         await ProductsDetails.updateOne({_id : temp},newValues)
+                     }
+             })
+             //delete products in cart after order
+ 
+             Promise.all([ProductsInCart.findOne({idSanPham : req.body.idSanPham[i],size :req.body.size[i],username : req.body.username})])
+             .then(async([carts])=>{
+                 if(carts){
+                     let temp = (carts._id).toString();
+                     //res.send(temp)
+                     await ProductsInCart.deleteOne({_id : temp})
+                 }
+             })
+         }
+         }
+         res.redirect('/users/cart')
+     },
     deleteCartAfterOrder(req,res,next){
         for(var i =0;i<(req.body.idSanPham).length;i++){
 

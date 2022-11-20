@@ -5,7 +5,8 @@ const UsersOrderDetail = new Schema({
     //tt user
     username :{type :String ,maxLength : 50,require:true},
     //
-    maHoaDon : {type :String ,maxLength : 100},
+    maHoaDon : {type :String,maxLength : 50 ,require:true},
+
     idSanPham :{type :String ,maxLength : 100},
     tenSanPham :{type :String ,maxLength : 100},
     size:{type :String,maxLength:20},

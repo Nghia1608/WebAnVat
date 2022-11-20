@@ -48,6 +48,7 @@
 
 										{{!-- After Login --}}
 										<li id="changePassword"hidden><a><i class="fa fa-sign-in" aria-hidden="true"></i>Thông tin tài khoản</a></li>
+										<li id="purchase"hidden><a href="/users/purchase"><i class="fa fa-sign-in" aria-hidden="true"></i>Lịch sử mua hàng</a></li>
 										{{!-- Before Login --}}
 
 										<li id="login" hidden><a  href="/auth/login"><i class="fa fa-sign-in" aria-hidden="true"></i>Đăng nhập</a></li>
@@ -77,6 +78,7 @@
 												document.getElementById("username").innerHTML ="Xin chào  " + 
 													localStorage.getItem("username");
 												document.getElementById("changePassword").hidden =false;
+												document.getElementById("purchase").hidden =false;
 												document.getElementById("login").hidden =true;
 
 											}

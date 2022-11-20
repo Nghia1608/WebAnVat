@@ -22,7 +22,8 @@ router.delete('/:id/delete',verifyTokenAndUserAuthorization,UserController.delet
 router.delete('/:id/delete',verifyTokenAndUserAuthorization,UserController.delete);
 router.get('/cart',verifyToken,UserController.cart);
 
-router.post('/order',verifyTokenAndUserAuthorization,UserController.order);
+router.get('/purchase',verifyTokenAndUserAuthorization,UserController.purchase);
+
 
 
 router.get('/storedUsers',verifyTokenAndAdmin,UserController.storedUsers);
