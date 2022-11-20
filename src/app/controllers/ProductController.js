@@ -246,13 +246,10 @@ const ProductController={
             .then(()=>res.redirect('/users/cart'))
             .catch(next);                  
     },
+
     order(req,res,next){
-
-        //res.send(req.body)
-
        const formData = req.body;
        const productOrder = new ProductsToOrder(formData);
-
          //data productOrder table
        productOrder.username = req.body.username;
        productOrder.hoTen = req.body.hoTen;
@@ -263,39 +260,70 @@ const ProductController={
        productOrder.hinhThucMuaHang = req.body.hinhThucMuaHang;
        productOrder.tinhTrang = req.body.tinhTrang;
        productOrder.tongTien = req.body.tongTienGioHang;
-
-
        productOrder.save()
- 
          //data productOrderDetail table
+
         for(var i =0;i<(req.body.idSanPham).length;i++){
         if((req.body.checked[i])=="true"){
             const productOrderDetail = new ProductsDetailToOrder(formData);
             productOrderDetail.username = req.body.username;
-
             productOrderDetail.idSanPham = req.body.idSanPham[i];
             productOrderDetail.tenSanPham = req.body.tenSanPham[i];
             productOrderDetail.size = req.body.size[i];
             productOrderDetail.soLuong = req.body.soLuong[i];
             productOrderDetail.giaTienBanRa = req.body.giaTienBanRa[i];
-
             productOrderDetail.save();
+            //reduce amout products in DB after order
+            
+             Promise.all([ProductsDetails.findOne({idProduct : req.body.idSanPham[i],size :req.body.size[i]})])
+                .then(async([productsdetails])=>{
+                        if(productsdetails){
+                            //Số lượng đã có
+                            soLuongCurrent = productsdetails.soLuongCon;
+                            //so lượng reduce
+                            soLuongReduce[i] = req.body.soLuong[i];
+                            // tổng sau cộng
+                            soLuongToTal =parseInt(soLuongCurrent) - parseInt(soLuongReduce);
+                            //
+                            newValues = ({ $set: {soLuongCon :soLuongToTal} });
+                            temp = (productsdetails._id).toString()
+                            await ProductsDetails.updateOne({_id : temp},newValues)
+                        }
+                })
+            //delete products in cart after order
+
             Promise.all([ProductsInCart.findOne({idSanPham : req.body.idSanPham[i],size :req.body.size[i],username : req.body.username})])
-                    .then(([carts])=>{
-                        if(carts){
-                            //ProductsInCart.deleteOne({_id : carts._id})
-
-
-                        }else{res.send("khong co")}
-
-                    })
-                    .catch(next)
+            .then(async([carts])=>{
+                if(carts){
+                    let temp = (carts._id).toString();
+                    //res.send(temp)
+                    await ProductsInCart.deleteOne({_id : temp})
+                }
+            })
         }
-
         }
+        res.redirect('/users/cart')
+    },
+    deleteCartAfterOrder(req,res,next){
+        for(var i =0;i<(req.body.idSanPham).length;i++){
+
+        if((req.body.checked[i])=="true"){
+            Promise.all([ProductsInCart.findOne({idSanPham : req.body.idSanPham[i],size :req.body.size[i],username : req.body.username})])
+            .then(([carts])=>{
+                if(carts){
+                    let temp = (carts._id).toString();
+                    //res.send(temp)
+                    ProductsInCart.deleteOne({_id : temp})
+                }else{res.send("khong co")}
+    
+            })
+            .catch(next)
+        }
+        }    
 
 
-         res.redirect('/users/cart')
+    res.redirect('/users/cart')
+
     },
 }
 module.exports = ProductController;

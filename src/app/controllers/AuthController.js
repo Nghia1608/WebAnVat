@@ -40,6 +40,7 @@ confirmLogin :async(req,res,next)=>{     //check dang nhap
         sameSite: "strict",
         });
         const { password, ...others } = user._doc;
+        res.redirect('/');
     }
     }
     

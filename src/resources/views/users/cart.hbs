@@ -357,7 +357,7 @@
 
         </div>
 {{!-- <button id="btn-select" class="btn btn-success"data-toggle="modal" data-target="#exampleModalOrder" >Xác nhận đặt hàng</button> --}}
-<a id="btn-select"class="btn btn-success" data-toggle="modal" data-target="#exampleModalOrder">Xác nhận đặt hàng</a>
+<a id="btn-select"class="btn btn-success" data-toggle="modal"  data-target="#exampleModalOrder">Xác nhận đặt hàng</a>
 
     </div>
 
@@ -571,6 +571,9 @@
           btnOrder.onclick = function(){
           orderForm.action = '/products/order?_method=POST';
           orderForm.submit();
+
+          //orderForm.action = '/products/'+1000+'/deleteCartAfterOrder?_method=DELETE';
+          //orderForm.submit();
         }
     })
 
