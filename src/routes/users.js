@@ -23,6 +23,7 @@ router.delete('/:id/delete',verifyTokenAndUserAuthorization,UserController.delet
 router.get('/cart',verifyToken,UserController.cart);
 
 router.get('/purchase',verifyTokenAndUserAuthorization,UserController.purchase);
+router.get('/:id/purchaseDetail',verifyTokenAndUserAuthorization,UserController.purchaseDetail);
 
 
 

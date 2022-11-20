@@ -83,5 +83,18 @@ const UserController = {
         })
         .catch(next); 
     },
+    purchaseDetail(req,res,next){
+        Promise.all([ProductsDetailToOrder.find({maHoaDon : req.params.id}),ProductsToOrder.findOne({maHoaDon : req.params.id})]) 
+                .then(([usersordersdetails,usersorders])=>{
+                        res.render('users/purchaseDetail',{
+                            usersorders : mongooseToObject(usersorders),
+                            usersordersdetails : multipleMongooseToObject(usersordersdetails),
+                    }); 
+                })
+                .catch((next)=>{
+                    res.send(next)
+                }); 
+
+    },
 }
 module.exports = UserController;
