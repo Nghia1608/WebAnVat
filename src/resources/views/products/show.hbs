@@ -175,6 +175,7 @@
             					<input type="text" class="form-control" value="{{this.giaTienBanRa}}" id="giaTienSize{{this.size}}"  hidden>
             					<input type="text" class="form-control" value="{{this.size}}" id="giaSize{{this.size}}"  hidden>
             					<input type="text" class="form-control" value="{{this.soLuongCon}}" id="soLuongCon{{this.size}}"  hidden>
+            					<input type="text" class="form-control" value="" id="maxSLToSelect"  hidden>
 
 							</td>
 							</tr>
@@ -184,9 +185,9 @@
 								var sizeIdSelected{{this.size}} = "buttonSize"+{{this.size}};
 								var ValueMoneySizeSelected{{this.size}} = "giaTienSize"+{{this.size}};
 								var ValueSizeSelected{{this.size}} = "giaSize"+{{this.size}};
-								var MoneySizeSelected{{this.size}} = "soLuongCon"+{{this.size}};
+								var AmoutOfSizeSelected{{this.size}} = "soLuongCon"+{{this.size}};
 								
-								if(document.getElementById(MoneySizeSelected{{this.size}}).value==0){
+								if(document.getElementById(AmoutOfSizeSelected{{this.size}}).value==0){
 									document.getElementById(sizeIdSelected{{this.size}}).disabled  = true;
 								}
 
@@ -196,7 +197,9 @@
 
 									document.getElementById("giaTienForShow").innerHTML = "Giá tiền : " + Number(giaTienSizeDaChonTag.value).toLocaleString() + "  VND";
 									document.getElementById("giaTienSizeDaChon").value = Number(giaTienSizeDaChonTag.value);
-
+									var max = document.getElementById(AmoutOfSizeSelected{{this.size}}).value;
+									var input = document.getElementById("soLuong");
+									input.setAttribute("max",max); // set a new value;
 									soLuongDaChon = document.getElementById("soLuong").value 
 									document.getElementById("tongGiaTien").innerHTML =(giaTienSizeDaChonTag.value*soLuongDaChon).toLocaleString() +"  VND";
 									document.getElementById("tongTien").value = (giaTienSizeDaChonTag.value*soLuongDaChon);
