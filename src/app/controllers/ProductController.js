@@ -276,40 +276,37 @@ const ProductController={
             productOrderDetail.giaTienBanRa = req.body.giaTienBanRa[i];
             productOrderDetail.save();
             //reduce amout products in DB after order
-            soLuongCurrent = [];
-            soLuongReduce = [];
-            soLuongToTal = [];
-            tinhTrangTotal =[];
-            tempSL = req.body.soLuong[i];
-             Promise.all([ProductsDetails.findOne({idProduct : req.body.idSanPham[i],size :req.body.size[i]})])
-                .then(async([productsdetails])=>{
-                        if(productsdetails){
-                            //Số lượng đã có
-                            soLuongCurrent[i] = productsdetails.soLuongCon;
-                            //so lượng reduce
-                            soLuongReduce[i] = tempSL;
-                            // tổng sau cộng
-                            soLuongToTal[i] =parseInt(soLuongCurrent[i]) - parseInt(soLuongReduce[i]);
-                            //
-                            tinhTrangTotal[i] = "Còn hàng";
-                            if(soLuongToTal[i]==0){
-                                tinhTrangTotal[i] ="Tạm hết hàng"
-                            }
-                            newValues = ({ $set: {soLuongCon :soLuongToTal[i],tinhTrang : tinhTrangTotal[i]} });
-                            temp = (productsdetails._id).toString()
-                            await ProductsDetails.updateOne({_id : temp},newValues)
+
+            let tempSL = req.body.soLuong[i];
+            Promise.all([ProductsDetails.findOne({idProduct : req.body.idSanPham[i],size :req.body.size[i]})])
+            .then(async([productsdetails])=>{
+                    if( productsdetails){
+                        //Số lượng đã có
+                        soLuongCurrent = productsdetails.soLuongCon;
+                        //so lượng reduce
+                        soLuongReduce = tempSL;
+                        // tổng sau cộng
+                        soLuongToTal =parseInt(soLuongCurrent) - parseInt(soLuongReduce);
+                        //
+                        tinhTrangTotal = "Còn hàng";
+                        if(soLuongToTal==0){
+                            tinhTrangTotal ="Tạm hết hàng"
                         }
-                })
+                        newValues = ({ $set: {soLuongCon :soLuongToTal,tinhTrang : tinhTrangTotal} });
+                        temp = (productsdetails._id).toString()
+                        await ProductsDetails.updateOne({_id : temp},newValues)
+                    }
+            })
             //delete products in cart after order
 
-            // Promise.all([ProductsInCart.findOne({idSanPham : req.body.idSanPham[i],size :req.body.size[i],username : req.body.username})])
-            // .then(async([carts])=>{
-            //     if(carts){
-            //         let temp = (carts._id).toString();
-            //         //res.send(temp)
-            //         await ProductsInCart.deleteOne({_id : temp})
-            //     }
-            // })
+            Promise.all([ProductsInCart.findOne({idSanPham : req.body.idSanPham[i],size :req.body.size[i],username : req.body.username})])
+            .then(async([carts])=>{
+                if(carts){
+                    let temp = (carts._id).toString();
+                    //res.send(temp)
+                    await ProductsInCart.deleteOne({_id : temp})
+                }
+            })
         }
         }
         res.redirect('/users/cart')

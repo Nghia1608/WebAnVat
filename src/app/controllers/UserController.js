@@ -55,7 +55,9 @@ const UserController = {
     },
 
     cart(req,res,next){
-        Promise.all([ProductsInCart.find({username : req.user.username}),Users.findOne({username : req.user.username})])
+        Promise.all([ProductsInCart.find({username : req.user.username})
+            ,Users.findOne({username : req.user.username})
+            ])
         .then(([carts,users])=>{
             res.render('users/cart',{
                 users : mongooseToObject(users),
