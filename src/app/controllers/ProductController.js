@@ -226,8 +226,8 @@ const ProductController={
 
     updateCart(req,res,next){
         //so luong va tien theo ID
-         var tempSoLuong = "soLuong"+req.params.id;  //soLuong6367847be736a0b3f32b2d95
-         var tempTongTien = "tongTien"+req.params.id;
+         var tempSoLuong = "soLuongForUpdate"+req.params.id;  //soLuong6367847be736a0b3f32b2d95
+         var tempTongTien = "tongTienForUpdate"+req.params.id;
         //
         var SoLuong = req.body[tempSoLuong];
         var TongTien = req.body[tempTongTien];
@@ -240,6 +240,8 @@ const ProductController={
 
                 })
             .catch(next);
+
+
     },
     deleteCart(req,res,next){
         ProductsInCart.deleteOne({_id : req.params.id})
@@ -274,18 +276,22 @@ const ProductController={
             productOrderDetail.giaTienBanRa = req.body.giaTienBanRa[i];
             productOrderDetail.save();
             //reduce amout products in DB after order
-            
+            var tempSoLuongForUpdate = req.body.soLuong[i];
              Promise.all([ProductsDetails.findOne({idProduct : req.body.idSanPham[i],size :req.body.size[i]})])
                 .then(async([productsdetails])=>{
                         if(productsdetails){
                             //Số lượng đã có
                             soLuongCurrent = productsdetails.soLuongCon;
                             //so lượng reduce
-                            soLuongReduce[i] = req.body.soLuong[i];
+                            soLuongReduce = tempSoLuongForUpdate;
                             // tổng sau cộng
                             soLuongToTal =parseInt(soLuongCurrent) - parseInt(soLuongReduce);
                             //
-                            newValues = ({ $set: {soLuongCon :soLuongToTal} });
+                            tinhTrangTotal = "Còn hàng";
+                            if(soLuongToTal==0){
+                                tinhTrangTotal ="Tạm hết hàng"
+                            }
+                            newValues = ({ $set: {soLuongCon :soLuongToTal,tinhTrang : tinhTrangTotal} });
                             temp = (productsdetails._id).toString()
                             await ProductsDetails.updateOne({_id : temp},newValues)
                         }

@@ -1,6 +1,6 @@
 .btnSelectSize {
     border: 1px solid black;
-    background-color: white;
+    background-color: rgb(255, 230, 208);
     color: black;
     padding: 10px 20px;
     font-size: 20px;
@@ -20,3 +20,9 @@
     cursor: pointer;
     font-size: 14px;
   }
+.btn:disabled,
+.btn[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}

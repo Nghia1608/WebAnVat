@@ -166,7 +166,7 @@
             			{{#each productsdetails}}
 
 							<tr >
-							<td><button id="buttonSize{{this.size}}" type="button" class="btnSelectSize">{{this.size}} g</button></td>
+							<td><button id="buttonSize{{this.size}}" type="button" class="btn btnSelectSize">{{this.size}} g</button></td>
 							<td>
 								<h5 class="d-flex flex-row align-items-center justify-content-center"> 
 									{{this.soLuongCon}}
@@ -174,15 +174,22 @@
 								{{!-- for get Value --}}
             					<input type="text" class="form-control" value="{{this.giaTienBanRa}}" id="giaTienSize{{this.size}}"  hidden>
             					<input type="text" class="form-control" value="{{this.size}}" id="giaSize{{this.size}}"  hidden>
+            					<input type="text" class="form-control" value="{{this.soLuongCon}}" id="soLuongCon{{this.size}}"  hidden>
 
 							</td>
 							</tr>
 							<script>
 
+
 								var sizeIdSelected{{this.size}} = "buttonSize"+{{this.size}};
 								var ValueMoneySizeSelected{{this.size}} = "giaTienSize"+{{this.size}};
 								var ValueSizeSelected{{this.size}} = "giaSize"+{{this.size}};
+								var MoneySizeSelected{{this.size}} = "soLuongCon"+{{this.size}};
 								
+								if(document.getElementById(MoneySizeSelected{{this.size}}).value==0){
+									document.getElementById(sizeIdSelected{{this.size}}).disabled  = true;
+								}
+
 								document.getElementById(sizeIdSelected{{this.size}}).onclick = function(){
 									giaTienSizeDaChonTag.value = document.getElementById(ValueMoneySizeSelected{{this.size}}).value;
 									giaTriSize.value =  document.getElementById(ValueSizeSelected{{this.size}}).value;
