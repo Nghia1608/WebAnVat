@@ -255,6 +255,17 @@ const ProductController={
 
         // This arrangement can be altered based on how we want the date's format to appear.
         var tempMHD =Math.floor(Math.random()*90000000000);
+        // thoi gian dat hang
+        const dt = new Date();
+        const padL = (nr, len = 2, chr = `0`) => `${nr}`.padStart(2, chr);
+        tempThoiGianDatHang = `${
+            padL(dt.getDate())}/${
+            padL(dt.getMonth()+1)}/${
+            dt.getFullYear()} ${
+            padL(dt.getHours())}:${
+            padL(dt.getMinutes())}:${
+            padL(dt.getSeconds())}`;
+        //
 
         const productOrder = new ProductsToOrder(formData);
           //data productOrder table
@@ -268,6 +279,7 @@ const ProductController={
         productOrder.tinhTrang = req.body.tinhTrang;
         productOrder.tongTien = req.body.tongTienGioHang;
         productOrder.maHoaDon = tempMHD;
+        productOrder.thoiGianDatHang = tempThoiGianDatHang;
         productOrder.save()
           //data productOrderDetail table
         var i;

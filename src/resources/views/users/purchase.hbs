@@ -112,7 +112,10 @@
         </thead>
         <tbody>
 
-            
+			<script>
+						var dt = new Date();
+						var padL = (nr, len = 2, chr = `0`) => `${nr}`.padStart(2, chr);
+				</script>
             {{#each usersorders}}
 
             <tr>
@@ -124,24 +127,55 @@
             <h5 class="giaTienBanRa"id="giaTienBanRa{{this.maHoaDon}}" name="giaTienBanRa{{this.giaTienBanRa}}" >{{this.tongTien}}</h5>
             </td>
             <td>
-              <h5 id="createdAt{{this.maHoaDon}}">{{this.createdAt}}</h5>
+              <h5 id="createdAt{{this.maHoaDon}}">{{this.thoiGianDatHang}}</h5>
             </td>
             <td>
               <h5>{{this.tinhTrang}}  </h5>
             </td>
             <td>
                 <a href="/users/{{this.maHoaDon}}/purchaseDetail" class="btnUpdate btn-link">Chi tiết</a>
-                <a id="btn-select{{this.maHoaDon}}"href="" class="btnDelete btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModalRestore">Hủy đơn hàng</a>
+                {{!-- <a id="btn-select{{this.maHoaDon}}"href="" class="btnDelete btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModalRestore">Hủy đơn hàng</a> --}}
+                <button id="btn-select{{this.maHoaDon}}"class="btnDelete1 btn-link" disabled>Hủy đơn hàng</button>
             </td>
             </tr>
             <script>
                 var tempID{{this.maHoaDon}} = "createdAt"+{{this.maHoaDon}}
                 var tempDate{{this.maHoaDon}} = document.getElementById(tempID{{this.maHoaDon}}).innerHTML
-                document.getElementById(tempID{{this.maHoaDon}}).innerHTML = (tempDate{{this.maHoaDon}}).slice(4,24)
+				var tempBtnHuy{{this.maHoaDon}} ="btn-select"+{{this.maHoaDon}}
 
 					var giaTienBanRaHienThi{{this.maHoaDon}} = "giaTienBanRa"+{{this.maHoaDon}}
                     document.getElementById(giaTienBanRaHienThi{{this.maHoaDon}}).innerHTML = ({{this.tongTien}}).toLocaleString() + "  VND"; 
+					//Disable button huy sau khi dat hang 30p
+						//Current date
 
+						tempThoiGianDatHang = `${
+						padL(dt.getDate())}/${
+						padL(dt.getMonth()+1)}/${
+						dt.getFullYear()} ${
+						padL(dt.getHours())}:${
+						padL(dt.getMinutes())}:${
+						padL(dt.getSeconds())}`;
+
+						minuteCurrent{{this.maHoaDon}} = tempThoiGianDatHang.slice(14, 16) 
+						dateCurrent{{this.maHoaDon}} = tempThoiGianDatHang.slice(0, 10)
+						hoursCurrent{{this.maHoaDon}} = tempThoiGianDatHang.slice(11,13)
+
+						//Order date
+						tempDate{{this.maHoaDon}} = document.getElementById(tempID{{this.maHoaDon}}).innerHTML
+						minute{{this.maHoaDon}} = tempDate{{this.maHoaDon}}.slice(14, 16) 
+						date{{this.maHoaDon}} = tempDate{{this.maHoaDon}}.slice(0, 10)
+						hours{{this.maHoaDon}} = tempDate{{this.maHoaDon}}.slice(11,13)
+						//Ngay gio bang nhau va phut chenh lech hon 10
+						if((date{{this.maHoaDon}}==dateCurrent{{this.maHoaDon}})
+							&& (hours{{this.maHoaDon}}==hoursCurrent{{this.maHoaDon}})
+							&& Math.abs(
+								parseInt(minute{{this.maHoaDon}})
+									-
+									parseInt(minuteCurrent{{this.maHoaDon}})
+								)<20 
+						){
+							document.getElementById(tempBtnHuy{{this.maHoaDon}}).disabled = false;
+						}
 
                 </script>
             {{/each}}

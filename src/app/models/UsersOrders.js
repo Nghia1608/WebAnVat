@@ -19,6 +19,8 @@ const UsersOrder = new Schema({
     // hinhThucThanhToan : {type :String ,maxLength : 100},
     hinhThucMuaHang : {type :String ,maxLength : 100},
     tongTien : {type :String ,maxLength : 100},
+    thoiGianDatHang : {type :String ,maxLength : 100},
+
     tinhTrang:  {type :String ,maxLength : 100},
     // slug : {type :String ,default : function() {
     //   return Math.floor(Math.random()*900000000300000000000) + 1000000000000000

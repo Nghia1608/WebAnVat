@@ -16,7 +16,6 @@ const Cart = new Schema({
     size :{type :String ,maxLength : 100},
     soLuong :{type :String ,maxLength :3},
     tongTien : {type :String ,maxLength : 100},
-
     slug : {type :String ,default : function() {
       return Math.floor(Math.random()*900000000300000000000) + 1000000000000000
     },require:true,unique:true},
