@@ -372,6 +372,7 @@ const ProductController={
 
          res.redirect('/users/cart')
      },
+
     deleteCartAfterOrder(req,res,next){
         for(var i =0;i<(req.body.idSanPham).length;i++){
 
@@ -393,5 +394,40 @@ const ProductController={
     res.redirect('/users/cart')
 
     },
+    cancelOrder(req,res,next){
+            Promise.all([ProductsToOrder.findOne({_id : req.params.id})])
+            .then(async([usersorders])=>{
+                Promise.all([ProductsDetailToOrder.findOne({maHoaDon : usersorders.maHoaDon})])
+                .then(async([usersordersdetails])=>{
+                    await ProductsDetailToOrder.deleteMany({maHoaDon : usersordersdetails.maHoaDon}),
+                    await ProductsToOrder.deleteOne({_id : req.params.id})
+
+                    //res.send(usersordersdetails._id)
+                    res.redirect('/users/purchase')
+                })
+            });
+
+            // Promise.all([ProductsDetails.find({idProduct : usersordersdetails.idSanPham,size :usersordersdetails.size})])
+            // .then(async([productsdetails])=>{
+            //         if( productsdetails){
+            //             //Số lượng đã có
+            //             soLuongCurrent = productsdetails.soLuongCon;
+            //             //so lượng reduce
+            //             soLuongReduce = tempSL;
+            //             // tổng sau cộng
+            //             soLuongToTal =parseInt(soLuongCurrent) - parseInt(soLuongReduce);
+            //             //
+            //             tinhTrangTotal = "Còn hàng";
+            //             if(soLuongToTal==0){
+            //                 tinhTrangTotal ="Tạm hết hàng"
+            //             }
+            //             newValues = ({ $set: {soLuongCon :soLuongToTal,tinhTrang : tinhTrangTotal} });
+            //             temp = (productsdetails._id).toString()
+            //             await ProductsDetails.updateOne({_id : temp},newValues)
+            //         }
+            // })
+
+         //res.redirect('/users/purchase')
+     },
 }
 module.exports = ProductController;

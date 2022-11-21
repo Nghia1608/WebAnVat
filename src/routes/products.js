@@ -41,6 +41,7 @@ router.delete('/:id/deleteDetail',verifyTokenAndAdmin,productsController.deleteD
 
 router.post('/order',verifyToken,productsController.order);
 router.delete('/:id/deleteCartAfterOrder',verifyToken,productsController.deleteCartAfterOrder);
+router.delete('/:id/cancelOrder',verifyTokenAndUserAuthorization,productsController.cancelOrder);
 
 
 router.post('/:id',verifyToken,productsController.storeProductToCart);

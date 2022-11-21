@@ -134,9 +134,9 @@
             </td>
             <td>
                 <a href="/users/{{this.maHoaDon}}/purchaseDetail" class="btnUpdate btn-link">Chi tiết</a>
-                {{!-- <a id="btn-select{{this.maHoaDon}}"href="" class="btnDelete btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModalRestore">Hủy đơn hàng</a> --}}
-                <button id="btn-select{{this.maHoaDon}}"class="btnDelete1 btn-link" disabled>Hủy đơn hàng</button>
-            </td>
+					<a id="btn-select{{this.maHoaDon}}"href="" class="btnDelete btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModalRestore" hidden>Hủy đơn hàng</a>
+
+			</td>
             </tr>
             <script>
                 var tempID{{this.maHoaDon}} = "createdAt"+{{this.maHoaDon}}
@@ -174,7 +174,7 @@
 									parseInt(minuteCurrent{{this.maHoaDon}})
 								)<20 
 						){
-							document.getElementById(tempBtnHuy{{this.maHoaDon}}).disabled = false;
+							document.getElementById(tempBtnHuy{{this.maHoaDon}}).hidden = false;
 						}
 
                 </script>
@@ -316,29 +316,15 @@
     document.addEventListener('DOMContentLoaded',function(){
         var idRestore;
         var restoreForm = document.getElementById('restore-product-form');
-
-
-
         var btnRestore = document.getElementById('btn-restore');
-
-
-        
-
-//
         $('#exampleModalRestore').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) 
         idRestore = button.data('id')
-
         });
-
-
         btnRestore.onclick = function(){
-            restoreForm.action = '/products/'+idRestore + '/updateCart?_method=PUT';
+            restoreForm.action = '/products/'+idRestore + '/cancelOrder?_method=DELETE';
             restoreForm.submit(); 
-
         }
-
-        
     })
 
 
