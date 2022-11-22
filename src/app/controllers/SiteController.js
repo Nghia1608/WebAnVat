@@ -29,17 +29,7 @@ const SiteController={
 
 
     },
-    // 
-    search(req,res,next){
-        // Products.find({tenSanPham:"Khô gà lá chanh 2"})
-        // .then(products =>{
-        //     res.render('home',{
-        //         products : multipleMongooseToObject(products)
-        //     });
-        // })
-        // .catch(next)
-        res.send(req.body)
-},
+
     contact(req,res){
         res.render('contact');
     }
