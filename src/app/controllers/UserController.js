@@ -69,13 +69,45 @@ const UserController = {
         .catch(next); 
     },
     purchase(req,res,next){
-        Promise.all([ProductsToOrder.find({username : req.user.username})
-            ,ProductsDetailToOrder.find({username:req.user.username})
-            ,Users.findOne({username : req.user.username})
+        if(req.user.quyen =="Admin"){
+            Promise.all([ProductsToOrder.find({})
+                ,ProductsDetailToOrder.find({})
+                ,Users.findOne({username : req.user.username})
+                ])
+            .then(([usersorders,usersordersdetails,users])=>{
+                res.render('users/purchase',{
+                    users : mongooseToObject(users),
+                    usersorders : multipleMongooseToObject(usersorders),
+                    usersordersdetails : multipleMongooseToObject(usersordersdetails),
+    
+                }); 
+            })
+            .catch(next); 
+        }else{
+            Promise.all([ProductsToOrder.find({username : req.user.username})
+                ,ProductsDetailToOrder.find({username:req.user.username})
+                ,Users.findOne({username : req.user.username})
+                ])
+            .then(([usersorders,usersordersdetails,users])=>{
+                res.render('users/purchase',{
+                    users : mongooseToObject(users),
+                    usersorders : multipleMongooseToObject(usersorders),
+                    usersordersdetails : multipleMongooseToObject(usersordersdetails),
+    
+                }); 
+            })
+            .catch(next); 
+        }
+
+    },
+    canceledPurchase(req,res,next){
+        Promise.all([ProductsToOrder.findDeleted()
+            ,ProductsDetailToOrder.findDeleted()
+            ,Users.findOne()
             ])
         .then(([usersorders,usersordersdetails,users])=>{
-            res.render('users/purchase',{
-                users : mongooseToObject(users),
+            res.render('users/canceledPurchase',{
+                //users : mongooseToObject(users),
                 usersorders : multipleMongooseToObject(usersorders),
                 usersordersdetails : multipleMongooseToObject(usersordersdetails),
 
@@ -88,6 +120,19 @@ const UserController = {
                 .then(([usersordersdetails,usersorders])=>{
                         res.render('users/purchaseDetail',{
                             usersorders : mongooseToObject(usersorders),
+                            usersordersdetails : multipleMongooseToObject(usersordersdetails),
+                    }); 
+                })
+                .catch((next)=>{
+                    res.send(next)
+                }); 
+
+    },
+    canceledPurchaseDetail(req,res,next){
+        Promise.all([ProductsDetailToOrder.findDeleted({maHoaDon : req.params.id}),ProductsToOrder.findDeleted({maHoaDon : req.params.id})]) 
+                .then(([usersordersdetails,usersorders])=>{
+                        res.render('users/canceledPurchaseDetail',{
+                            usersorders : multipleMongooseToObject(usersorders),
                             usersordersdetails : multipleMongooseToObject(usersordersdetails),
                     }); 
                 })

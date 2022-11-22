@@ -148,7 +148,7 @@
 
     <br>
 
-        <h2>Đơn hàng đã mua</h2>
+        <h2>Đơn hàng đã hủy</h2>
     <table class="table">
 
         <thead>
@@ -162,7 +162,6 @@
             </tr>
         </thead>
         <tbody>
-  		<input type="text" class="form-control" value="{{users.quyen}}" id="quyen"hidden>
 
 			<script>
 						var dt = new Date();
@@ -185,54 +184,18 @@
               <h5>{{this.tinhTrang}}  </h5>
             </td>
             <td>
-                <a href="/users/{{this.maHoaDon}}/purchaseDetail" class="btnUpdate btn-link">Chi tiết</a>
-					<a id="btn-select{{this.maHoaDon}}"href="" class="btnDelete btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModalRestore" hidden>Hủy đơn hàng</a>
+                <a href="/users/{{this.maHoaDon}}/canceledPurchaseDetail" class="btnUpdate btn-link">Chi tiết</a>
 
 			</td>
             </tr>
             <script>
-				var quyenAdmin = document.getElementById("quyen").value
                 var tempID{{this.maHoaDon}} = "createdAt"+{{this.maHoaDon}}
                 var tempDate{{this.maHoaDon}} = document.getElementById(tempID{{this.maHoaDon}}).innerHTML
-				var tempBtnHuy{{this.maHoaDon}} ="btn-select"+{{this.maHoaDon}}
 
 					var giaTienBanRaHienThi{{this.maHoaDon}} = "giaTienBanRa"+{{this.maHoaDon}}
                     document.getElementById(giaTienBanRaHienThi{{this.maHoaDon}}).innerHTML = ({{this.tongTien}}).toLocaleString() + "  VND"; 
-					//Disable button huy sau khi dat hang 30p
-						//Current date
 
-						tempThoiGianDatHang = `${
-						padL(dt.getDate())}/${
-						padL(dt.getMonth()+1)}/${
-						dt.getFullYear()} ${
-						padL(dt.getHours())}:${
-						padL(dt.getMinutes())}:${
-						padL(dt.getSeconds())}`;
 
-						minuteCurrent{{this.maHoaDon}} = tempThoiGianDatHang.slice(14, 16) 
-						dateCurrent{{this.maHoaDon}} = tempThoiGianDatHang.slice(0, 10)
-						hoursCurrent{{this.maHoaDon}} = tempThoiGianDatHang.slice(11,13)
-
-						//Order date
-						tempDate{{this.maHoaDon}} = document.getElementById(tempID{{this.maHoaDon}}).innerHTML
-						minute{{this.maHoaDon}} = tempDate{{this.maHoaDon}}.slice(14, 16) 
-						date{{this.maHoaDon}} = tempDate{{this.maHoaDon}}.slice(0, 10)
-						hours{{this.maHoaDon}} = tempDate{{this.maHoaDon}}.slice(11,13)
-						//Ngay gio bang nhau va phut chenh lech hon 10
-						if((date{{this.maHoaDon}}==dateCurrent{{this.maHoaDon}})
-							&& (hours{{this.maHoaDon}}==hoursCurrent{{this.maHoaDon}})
-							&& Math.abs(
-								parseInt(minute{{this.maHoaDon}})
-									-
-									parseInt(minuteCurrent{{this.maHoaDon}})
-								)<20 
-						){
-							document.getElementById(tempBtnHuy{{this.maHoaDon}}).hidden = false;
-						}
-						if(quyenAdmin=="Admin"){
-							document.getElementById(tempBtnHuy{{this.maHoaDon}}).hidden = true;
-
-						}
                 </script>
             {{/each}}
 
@@ -248,28 +211,7 @@
 
     </form>
 
-<!--Form Xóa-->
 
-<div class="modal fade" id="exampleModalRestore" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Xác nhận hủy</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Bạn có chắc muốn hủy đơn hàng ?</p>
-      </div>
-      <div class="modal-footer">
-        <button id="btn-restore" type="button" class="btnDelete1 btn-link">Xác nhận</button>
-        <button type="button" class="btnCancel btn-link" data-dismiss="modal">Hủy</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!--Confirm Delete Button -->
 
 
 
@@ -368,23 +310,7 @@
 	</div>
 
 <!--Event xóa-->
-<script>
-    document.addEventListener('DOMContentLoaded',function(){
-        var idRestore;
-        var restoreForm = document.getElementById('restore-product-form');
-        var btnRestore = document.getElementById('btn-restore');
-        $('#exampleModalRestore').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) 
-        idRestore = button.data('id')
-        });
-        btnRestore.onclick = function(){
-            restoreForm.action = '/products/'+idRestore + '/cancelOrder?_method=DELETE';
-            restoreForm.submit(); 
-        }
-    })
 
-
-</script>
 <script src="/js/jquery-3.2.1.min.js"></script>
 <script src="/styles/bootstrap4/popper.js"></script>
 <script src="/styles/bootstrap4/bootstrap.min.js"></script>

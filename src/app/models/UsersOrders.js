@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const slug = require('mongoose-slug-generator');
+const mongooseDelete = require('mongoose-delete');
 
 
 
@@ -29,5 +31,9 @@ const UsersOrder = new Schema({
   },{
     timestamps : true,
   });
-
+  mongoose.plugin(slug);
+  UsersOrder.plugin(mongooseDelete,{
+    deletedAt :true,
+    overrideMethods : 'all',
+  });
 module.exports = mongoose.model('UsersOrders',UsersOrder);

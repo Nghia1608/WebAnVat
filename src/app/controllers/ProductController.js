@@ -417,11 +417,19 @@ const ProductController={
                                     newValues = ({ $set: {soLuongCon :soLuongToTal,tinhTrang : tinhTrangTotal} });
                                     temp = (productsdetails._id).toString()
                                     await ProductsDetails.updateOne({_id : temp},newValues)
+                                    
+                    await ProductsDetailToOrder.delete({maHoaDon : usersorders.maHoaDon})
+
                                 }
                         })
+
                     })
-                    await ProductsDetailToOrder.deleteMany({maHoaDon : usersorders.maHoaDon}),
-                    await ProductsToOrder.deleteOne({_id : req.params.id})    
+                    //await ProductsDetailToOrder.deleteMany({maHoaDon : usersorders.maHoaDon}),
+                    //await ProductsToOrder.deleteOne({_id : req.params.id})
+                    setValueForCanceled = ({ $set: {tinhTrang :"Đã hủy bởi người mua"} });
+                    await ProductsToOrder.updateOne({_id : req.params.id},setValueForCanceled)    
+
+                    await ProductsToOrder.delete({_id : req.params.id})    
                 })
             });
          res.redirect('/users/purchase')

@@ -22,9 +22,11 @@ router.delete('/:id/delete',verifyTokenAndUserAuthorization,UserController.delet
 router.delete('/:id/delete',verifyTokenAndUserAuthorization,UserController.delete);
 router.get('/cart',verifyToken,UserController.cart);
 
-router.get('/purchase',verifyTokenAndUserAuthorization,UserController.purchase);
-router.get('/:id/purchaseDetail',verifyTokenAndUserAuthorization,UserController.purchaseDetail);
+router.get('/purchase',verifyToken,UserController.purchase);
+router.get('/:id/purchaseDetail',verifyToken,UserController.purchaseDetail);
 
+router.get('/canceledPurchase',verifyTokenAndAdmin,UserController.canceledPurchase);
+router.get('/:id/canceledPurchaseDetail',verifyTokenAndAdmin,UserController.canceledPurchaseDetail);
 
 
 router.get('/storedUsers',verifyTokenAndAdmin,UserController.storedUsers);

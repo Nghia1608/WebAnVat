@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Đơn hàng đã mua</title>
+<title>Chi tiết sản phẩm</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Colo Shop Template">
@@ -16,7 +16,6 @@
 <link rel="stylesheet" type="text/css" href="/styles/single_styles.css">
 <link rel="stylesheet" type="text/css" href="/styles/single_responsive.css">
 <link rel="stylesheet" type="text/css" href="/css/cssUsers/cart.css">
-<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
 </head>
@@ -58,6 +57,7 @@
 
 										<li id="login" hidden><a  href="/auth/login"><i class="fa fa-sign-in" aria-hidden="true"></i>Đăng nhập</a></li>
 										
+										<form name="logoutForm" method="POST">
 										<li>
 											<a id="logout"href="#"><i class="fa fa-user-plus" aria-hidden="true">
 											</i>Đăng xuất</a>
@@ -109,6 +109,7 @@
 						</div>
 						<nav class="navbar">
 							<ul class="navbar_menu">
+								<form name="search" method="POST">
 								<li><a href="/">Trang chủ</a></li>
 								<li><a href="/contact">Liên hệ</a></li>
 								<li>
@@ -142,136 +143,85 @@
 
 	</header>
 
-    <form id="restore-product-form"name="restore-product-form" method="POST">
 	
 	<div class="container single_product_container">
+<div class="mt-4">
+  <h3 class="free_delivery d-flex flex-row align-items-center justify-content-center"> 
+    Chi tiết đơn hủy 
+  </h3>
+<div class="row" id="formCheckout">
+  <div class="col-75">
+    <div class="container">
+        {{#each usersorders}}
 
-    <br>
+        <div class="row">
+          <div id="formUser" class="col-50">
+            <label for="hoTen"><i class="fa fa-user"></i> Họ tên :<i>{{this.hoTen}}</label>
+            <label for="email"><i class="fa fa-envelope"></i> Email :<i>{{this.email}}</label>
+            <label for="diaChi"><i class="fa fa-address-card-o"></i> Địa chỉ nhận hàng :  <i>{{this.diaChi}}</i></label>
+            <label for="sdt"><i class="fa fa fa-phone"></i> Số điện thoại :<i>{{this.sdt}}</label>
+            <label for="adr"><i class="fa fas fa-bookmark"></i> Ghi chú :<i>{{this.note}}</label>
+          </div>
 
-        <h2>Đơn hàng đã mua</h2>
+        </div>
+        {{/each}}
+    </div>
+
+  </div>
+
+
+</div>
     <table class="table">
-
         <thead>
             <tr>
             <th scope="col">STT</th>
-            <th scope="col">Hình thức mua</th>
-            <th scope="col">Tổng tiền</th>
-            <th scope="col">Ngày đặt hàng</th>
-            <th scope="col">Tình trạng</th>
-            <th scope="col" colspan="2">Chỉnh sửa</th>
+            <th scope="col">Tên sản phẩm</th>
+            <th scope="col">Size</th>
+            <th scope="col">Số lượng</th>
+            <th scope="col">Giá tiền bán ra</th>
             </tr>
         </thead>
         <tbody>
-  		<input type="text" class="form-control" value="{{users.quyen}}" id="quyen"hidden>
-
-			<script>
-						var dt = new Date();
-						var padL = (nr, len = 2, chr = `0`) => `${nr}`.padStart(2, chr);
-				</script>
-            {{#each usersorders}}
-
+            {{#each usersordersdetails}}
             <tr>
             <th scope="row">{{sum @index 1}}</th>
             <td>
-              <h5>{{this.hinhThucMuaHang}}  </h5>
+                <h5 >{{this.tenSanPham}}</h5>
             </td>
             <td>
-            <h5 class="giaTienBanRa"id="giaTienBanRa{{this.maHoaDon}}" name="giaTienBanRa{{this.giaTienBanRa}}" >{{this.tongTien}}</h5>
-            </td>
+                <h5 class="size"id="size{{this.giaTienBanRa}}" name="size{{this.giaTienBanRa}}"  >{{this.size}}</h5>
+                </td>
             <td>
-              <h5 id="createdAt{{this.maHoaDon}}">{{this.thoiGianDatHang}}</h5>
+            <h5  >{{this.soLuong}}</h5>
             </td>
-            <td>
-              <h5>{{this.tinhTrang}}  </h5>
+			<td>
+            <h5 class="giaTienBanRa"id="giaTienBanRa{{this.giaTienBanRa}}" name="giaTienBanRa{{this.giaTienBanRa}}" >{{this.giaTienBanRa}}</h5>
             </td>
-            <td>
-                <a href="/users/{{this.maHoaDon}}/purchaseDetail" class="btnUpdate btn-link">Chi tiết</a>
-					<a id="btn-select{{this.maHoaDon}}"href="" class="btnDelete btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModalRestore" hidden>Hủy đơn hàng</a>
-
-			</td>
             </tr>
+
             <script>
-				var quyenAdmin = document.getElementById("quyen").value
-                var tempID{{this.maHoaDon}} = "createdAt"+{{this.maHoaDon}}
-                var tempDate{{this.maHoaDon}} = document.getElementById(tempID{{this.maHoaDon}}).innerHTML
-				var tempBtnHuy{{this.maHoaDon}} ="btn-select"+{{this.maHoaDon}}
+                //size
+                    var sizeHienThi{{this.giaTienBanRa}} = "size"+{{this.giaTienBanRa}}
+                    document.getElementById(sizeHienThi{{this.giaTienBanRa}}).innerHTML = ({{this.size}}).toLocaleString() + "  g";     
+                //soluong
 
-					var giaTienBanRaHienThi{{this.maHoaDon}} = "giaTienBanRa"+{{this.maHoaDon}}
-                    document.getElementById(giaTienBanRaHienThi{{this.maHoaDon}}).innerHTML = ({{this.tongTien}}).toLocaleString() + "  VND"; 
-					//Disable button huy sau khi dat hang 30p
-						//Current date
-
-						tempThoiGianDatHang = `${
-						padL(dt.getDate())}/${
-						padL(dt.getMonth()+1)}/${
-						dt.getFullYear()} ${
-						padL(dt.getHours())}:${
-						padL(dt.getMinutes())}:${
-						padL(dt.getSeconds())}`;
-
-						minuteCurrent{{this.maHoaDon}} = tempThoiGianDatHang.slice(14, 16) 
-						dateCurrent{{this.maHoaDon}} = tempThoiGianDatHang.slice(0, 10)
-						hoursCurrent{{this.maHoaDon}} = tempThoiGianDatHang.slice(11,13)
-
-						//Order date
-						tempDate{{this.maHoaDon}} = document.getElementById(tempID{{this.maHoaDon}}).innerHTML
-						minute{{this.maHoaDon}} = tempDate{{this.maHoaDon}}.slice(14, 16) 
-						date{{this.maHoaDon}} = tempDate{{this.maHoaDon}}.slice(0, 10)
-						hours{{this.maHoaDon}} = tempDate{{this.maHoaDon}}.slice(11,13)
-						//Ngay gio bang nhau va phut chenh lech hon 10
-						if((date{{this.maHoaDon}}==dateCurrent{{this.maHoaDon}})
-							&& (hours{{this.maHoaDon}}==hoursCurrent{{this.maHoaDon}})
-							&& Math.abs(
-								parseInt(minute{{this.maHoaDon}})
-									-
-									parseInt(minuteCurrent{{this.maHoaDon}})
-								)<20 
-						){
-							document.getElementById(tempBtnHuy{{this.maHoaDon}}).hidden = false;
-						}
-						if(quyenAdmin=="Admin"){
-							document.getElementById(tempBtnHuy{{this.maHoaDon}}).hidden = true;
-
-						}
+                //giatien
+                    var giaTienBanRaHienThi{{this.giaTienBanRa}} = "giaTienBanRa"+{{this.giaTienBanRa}}
+                    document.getElementById(giaTienBanRaHienThi{{this.giaTienBanRa}}).innerHTML = ({{this.giaTienBanRa}}).toLocaleString() + "  VND";     
                 </script>
+
             {{/each}}
 
         </tbody>
-        
 
     </table>
-  </div>
-
-
-
-
-
-    </form>
-
-<!--Form Xóa-->
-
-<div class="modal fade" id="exampleModalRestore" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Xác nhận hủy</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Bạn có chắc muốn hủy đơn hàng ?</p>
-      </div>
-      <div class="modal-footer">
-        <button id="btn-restore" type="button" class="btnDelete1 btn-link">Xác nhận</button>
-        <button type="button" class="btnCancel btn-link" data-dismiss="modal">Hủy</button>
-      </div>
-    </div>
-  </div>
 </div>
-<!--Confirm Delete Button -->
+    
+  </div>
 
 
+{{!-- Tong tien ne --}}
+    
 
 
 
@@ -367,24 +317,6 @@
 
 	</div>
 
-<!--Event xóa-->
-<script>
-    document.addEventListener('DOMContentLoaded',function(){
-        var idRestore;
-        var restoreForm = document.getElementById('restore-product-form');
-        var btnRestore = document.getElementById('btn-restore');
-        $('#exampleModalRestore').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) 
-        idRestore = button.data('id')
-        });
-        btnRestore.onclick = function(){
-            restoreForm.action = '/products/'+idRestore + '/cancelOrder?_method=DELETE';
-            restoreForm.submit(); 
-        }
-    })
-
-
-</script>
 <script src="/js/jquery-3.2.1.min.js"></script>
 <script src="/styles/bootstrap4/popper.js"></script>
 <script src="/styles/bootstrap4/bootstrap.min.js"></script>
