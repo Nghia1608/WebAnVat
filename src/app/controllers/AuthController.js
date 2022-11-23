@@ -26,21 +26,26 @@ confirmLogin :async(req,res,next)=>{     //check dang nhap
     }
     if (user && validPassword) {
         //Generate access token
-        const accessToken = AuthController.generateAccessToken(user);
-        //Generate refresh token
-        const refreshToken = AuthController.generateRefreshToken(user);
+        if(user.trangThai == "Đang hoạt động"){
+          const accessToken = AuthController.generateAccessToken(user);
+          //Generate refresh token
+          const refreshToken = AuthController.generateRefreshToken(user);
+  
+          refreshTokens.push(refreshToken);
+  
+          //STORE REFRESH TOKEN IN COOKIE
+          res.cookie("refreshToken", refreshToken, {
+          httpOnly: true,
+          secure:false,
+          path: "/",
+          sameSite: "strict",
+          });
+          const { password, ...others } = user._doc;
+          res.redirect('/');
+        }else{
+          res.send("Tai khoan da bi khoa")
+        }
 
-        refreshTokens.push(refreshToken);
-
-        //STORE REFRESH TOKEN IN COOKIE
-        res.cookie("refreshToken", refreshToken, {
-        httpOnly: true,
-        secure:false,
-        path: "/",
-        sameSite: "strict",
-        });
-        const { password, ...others } = user._doc;
-        res.redirect('/');
     }
     }
     

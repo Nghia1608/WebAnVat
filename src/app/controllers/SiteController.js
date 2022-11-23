@@ -6,6 +6,10 @@ const {mongooseToObject, multipleMongooseToObject}= require('../../util/mongoose
 const SiteController={
 
     // [Get] /
+    admin(req,res,next){
+        res.render('dashboard');
+    },
+
     index(req,res,next){
             Products.find({})
             .then(products =>{

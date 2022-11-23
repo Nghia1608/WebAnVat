@@ -68,7 +68,7 @@
 											document.getElementById("logout").onclick = function(){
     												localStorage.removeItem("username");
 
-													var logoutForm = document.forms['logoutForm'];
+													var logoutForm = document.forms['restore-product-form'];
 
 													logoutForm.action = '/auth/logout?_method=POST';
 													logoutForm.submit();

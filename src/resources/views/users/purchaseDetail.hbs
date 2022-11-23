@@ -27,7 +27,6 @@
 <div class="super_container">
 
 	<!-- Header -->
-
 	<header class="header trans_300">
 
 		<!-- Top Navigation -->
@@ -57,7 +56,6 @@
 
 										<li id="login" hidden><a  href="/auth/login"><i class="fa fa-sign-in" aria-hidden="true"></i>Đăng nhập</a></li>
 										
-										<form name="logoutForm" method="POST">
 										<li>
 											<a id="logout"href="#"><i class="fa fa-user-plus" aria-hidden="true">
 											</i>Đăng xuất</a>
@@ -68,7 +66,7 @@
 											document.getElementById("logout").onclick = function(){
     												localStorage.removeItem("username");
 
-													var logoutForm = document.forms['logoutForm'];
+													var logoutForm = document.forms['restore-product-form'];
 
 													logoutForm.action = '/auth/logout?_method=POST';
 													logoutForm.submit();
@@ -109,7 +107,6 @@
 						</div>
 						<nav class="navbar">
 							<ul class="navbar_menu">
-								<form name="search" method="POST">
 								<li><a href="/">Trang chủ</a></li>
 								<li><a href="/contact">Liên hệ</a></li>
 								<li>

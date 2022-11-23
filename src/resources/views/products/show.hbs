@@ -244,6 +244,7 @@
 								}
 
 								document.getElementById(sizeIdSelected{{this.size}}).onclick = function(){
+
 									document.getElementById("soLuong").value = 1;
 
 									giaTienSizeDaChonTag.value = document.getElementById(ValueMoneySizeSelected{{this.size}}).value;
@@ -257,6 +258,8 @@
 									soLuongDaChon = document.getElementById("soLuong").value 
 									document.getElementById("tongGiaTien").innerHTML =(giaTienSizeDaChonTag.value*soLuongDaChon).toLocaleString() +"  VND";
 									document.getElementById("tongTien").value = (giaTienSizeDaChonTag.value*soLuongDaChon);
+									document.getElementById("btn-add").disabled = false;
+
 								}
 							</script>
 						{{/each}}
@@ -279,20 +282,23 @@
 
             {{!-- HIDDEn to get value for req.body--}}
 			
-            <input type="text" class="form-control" value="" id="tongTien" name="tongTien" hidden>
+            <input type="text" class="form-control" value="0" id="tongTien" name="tongTien" hidden>
             <input type="text" class="form-control" value="{{products._id}}" id="idSP" name="idSP" hidden>
             <input type="text" class="form-control" value="{{products.tenSanPham}}" id="tenSanPham" name="tenSanPham" hidden>
             <input type="text" class="form-control" value="{{products.image}}" id="image" name="image" hidden>
 
-			<button id="btn-add" type="submit" class="btnUpdate1 btn-link">Thêm vào giỏ hàng</button>
+			<button id="btn-add" type="submit" class="btnUpdate1 btn-link" disabled>Thêm vào giỏ hàng</button>
 
 			<script>
+
 				document.getElementById("soLuong").onchange= function(){
 					soLuongDaChon = document.getElementById("soLuong").value 
 					document.getElementById("tongGiaTien").innerHTML =(giaTienSizeDaChonTag.value*soLuongDaChon).toLocaleString() +"  VND";
 					document.getElementById("tongTien").value = (giaTienSizeDaChonTag.value*soLuongDaChon);
 					console.log("tong tien ne"+document.getElementById("tongTien").value)
+
 				}
+
 			</script>
 			</div>
 		</div>
