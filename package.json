@@ -23,7 +23,8 @@
     "mongoose": "^6.6.1",
     "mongoose-delete": "^0.5.4",
     "mongoose-slug-generator": "^1.0.4",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "uniq": "^1.0.1"
   },
   "devDependencies": {
     "husky": "^8.0.1",

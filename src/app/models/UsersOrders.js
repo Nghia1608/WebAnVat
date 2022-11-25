@@ -20,7 +20,7 @@ const UsersOrder = new Schema({
     // tongTienKhuyenMai : {type :String ,maxLength : 100},
     // hinhThucThanhToan : {type :String ,maxLength : 100},
     hinhThucMuaHang : {type :String ,maxLength : 100},
-    tongTien : {type :String ,maxLength : 100},
+    tongTien : {type :Number ,maxLength : 100},
     thoiGianDatHang : {type :String ,maxLength : 100},
 
     tinhTrang:  {type :String ,maxLength : 100},
@@ -36,4 +36,5 @@ const UsersOrder = new Schema({
     deletedAt :true,
     overrideMethods : 'all',
   });
+  
 module.exports = mongoose.model('UsersOrders',UsersOrder);
