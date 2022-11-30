@@ -155,8 +155,9 @@
                       {{#each usersorders1}}{{#if @first}}{{this.tongTien}}{{/if}}{{/each}}
                       </div>
                       <div class="mt-2 mb-0 text-muted text-xs">
-                        <span class="text-success mr-2"><i class="fa fa-arrow-up" id="percent">3.48%</i> </span>
-                        <span>So với tháng trước</span>
+                        <span class="text-success mr-2"><i  id="percent">3.48%</i> </span>
+                        <br>
+                        <span id="hienThiPhanTram">Tăng so với tháng trước</span>
                         <span id="thangTruoc"></span>
                       </div>
                     </div>
@@ -172,11 +173,16 @@
                 <script>
                   var tienThangTruoc = document.getElementById("tienThangTruoc").value
                   var tienThangNay =  document.getElementById("thuNhapThang").innerHTML
-                  var percent = tienThangNay/tienThangTruoc*100
+
+                  var percent = Math.round((tienThangNay/tienThangTruoc*100) * 100) / 100
+
                   document.getElementById("percent").innerHTML = percent + " %";
                   document.getElementById("thangTruoc").innerHTML = Number(tienThangTruoc).toLocaleString() + " VND";
 
+                  if(percent<100){
+                  document.getElementById("hienThiPhanTram").innerHTML = "Giảm so với tháng trước";
 
+                  }
                   document.getElementById("thuNhapThang").innerHTML = Number(document.getElementById("thuNhapThang").innerHTML).toLocaleString() + "   VND"
 
                 </script>
