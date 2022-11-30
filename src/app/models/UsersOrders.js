@@ -22,6 +22,7 @@ const UsersOrder = new Schema({
     hinhThucMuaHang : {type :String ,maxLength : 100},
     tongTien : {type :Number ,maxLength : 100},
     thoiGianDatHang : {type :String ,maxLength : 100},
+    thoiGianGiaoDuKien : {type :String ,maxLength : 100},
 
     tinhTrang:  {type :String ,maxLength : 100},
     // slug : {type :String ,default : function() {

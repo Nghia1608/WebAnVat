@@ -1,5 +1,6 @@
 const Users = require('../models/Users');
 const ProductsDetails = require('../models/ProductsDetail');
+const Products = require('../models/Products');
 
 const ProductsInCart = require('../models/UsersCart');
 const ProductsToOrder = require('../models/UsersOrders');
@@ -21,23 +22,33 @@ const SiteController={
             ProductsToOrder.aggregate([
                 { $match: { deleted: false } },
                 { $group: { _id: { $substr: [ "$thoiGianDatHang", 3, 7 ] }, tongTien: { $sum: "$tongTien" } } },
-                { $sort: { _id: +1 } },
+                { $sort: { _id: -1 } },
+                {$limit: 2}
               ])
                 .then((usersorders1)=>{
-                    var valueForMonth = [{},{},{},{},{},{},{},{},{},{},{},{}];
+                    ProductsDetailToOrder.aggregate([
+                        { $match: { deleted: false } },
+                        { $group: { _id:  "$tenSanPham" , tongSoLuong: { $sum: "$soLuong" } } },
+                        { $sort: { tongSoLuong: -1 } },
+                      ])
+                      .then((productsHasOrderd)=>{
+                        //var valueForMonth = [{},{},{},{},{},{},{},{},{},{},{},{}];
     
-                    usersorders1.forEach(order=>{
-                        var month = order['_id'].slice(0,2)
-                        valueForMonth[Number(month)-1] = JSON.parse(order['tongTien']);
-    
-                    })
-                    res.render('dashboard',{
-                        users : mongooseToObject(users),
-                        usersorders : multipleMongooseToObject(usersorders),
-                        usersordersdetails : multipleMongooseToObject(usersordersdetails),
-                        usersorders1 : usersorders1,
-                        
-                    }); 
+                        // usersorders1.forEach(order=>{
+                        //     var month = order['_id'].slice(0,2)
+                        //     valueForMonth[Number(month)-1] = JSON.parse(order['tongTien']);
+        
+                        // })
+                        res.render('dashboard',{
+                            users : mongooseToObject(users),
+                            usersorders : multipleMongooseToObject(usersorders),
+                            usersordersdetails : multipleMongooseToObject(usersordersdetails),
+                            usersorders1 : usersorders1,
+                            productsHasOrderd : productsHasOrderd
+                        }); 
+                      })
+
+
                 })
             //
 

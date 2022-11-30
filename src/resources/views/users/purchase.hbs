@@ -111,18 +111,7 @@
 							<ul class="navbar_menu">
 								<li><a href="/">Trang chủ</a></li>
 								<li><a href="/contact">Liên hệ</a></li>
-								<li>
-									<div class="dropdown">
-									<a class="" href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-										Quản lý
-									</a>
-									<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-										<li><a class="dropdown-item" href="/products/storedProducts">Sản phẩm</a></li>
-										<li><a class="dropdown-item" href="/users/storedUsers">Tài khoản</a></li>
-										<li><a class="dropdown-item" href="#">Thống kê</a></li>
-									</ul>
-									</div>
-								</li>
+
 							</ul>
 							<ul class="navbar_user">
 
@@ -158,7 +147,8 @@
             <th scope="col">Tổng tiền</th>
             <th scope="col">Ngày đặt hàng</th>
             <th scope="col">Tình trạng</th>
-            <th scope="col" colspan="2">Chỉnh sửa</th>
+            {{!-- <th scope="col">Thời gian giao dự kiến</th> --}}
+            <th scope="col" colspan="1">Chỉnh sửa</th>
             </tr>
         </thead>
         <tbody>
@@ -184,6 +174,9 @@
             <td>
               <h5>{{this.tinhTrang}}  </h5>
             </td>
+			{{!-- <td>
+              <h5>{{this.thoiGianGiaoDuKien}}  </h5>
+            </td> --}}
             <td>
                 <a href="/users/{{this.maHoaDon}}/purchaseDetail" class="btnUpdate btn-link">Chi tiết</a>
 					<a id="btn-select{{this.maHoaDon}}"href="" class="btnDelete btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModalRestore" hidden>Hủy đơn hàng</a>

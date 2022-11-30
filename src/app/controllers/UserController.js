@@ -69,74 +69,74 @@ const UserController = {
         .catch(next); 
     },
     purchase(req,res,next){
-        // if(req.user.quyen =="Admin"){
-        //     Promise.all([ProductsToOrder.find({})
-        //         ,ProductsDetailToOrder.find({})
-        //         ,Users.findOne({username : req.user.username})
-        //         ])
-        //     .then(([usersorders,usersordersdetails,users])=>{
-        //         res.render('users/purchase',{
-        //             users : mongooseToObject(users),
-        //             usersorders : multipleMongooseToObject(usersorders),
-        //             usersordersdetails : multipleMongooseToObject(usersordersdetails),
+        if(req.user.quyen =="Admin"){
+            Promise.all([ProductsToOrder.find({})
+                ,ProductsDetailToOrder.find({})
+                ,Users.findOne({username : req.user.username})
+                ])
+            .then(([usersorders,usersordersdetails,users])=>{
+                res.render('users/purchase',{
+                    users : mongooseToObject(users),
+                    usersorders : multipleMongooseToObject(usersorders),
+                    usersordersdetails : multipleMongooseToObject(usersordersdetails),
     
-        //         }); 
-        //         usersorders.forEach(order=>{     //lap qua cac phan tu trong mang da lay ra
-        //             Promise.all([ProductsDetails.findOne({idProduct : order['idSanPham'],size :order['size']})])
-        //             .then(async([productsdetails])=>{
-        //                     if( productsdetails){
-        //                         //Số lượng đã có
-        //                         soLuongCurrent = productsdetails.soLuongCon;
-        //                         //so lượng reduce
-        //                         soLuongReduce = order['soLuong'];
-        //                         // tổng sau cộng
-        //                         soLuongToTal =parseInt(soLuongCurrent) + parseInt(soLuongReduce);
-        //                         //
-        //                         if(soLuongToTal>0){
-        //                             tinhTrangTotal = "Còn hàng";
-        //                         }
-        //                         newValues = ({ $set: {soLuongCon :soLuongToTal,tinhTrang : tinhTrangTotal} });
-        //                         temp = (productsdetails._id).toString()
-        //                         await ProductsDetails.updateOne({_id : temp},newValues)
+                }); 
+                usersorders.forEach(order=>{     //lap qua cac phan tu trong mang da lay ra
+                    Promise.all([ProductsDetails.findOne({idProduct : order['idSanPham'],size :order['size']})])
+                    .then(async([productsdetails])=>{
+                            if( productsdetails){
+                                //Số lượng đã có
+                                soLuongCurrent = productsdetails.soLuongCon;
+                                //so lượng reduce
+                                soLuongReduce = order['soLuong'];
+                                // tổng sau cộng
+                                soLuongToTal =parseInt(soLuongCurrent) + parseInt(soLuongReduce);
+                                //
+                                if(soLuongToTal>0){
+                                    tinhTrangTotal = "Còn hàng";
+                                }
+                                newValues = ({ $set: {soLuongCon :soLuongToTal,tinhTrang : tinhTrangTotal} });
+                                temp = (productsdetails._id).toString()
+                                await ProductsDetails.updateOne({_id : temp},newValues)
                                 
-        //         await ProductsDetailToOrder.delete({maHoaDon : usersorders.maHoaDon})
+                await ProductsDetailToOrder.delete({maHoaDon : usersorders.maHoaDon})
 
-        //                     }
-        //             })
+                            }
+                    })
                     
-        //         })
-        //     })
-        //     .catch(next); 
-        // }else{
-        //     Promise.all([ProductsToOrder.find({username : req.user.username})
-        //         ,ProductsDetailToOrder.find({username:req.user.username})
-        //         ,Users.findOne({username : req.user.username})
-        //         ])
-        //     .then(([usersorders,usersordersdetails,users])=>{
-        //         res.render('users/purchase',{
-        //             users : mongooseToObject(users),
-        //             usersorders : multipleMongooseToObject(usersorders),
-        //             usersordersdetails : multipleMongooseToObject(usersordersdetails),
-    
-        //         }); 
-        //     })
-        //     .catch(next); 
-        // }
-
-        ProductsToOrder.aggregate([
-            { $match: { deleted: false } },
-            { $group: { _id: { $substr: [ "$thoiGianDatHang", 3, 7 ] }, tongTien: { $sum: "$tongTien" } } },
-            { $sort: { _id: +1 } },
-          ])
-            .then((usersorders)=>{
-                var valueForMonth = [0,0,0,0,0,0,0,0,0,0,0,0];
-
-                usersorders.forEach(order=>{
-                    var month = order['_id'].slice(0,2)
-                    valueForMonth[Number(month)-1] = order['tongTien'];
                 })
-                res.send(valueForMonth)
             })
+            .catch(next); 
+        }else{
+            Promise.all([ProductsToOrder.find({username : req.user.username})
+                ,ProductsDetailToOrder.find({username:req.user.username})
+                ,Users.findOne({username : req.user.username})
+                ])
+            .then(([usersorders,usersordersdetails,users])=>{
+                res.render('users/purchase',{
+                    users : mongooseToObject(users),
+                    usersorders : multipleMongooseToObject(usersorders),
+                    usersordersdetails : multipleMongooseToObject(usersordersdetails),
+    
+                }); 
+            })
+            .catch(next); 
+        }
+
+        // ProductsToOrder.aggregate([
+        //     { $match: { deleted: false } },
+        //     { $group: { _id: { $substr: [ "$thoiGianDatHang", 3, 7 ] }, tongTien: { $sum: "$tongTien" } } },
+        //     { $sort: { _id: +1 } },
+        //   ])
+        //     .then((usersorders)=>{
+        //         var valueForMonth = [0,0,0,0,0,0,0,0,0,0,0,0];
+
+        //         usersorders.forEach(order=>{
+        //             var month = order['_id'].slice(0,2)
+        //             valueForMonth[Number(month)-1] = order['tongTien'];
+        //         })
+        //         res.send(valueForMonth)
+        //     })
 
                 
     },

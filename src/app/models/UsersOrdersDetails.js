@@ -14,7 +14,7 @@ const UsersOrderDetail = new Schema({
     idSanPham :{type :String ,maxLength : 100},
     tenSanPham :{type :String ,maxLength : 100},
     size:{type :String,maxLength:20},
-    soLuong:{type :String,maxLength:20},
+    soLuong:{type :Number,maxLength:20},
     giaTienBanRa :{type :Number,maxLength:100},
   },{
     timestamps : true,

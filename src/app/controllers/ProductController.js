@@ -265,6 +265,13 @@ const ProductController={
             padL(dt.getHours())}:${
             padL(dt.getMinutes())}:${
             padL(dt.getSeconds())}`;
+        tempThoiGianGiaoHang = `${
+                padL(dt.getDate()+3)}/${
+                padL(dt.getMonth()+1)}/${
+                dt.getFullYear()} ${
+                padL(dt.getHours())}:${
+                padL(dt.getMinutes())}:${
+                padL(dt.getSeconds())}`;
         //
 
         const productOrder = new ProductsToOrder(formData);
@@ -280,6 +287,7 @@ const ProductController={
         productOrder.tongTien = req.body.tongTienGioHang;
         productOrder.maHoaDon = tempMHD;
         productOrder.thoiGianDatHang = tempThoiGianDatHang;
+        productOrder.thoiGianGiaoDuKien = tempThoiGianGiaoHang;
         productOrder.save()
           //data productOrderDetail table
         var i;
