@@ -30,31 +30,15 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   }
   return s.join(dec);
 }
-//Data
-
-// {
-//   var value = ProductsToOrder.aggregate([
-//     { $match: { deleted: false } },
-//     { $group: { _id: { $substr: [ "$thoiGianDatHang", 3, 7 ] }, tongTien: { $sum: "$tongTien" } } },
-//     { $sort: { _id: +1 } },
-//   ])
-//     .then((usersorders)=>{
-//         var valueForMonth = [0,0,0,0,0,0,0,0,0,0,0,0];
-  
-//         usersorders.forEach(order=>{
-//             var month = order['_id'].slice(0,2)
-//             valueForMonth[Number(month)-1] = order['tongTien'];
-//         })
-        
-//         return valueForMonth
-        
-//     })
-// }
-
 
 
 // Area Chart Example
 var ctx = document.getElementById("myAreaChart");
+var valueMoney = document.getElementById("tienTheoCacThang").value;
+
+var b = valueMoney.split(',').map(function(item) {
+  return parseInt(item, 10);
+});
 var myLineChart = new Chart(ctx, {
   type:'line',
   data: {
@@ -73,8 +57,8 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-       data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
-      // data : value
+       //data: [0, 100000, 50000, 150000, 100000, 200000, 150000, 250000, 200000, 300000, 250000, 100000],
+       data : b
     }],
   },
   options: {
@@ -106,7 +90,7 @@ var myLineChart = new Chart(ctx, {
           padding: 10,
           // Include a dollar sign in the ticks
           callback: function(value, index, values) {
-            return '$' + number_format(value);
+            return  number_format(value)+ '  VNĐ' ;
           }
         },
         gridLines: {
@@ -138,7 +122,7 @@ var myLineChart = new Chart(ctx, {
       callbacks: {
         label: function(tooltipItem, chart) {
           var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+          return datasetLabel + number_format(tooltipItem.yLabel) + ' VNĐ';
         }
       }
     }

@@ -176,11 +176,12 @@
 
                   var percent = Math.round((tienThangNay/tienThangTruoc*100) * 100) / 100
 
-                  document.getElementById("percent").innerHTML = percent + " %";
+                  document.getElementById("percent").innerHTML ="+" +percent + " %";
                   document.getElementById("thangTruoc").innerHTML = Number(tienThangTruoc).toLocaleString() + " VND";
 
                   if(percent<100){
                   document.getElementById("hienThiPhanTram").innerHTML = "Giảm so với tháng trước";
+                  document.getElementById("percent").innerHTML ="-"+ percent + " %";
 
                   }
                   document.getElementById("thuNhapThang").innerHTML = Number(document.getElementById("thuNhapThang").innerHTML).toLocaleString() + "   VND"
@@ -249,7 +250,10 @@
             </div>
 
             <!-- Area Chart -->
-            <div class="col-xl-12 col-lg-7">
+            <div class="col-xl-12 col-lg-7"> 
+                  <input type="text" class="form-control" 
+                  value="{{valueForMonth}}" 
+                  id="tienTheoCacThang" hidden>
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Doanh thu theo tháng</h6>
@@ -328,26 +332,24 @@
                     <thead class="thead-light">
                       <tr>
                         <th>Mã hóa đơn</th>
-                        <th>Khách hàng</th>
                         <th>Tổng tiền</th>
                         <th>Trạng thái</th>
                         <th>Chi tiết</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {{#each usersorders1}}
+                      {{#each listorder}}
                       <tr>
                         <td>{{this._id}}</td>
-                        <td>{{this.username}}</td>
-                        <td>            <h6 class="giaTienBanRa"id="giaTienBanRa{{this._id}}" name="giaTienBanRa{{this.giaTienBanRa}}" >{{this.tongTien}}</h6></td>
+                        <td>            <h6 class="giaTienBanRa"id="giaTienBanRa{{this._id}}" name="giaTienBanRa{{this._id}}" >{{this.tongTien}}</h6></td>
                         <td>{{this.tinhTrang}}</td>
-                        <td><a href="/users/{{this.maHoaDon}}/purchaseDetail" class="btn btn-sm btn-primary">Chi tiết</a></td>
+                        <td><a href="/users/{{this._id}}/purchaseDetail" class="btn btn-sm btn-primary">Chi tiết</a></td>
                       </tr>
-                    {{!-- <script>
+                    <script>
         					    var giaTienBanRaHienThi{{this._id}} = "giaTienBanRa"+{{this._id}}
                       document.getElementById(giaTienBanRaHienThi{{this._id}}).innerHTML = ({{this.tongTien}}).toLocaleString() + "  VND"; 
 
-                    </script> --}}
+                    </script>
                     {{/each}}
 
                     </tbody>

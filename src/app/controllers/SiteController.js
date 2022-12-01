@@ -1,63 +1,117 @@
-const Users = require('../models/Users');
-const ProductsDetails = require('../models/ProductsDetail');
 const Products = require('../models/Products');
-
-const ProductsInCart = require('../models/UsersCart');
 const ProductsToOrder = require('../models/UsersOrders');
 const ProductsDetailToOrder = require('../models/UsersOrdersDetails');
-
-const { response } = require('express');
-const jwt = require('jsonwebtoken')
-const cookieparser = require('cookie-parser')
-const bcrypt = require("bcrypt");
-const {mongooseToObject, multipleMongooseToObject}= require('../../util/mongoose');
+const {multipleMongooseToObject}= require('../../util/mongoose');
 const SiteController={
 
+    admin1(req,res,next){
+        ProductsToOrder.aggregate([
+            { $match: { deleted: false } },
+            { $group: { _id: { $substr: [ "$thoiGianDatHang", 3, 7 ] }, tongTien: { $sum: "$tongTien" } } },
+            { $sort: { _id: +1 } },
+          ])
+            .then((usersorders)=>{
+                var valueForMonth = [0,0,0,0,0,0,0,0,0,0,0,0];
+
+                usersorders.forEach(order=>{
+                    var month = order['_id'].slice(0,2)
+                    valueForMonth[Number(month)-1] = order['tongTien'];
+                })
+                res.send(valueForMonth) ;
+
+            })
+    },
     // [Get] /
     admin(req,res,next){
-        Promise.all([ProductsToOrder.find({})
-            ,ProductsDetailToOrder.find({})
+        Promise.all([
+           // ProductsToOrder.find({}).limit(5)  //limit lấy 5 hóa đơn gần nhât
+           ProductsToOrder.aggregate([
+                { $match: { deleted: false } },
+                { $group: { _id:  "$maHoaDon" , tongTien: { "$first": "$tongTien" },thoiGianDatHang:{ "$first": "$thoiGianDatHang" }, tinhTrang:{ "$first": "$tinhTrang" }} },
+                { $sort: { thoiGianDatHang: -1 } },
+
+                ])
             ])
-        .then(([usersorders,usersordersdetails,users])=>{
+        .then(([usersorders])=>{
+            //doanh thu theo thang
             ProductsToOrder.aggregate([
                 { $match: { deleted: false } },
                 { $group: { _id: { $substr: [ "$thoiGianDatHang", 3, 7 ] }, tongTien: { $sum: "$tongTien" } } },
                 { $sort: { _id: -1 } },
                 {$limit: 2}
-              ])
-                .then((usersorders1)=>{
-                    ProductsDetailToOrder.aggregate([
-                        { $match: { deleted: false } },
-                        { $group: { _id:  "$tenSanPham" , tongSoLuong: { $sum: "$soLuong" } } },
-                        { $sort: { tongSoLuong: -1 } },
-                      ])
-                      .then((productsHasOrderd)=>{
-                        //var valueForMonth = [{},{},{},{},{},{},{},{},{},{},{},{}];
+            ])
+            .then((usersorders1)=>{
+                ProductsDetailToOrder.aggregate([
+                    { $match: { deleted: false } },
+                    { $group: { _id:  "$tenSanPham" , tongSoLuong: { $sum: "$soLuong" } } },
+                    { $sort: { tongSoLuong: -1 } },
+                    ])
+                    .then((productsHasOrderd)=>{
+                        ProductsToOrder.aggregate([
+                            { $match: { deleted: false } },
+                            { $group: { _id: { $substr: [ "$thoiGianDatHang", 3, 7 ] }, tongTien: { $sum: "$tongTien" } } },
+                            { $sort: { _id: +1 } },
+                          ])
+                            .then((usersorders)=>{
+                                var valueForMonth = [0,0,0,0,0,0,0,0,0,0,0,0];
+                
+                                usersorders.forEach(order=>{
+                                    var month = order['_id'].slice(0,2)
+                                    valueForMonth[Number(month)-1] = order['tongTien'];
+                                })
+                                ProductsToOrder.aggregate([
+                                    { $match: { deleted: false } },
+                                    { $group: { _id:  "$maHoaDon" , tongTien: { "$first": "$tongTien" },thoiGianDatHang:{ "$first": "$thoiGianDatHang" }, tinhTrang:{ "$first": "$tinhTrang" }} },
+                                    { $sort: { thoiGianDatHang: -1 } },
+                                    {$limit: 5}
+                    
+                                    ])
+                                .then((listorder)=>{
+                                    res.render('dashboard',{
+                                        usersorders : usersorders, //danh sách hóa đơn
+                                        usersorders1 : usersorders1, //doanh thu theo tháng
+                                        productsHasOrderd : productsHasOrderd ,  //sl sản phẩm bán
+                                        valueForMonth : valueForMonth ,
+                                        listorder:listorder
     
-                        // usersorders1.forEach(order=>{
-                        //     var month = order['_id'].slice(0,2)
-                        //     valueForMonth[Number(month)-1] = JSON.parse(order['tongTien']);
-        
-                        // })
-                        res.render('dashboard',{
-                            users : mongooseToObject(users),
-                            usersorders : multipleMongooseToObject(usersorders),
-                            usersordersdetails : multipleMongooseToObject(usersordersdetails),
-                            usersorders1 : usersorders1,
-                            productsHasOrderd : productsHasOrderd
-                        }); 
-                      })
+                                    });                                 })
+
+                            })
+
+                    //     res.render('dashboard',{
+                    //     usersorders : usersorders, //danh sách hóa đơn
+                    //     usersorders1 : usersorders1, //doanh thu theo tháng
+                    //     productsHasOrderd : productsHasOrderd   //sl sản phẩm bán
+                    // }); 
+                    })
 
 
-                })
+            })
             //
 
         })
-        .catch(next); 
-
-
-
-
+        // Promise.all([ProductsToOrder.find({}).limit(5),//limit lấy 5 hóa đơn gần nhât
+        //             ProductsToOrder.aggregate([
+        //                 { $match: { deleted: false } },
+        //                 { $group: { _id: { $substr: [ "$thoiGianDatHang", 3, 7 ] }, tongTien: { $sum: "$tongTien" } } },
+        //                 { $sort: { _id: -1 } },
+        //                 {$limit: 2}
+        //             ]),
+        //             ProductsDetailToOrder.aggregate([
+        //                 { $match: { deleted: false } },
+        //                 { $group: { _id:  "$tenSanPham" , tongSoLuong: { $sum: "$soLuong" } } },
+        //                 { $sort: { tongSoLuong: -1 } },
+        //             ])]
+        // )             
+        //     .then((usersorders,usersorders1,productsHasOrderd)=>{
+        //         res.render('dashboard',{
+        //             usersorders : usersorders,
+        //             //usersordersdetails : multipleMongooseToObject(usersordersdetails),
+        //             usersorders1 : usersorders1, //doanh thu theo tháng
+        //             productsHasOrderd : productsHasOrderd   //sl sản phẩm bán
+        //         }); 
+        //     })
+        //     //doanh thu theo thang
     },
 
     index(req,res,next){

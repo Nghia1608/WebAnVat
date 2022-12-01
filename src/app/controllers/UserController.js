@@ -70,7 +70,7 @@ const UserController = {
     },
     purchase(req,res,next){
         if(req.user.quyen =="Admin"){
-            Promise.all([ProductsToOrder.find({})
+            Promise.all([ProductsToOrder.find({}).sort( { "_id": -1 } )
                 ,ProductsDetailToOrder.find({})
                 ,Users.findOne({username : req.user.username})
                 ])
@@ -153,7 +153,7 @@ const UserController = {
                     var month = order['_id'].slice(0,2)
                     valueForMonth[Number(month)-1] = order['tongTien'];
                 })
-                return valueForMonth;
+                res.send(valueForMonth) ;
 
             })
     },
