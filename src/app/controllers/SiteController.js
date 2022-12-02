@@ -43,7 +43,7 @@ const SiteController={
             .then((usersorders1)=>{
                 ProductsDetailToOrder.aggregate([
                     { $match: { deleted: false } },
-                    { $group: { _id:  "$tenSanPham" , tongSoLuong: { $sum: "$soLuong" } } },
+                    { $group: { _id:  "$tenSanPham" ,thoiGianDatHang: { $substr: [ req.body.thoiGianDatHang, 0, 7 ] }, tongSoLuong: { $sum: "$soLuong" } } },
                     { $sort: { tongSoLuong: -1 } },
                     ])
                     .then((productsHasOrderd)=>{
@@ -51,6 +51,7 @@ const SiteController={
                             { $match: { deleted: false } },
                             { $group: { _id: { $substr: [ "$thoiGianDatHang", 3, 7 ] }, tongTien: { $sum: "$tongTien" } } },
                             { $sort: { _id: +1 } },
+                            
                           ])
                             .then((usersorders)=>{
                                 var valueForMonth = [0,0,0,0,0,0,0,0,0,0,0,0];
@@ -78,11 +79,6 @@ const SiteController={
 
                             })
 
-                    //     res.render('dashboard',{
-                    //     usersorders : usersorders, //danh sách hóa đơn
-                    //     usersorders1 : usersorders1, //doanh thu theo tháng
-                    //     productsHasOrderd : productsHasOrderd   //sl sản phẩm bán
-                    // }); 
                     })
 
 
@@ -90,28 +86,7 @@ const SiteController={
             //
 
         })
-        // Promise.all([ProductsToOrder.find({}).limit(5),//limit lấy 5 hóa đơn gần nhât
-        //             ProductsToOrder.aggregate([
-        //                 { $match: { deleted: false } },
-        //                 { $group: { _id: { $substr: [ "$thoiGianDatHang", 3, 7 ] }, tongTien: { $sum: "$tongTien" } } },
-        //                 { $sort: { _id: -1 } },
-        //                 {$limit: 2}
-        //             ]),
-        //             ProductsDetailToOrder.aggregate([
-        //                 { $match: { deleted: false } },
-        //                 { $group: { _id:  "$tenSanPham" , tongSoLuong: { $sum: "$soLuong" } } },
-        //                 { $sort: { tongSoLuong: -1 } },
-        //             ])]
-        // )             
-        //     .then((usersorders,usersorders1,productsHasOrderd)=>{
-        //         res.render('dashboard',{
-        //             usersorders : usersorders,
-        //             //usersordersdetails : multipleMongooseToObject(usersordersdetails),
-        //             usersorders1 : usersorders1, //doanh thu theo tháng
-        //             productsHasOrderd : productsHasOrderd   //sl sản phẩm bán
-        //         }); 
-        //     })
-        //     //doanh thu theo thang
+
     },
 
     index(req,res,next){
