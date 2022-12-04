@@ -66,7 +66,7 @@ registerUser: async (req, res) => {
 
     user.password=  hashed,
     user.quyen = 'Khach';
-
+    user.trangThai = "Đang hoạt động";
     user.save()
         .then(()=>{
             res.redirect('/auth/login');

@@ -125,6 +125,9 @@ const ProductController={
         //save values
         product.tenSanPham = req.body.tenSanPham;
         product.image = req.body.image;
+        product.image1 = req.body.image1;
+        product.image2 = req.body.image2;
+        product.image3 = req.body.image3;
         product.moTa = req.body.moTa;
         product.maLoai  = req.body.maLoai;
         product.tinhTrang = req.body.tinhTrang;
@@ -133,7 +136,6 @@ const ProductController={
         product.save()
             .then(()=>{
                 res.redirect('/products/storedProducts');
-                alert('Thêm sản phẩm thành công');
             })
             .catch(error=>{
             })

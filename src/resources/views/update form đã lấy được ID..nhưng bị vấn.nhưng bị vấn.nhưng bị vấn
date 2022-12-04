@@ -1,2 +1,0 @@
-update form đã lấy được ID..nhưng bị vấn đề : 
-luôn lấy giá trị (req.body) của sản phẩm cuối cùng
