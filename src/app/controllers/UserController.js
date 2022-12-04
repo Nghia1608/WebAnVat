@@ -28,7 +28,8 @@ const UserController = {
     edit(req,res,next){
         
         Users.findById(req.params.id)         
-            .then(users=>{
+            .then( users=>{
+
                 var idUserQuyen = req.user.quyen;
 
                 res.render('users/editUser',{
@@ -40,18 +41,33 @@ const UserController = {
     },
     //[PUT]
     update : async (req,res,next)=>{
+        //ma hoa mat khau
         const salt = await bcrypt.genSaltSync(10);
         const hashed = await bcrypt.hashSync(req.body.password.toString(), salt);
-
         req.body.password = hashed;
 
         //luu thông tin từ form
-        
-        Users.updateOne({_id : req.params.id},req.body)
-            .then(()=>{
-                res.redirect('/auth/login')
-            })
-            .catch(next);
+        Users.findById(req.params.id)         
+        .then(async users=>{
+            //giai ma mat khau cu..sau đó so sanh với mật khẩu cũ user nhập vào
+            const validPassword = await bcrypt.compare(
+                req.body.oldPassword,
+                users.password
+            );
+            if(validPassword){
+                Users.updateOne({_id : req.params.id},req.body)
+                .then(()=>{
+                    res.redirect('/auth/login')
+                })
+                .catch(next);
+            }
+            else{
+                res.redirect('back')
+            }
+        })
+
+
+
     },
     delete(req,res,next){
         Users.deleteOne({_id : req.params.id})
