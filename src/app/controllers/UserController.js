@@ -28,10 +28,14 @@ const UserController = {
     edit(req,res,next){
         
         Users.findById(req.params.id)         
-            .then(users=>res.render('users/editUser',{
-                    users : mongooseToObject(users)
+            .then(users=>{
+                var idUserQuyen = req.user.quyen;
 
-                })) 
+                res.render('users/editUser',{
+                    users : mongooseToObject(users),
+                    idUserQuyen : idUserQuyen
+                })
+            })
             .catch(next);                    
     },
     //[PUT]
@@ -45,7 +49,7 @@ const UserController = {
         
         Users.updateOne({_id : req.params.id},req.body)
             .then(()=>{
-                res.redirect('users/storedUsers')
+                res.redirect('/auth/login')
             })
             .catch(next);
     },

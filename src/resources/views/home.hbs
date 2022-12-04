@@ -47,7 +47,7 @@
 									<ul class="account_selection">
 
 										{{!-- After Login --}}
-										<li id="changePassword"hidden><a><i class="fa fa-sign-in" aria-hidden="true"></i>Thông tin tài khoản</a></li>
+										<li id="changePassword"hidden><a href="/users/{{idUser}}/edit"><i class="fa fa-sign-in" aria-hidden="true"></i>Thông tin tài khoản</a></li>
 										<li id="purchase"hidden><a href="/users/purchase"><i class="fa fa-sign-in" aria-hidden="true"></i>Lịch sử mua hàng</a></li>
 										{{!-- Before Login --}}
 
@@ -58,7 +58,6 @@
 										<li>
 											<a id="logout"href="#"><i class="fa fa-user-plus" aria-hidden="true">
 											</i>Đăng xuất</a>
-    									{{!-- <button type="submit" class="btn btn-primary">Đăng xuất</button> --}}
 										</li>
 
 										<script>

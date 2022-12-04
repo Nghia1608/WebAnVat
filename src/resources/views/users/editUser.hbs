@@ -142,81 +142,84 @@
 
 	</header>
 
+    <form method="POST" action="/users/{{users._id}}?_method=PUT">
 	
 	<div class="container single_product_container">
 
-<div class="mt-4">
+	<div class="mt-4">
     <h3>Sửa đổi thông tin tài khoản</h3>
-    <form method="POST" action="/users/{{users._id}}?_method=PUT">
+
     <div class="form-group">
         <label for="usersName">Tên tài khoản</label>
         <input type="text" class="form-control" value="{{users.username}}" id="tenSanPham" name="tenSanPham"placeholder="Tên tài khoản" disabled>
     </div>
     <div class="form-group">
         <label for="usersName">Mật khẩu</label>
-        <input type="text" class="form-control" value="{{users.password}}" id="password" name="password"placeholder="Mật khẩu">
+        <input type="password" class="form-control" value="{{users.password}}" id="password" name="password"placeholder="Mật khẩu">
     </div>
     <div class="form-group">
         <label for="usersName">Xác nhận mật khẩu</label>
-        <input type="text" class="form-control" value="{{users.password}}" id="confirmPassword" name="confirmPassword"placeholder="Xác nhận mật khẩu" >
-    </div>
-    <div class="form-group">
-        <h3 for="tinhTrang">Phân quyền</h3>
-        <input type="combobox" class="form-control" value="{{users.quyen}}" id="tinhTrang"name="tinhTrang"placeholder="Trình trạng sản phẩm" hidden>
+        <input type="password" class="form-control" value="{{users.password}}" id="confirmPassword" name="confirmPassword"placeholder="Xác nhận mật khẩu" >
+    
+	</div>
+    <div id="q" class="form-group">
+        <label for="tinhTrang">Phân quyền</label>
+        <input type="combobox" class="form-control" value="{{users.quyen}}" id="tinhTrang"name="quyen" hidden>
 
-        <select id="selectTinhTrang" name="selectTinhTrang">
+        <select id="selectTinhTrang" name="selectTinhTrang" disabled>
         <option id="optTinhTrang0" value="Admin">Admin</option>
         <option id="optTinhTrang1" value="Khach">Khách hàng</option>
         </select>
     </div>
 
-    <div class="form-group">
-        <h3 for="tinhTrang">Tình trạng</h3>
-        <input type="combobox" class="form-control" value="{{users.trangThai}}" id="trangThai"name="trangThai"placeholder="Trình trạng sản phẩm" hidden>
+    <div id="tt" class="form-group">
+        <label for="tinhTrang">Tình trạng</label>
+        <input type="combobox" class="form-control" value="{{users.trangThai}}" id="trangThai"name="trangThai" hidden>
 
-        <select id="selecttrangThai" name="selecttrangThai">
+        <select id="selecttrangThai" name="selecttrangThai" disabled>
         <option id="opttrangThai0" value="Đang hoạt động">Đang hoạt động</option>
         <option id="opttrangThai1" value="Đang bị khóa">Đang bị khóa</option>
-        
     </div>
-    <div class="form-group">
+				<input type="text" class="form-control" 
+                  value="{{idUserQuyen}}" 
+                  id="quyenHienTai" hidden>
+				  <br>
+
+    <div id="btnSave" class="form-group">
     <button type="submit" class="btn btn-primary">Lưu sửa đổi</button>
-
-        
     </div>
+	
+		<script>
+			var tempQuyen = document.getElementById("quyenHienTai").value
+			if(tempQuyen=="Admin"){
+				document.getElementById("selecttrangThai").disabled = false;
+				document.getElementById("selectTinhTrang").disabled = false;
 
-    					<script>
-						var lengthSelect = document.getElementById("selectTinhTrang").length;
-						var temp = document.getElementById("tinhTrang").value;
-						for(var i=0;i<lengthSelect;i++){
-							var idOpt = "optTinhTrang"+i;
-							var valueOpt = document.getElementById(idOpt).value;
-							if( valueOpt ==temp){
-						document.getElementById("selectTinhTrang").selectedIndex=i;
-
-							}
-						}
-
-						var lengthSelect1 = document.getElementById("selecttrangThai").length;
-						var temp = document.getElementById("trangThai").value;
-						for(var i=0;i<lengthSelect1;i++){
-							var idOpt = "opttrangThai"+i;
-							var valueOpt = document.getElementById(idOpt).value;
-							if( valueOpt ==temp){
-						document.getElementById("selecttrangThai").selectedIndex=i;
-
-							}
-						}
-					</script>
-
-    </form>
-
-</div>
-
-
-
-
+			}
+		</script>
+		<script>
+			var lengthSelect = document.getElementById("selectTinhTrang").length;
+			var temp = document.getElementById("tinhTrang").value;
+			for(var i=0;i<lengthSelect;i++){
+				var idOpt = "optTinhTrang"+i;
+				var valueOpt = document.getElementById(idOpt).value;
+				if( valueOpt ==temp){
+					document.getElementById("selectTinhTrang").selectedIndex=i;
+				}
+			}
+			var lengthSelect1 = document.getElementById("selecttrangThai").length;
+			var temp = document.getElementById("trangThai").value;
+			for(var i=0;i<lengthSelect1;i++){
+				var idOpt = "opttrangThai"+i;
+				var valueOpt = document.getElementById(idOpt).value;
+				if( valueOpt ==temp){
+					document.getElementById("selecttrangThai").selectedIndex=i;
+				}
+			}
+		</script>
+	</div>
   </div>
+    </form>
 
 
 

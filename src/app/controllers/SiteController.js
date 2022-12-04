@@ -69,17 +69,10 @@ const SiteController={
                                         listorder:listorder
     
                                     });              
-                  
                                 })
-
                             })
-
                     })
-
-
             })
-            //
-
         })
 
     },
@@ -93,14 +86,17 @@ const SiteController={
                     { $count:  "soSanPhamTrongGioHang" },
                     ])
                 .then((soSanPhamTrongGioHang)=>{
+                    var idUser = req.user.id;
                     var soSanPham = [0];
                     soSanPhamTrongGioHang.forEach(order=>{
                         soSanPham[0] = order['soSanPhamTrongGioHang'];
                     })
                     res.render('home',{
                         soSanPham : soSanPham,
+                        idUser : idUser,
                         products : multipleMongooseToObject(products)
-                    });       
+                    });   
+                    //res.send(req.user.id)    
                 })
             })
         }else{
@@ -112,7 +108,7 @@ const SiteController={
             })
             .catch(next)
         }
-
+///users/{{this._id}}/edit
     },
 
 
