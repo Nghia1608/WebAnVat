@@ -17,7 +17,15 @@ const verifyToken = (req, res, next) => {
     res.redirect('/auth/login')
   }
 };
+const verifyUser = (req, res, next) => {
+  const refreshToken = req.cookies.refreshToken;
+    const accessToken = refreshToken;
+    jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
+      req.user = user;
+      next();
+    });
 
+};
 const verifyTokenAndUserAuthorization = (req, res, next) => {
   verifyToken(req, res, () => {
     if (req.user.id === req.params.id|| req.user.quyen=='Admin') {
@@ -39,6 +47,7 @@ const verifyTokenAndAdmin = (req, res, next) => {
 };
 
 module.exports = {
+  verifyUser,
   verifyToken,
   verifyTokenAndUserAuthorization,
   verifyTokenAndAdmin,

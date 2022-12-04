@@ -292,7 +292,7 @@
 										<li><a class="dropdown-item" href="/products/storedProducts">Hôm nay</a></li>
 										<li><a class="dropdown-item" href="/users/storedUsers">Quý</a></li>
 										<li><a class="dropdown-item" href="#">Năm</a></li>
-										<li><a class="dropdown-item" href="#">Tùy chọn <input type="date" id="Test_DatetimeLocal" name="thoiGianDatHang"> Đến <input type="date" id="Test_DatetimeLocal"></a></li>
+										<li><a class="dropdown-item" href="#">Tùy chọn <input type="date" id="Test_DatetimeLocal" name="thoiGianDatHang"> Đến <input type="date1" id="Test_DatetimeLocal1"></a></li>
 									</ul>
 									</div>
                   </div>
@@ -315,12 +315,14 @@
                       class="fas fa-chevron-right"></i></a>
                 </div>
               </div>
+
               <script>
+                
                     document.getElementById("Test_DatetimeLocal").onchange = function(){
 
 
                     var formDashboard = document.forms['formDashboard'];
-                    formDashboard.action = '/admin?_method=GET';
+                    formDashboard.action = '/admin1?_method=GET';
                     formDashboard.submit();
                 }
               </script>
