@@ -73,6 +73,7 @@ registerUser: async (req, res) => {
 
         })
         .catch(error=>{
+          res.send(error)
         })
 
 
