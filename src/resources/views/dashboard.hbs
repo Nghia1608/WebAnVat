@@ -152,12 +152,12 @@
                       <div class="text-xs font-weight-bold text-uppercase mb-1">Thu nhập (Tháng)</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800" 
                       id="thuNhapThang">
-                      {{#each usersorders1}}{{#if @first}}{{this.tongTien}}{{/if}}{{/each}}
+                      {{#each doanhThuTheo2ThangGanNhat}}{{#if @first}}{{this.tongTien}}{{/if}}{{/each}}
                       </div>
                       <div class="mt-2 mb-0 text-muted text-xs">
-                        <span class="text-success mr-2"><i  id="percent">3.48%</i> </span>
+                        <span class="text-success mr-2"><i  id="percent"></i> </span>
                         <br>
-                        <span id="hienThiPhanTram">Tăng so với tháng trước</span>
+                        <span id="hienThiPhanTram">Thu nhập tăng so với tháng trước</span>
                         <span id="thangTruoc"></span>
                       </div>
                     </div>
@@ -168,7 +168,7 @@
                 </div>
               </div>
                 <input type="text" class="form-control" 
-                  value="{{#each usersorders1}}{{#if @last}}{{this.tongTien}}{{/if}}{{/each}}" 
+                  value="{{#each doanhThuTheo2ThangGanNhat}}{{#if @last}}{{this.tongTien}}{{/if}}{{/each}}" 
                   id="tienThangTruoc" hidden>
                 <script>
                   var tienThangTruoc = document.getElementById("tienThangTruoc").value
@@ -179,7 +179,7 @@
                   document.getElementById("thangTruoc").innerHTML = Number(tienThangTruoc).toLocaleString() + " VND";
 
                   if(percent<100){
-                  document.getElementById("hienThiPhanTram").innerHTML = "Giảm so với tháng trước";
+                  document.getElementById("hienThiPhanTram").innerHTML = "Thu nhập giảm so với tháng trước";
                   document.getElementById("percent").innerHTML ="-"+ (percent-100) + " %";
                   }
                   document.getElementById("thuNhapThang").innerHTML = Number(document.getElementById("thuNhapThang").innerHTML).toLocaleString() + "   VND"
@@ -192,11 +192,17 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-uppercase mb-1">Tổng đơn hàng</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="tongDonHang">650</div>
+                      <div class="text-xs font-weight-bold text-uppercase mb-1">Tổng đơn hàng (tháng)</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800" 
+                        id="tongDonHang">
+                      {{#each soHoaDon2ThangGanNhat}}{{#if @first}}{{this.maHoaDon.length}}{{/if}}{{/each}}
+                        
+                      </div>
                       <div class="mt-2 mb-0 text-muted text-xs">
-                        <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
-                        <span>So với tháng trước</span>
+                        <span class="text-success mr-2"><i  id="percent1"></i> </span>
+                        <br>
+                        <span id="hienThiPhanTram1">Số hóa đơn tăng so với tháng trước</span>
+                        <span id="thangTruoc1"></span>
                       </div>
                     </div>
                     <div class="col-auto">
@@ -205,6 +211,24 @@
                   </div>
                 </div>
               </div>
+                  <input type="text" class="form-control" 
+                  value="{{#each soHoaDon2ThangGanNhat}}{{#if @last}}{{this.maHoaDon.length}}{{/if}}{{/each}}" 
+                  id="soHoaDonThangTruoc1" hidden>
+                <script>
+                  var tienThangTruoc1 = document.getElementById("soHoaDonThangTruoc1").value
+                  var tienThangNay1 =  document.getElementById("tongDonHang").innerHTML
+                  var percent1 = Math.round(tienThangNay1/tienThangTruoc1*100)
+
+                  document.getElementById("percent1").innerHTML ="+" +(percent1-100) + " %";
+                  document.getElementById("thangTruoc1").innerHTML = Number(tienThangTruoc1).toLocaleString() + " đơn hàng";
+
+                  if(percent1<100){
+                  document.getElementById("hienThiPhanTram1").innerHTML = "Giảm so với tháng trước";
+                  document.getElementById("percent1").innerHTML ="-"+ (percent1-100) + " %";
+                  }
+                  document.getElementById("tongDonHang").innerHTML = Number(document.getElementById("tongDonHang").innerHTML).toLocaleString() + "   đơn hàng"
+
+                </script>
             </div>
             <!-- New User Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
@@ -250,7 +274,7 @@
             <!-- Area Chart -->
             <div class="col-xl-12 col-lg-7"> 
                   <input type="text" class="form-control" 
-                  value="{{valueForMonth}}" 
+                  value="{{doanhThuCacThangTrongNam}}" 
                   id="tienTheoCacThang" hidden>
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -300,7 +324,7 @@
                 </div>
 
                 <div class="card-body">
-                      {{#each productsHasOrderd}}
+                      {{#each soLuongSanPham}}
 
                   <div class="mb-3">
                     <div class="small text-gray-500">{{this._id}}
@@ -347,7 +371,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      {{#each listorder}}
+                      {{#each danhSachHoaDonGanNhat}}
                       <tr>
                         <td>{{this._id}}</td>
                         <td>            <h6 class="giaTienBanRa"id="giaTienBanRa{{this._id}}" name="giaTienBanRa{{this._id}}" >{{this.tongTien}}</h6></td>
