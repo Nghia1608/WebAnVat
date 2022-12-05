@@ -12,7 +12,7 @@ const {
 //product
 
 router.get('/create',verifyTokenAndAdmin,productsController.create);
-router.post('/store',verifyTokenAndAdmin,productsController.store);
+router.post('/storeProducts',verifyTokenAndAdmin,productsController.store);
 
 router.get('/:id/edit',verifyTokenAndAdmin,productsController.edit);
 router.put('/:id',verifyTokenAndAdmin,productsController.update);
@@ -42,7 +42,7 @@ router.delete('/:id/deleteCartAfterOrder',verifyToken,productsController.deleteC
 router.delete('/:id/cancelOrder',verifyToken,productsController.cancelOrder);
 
 
-router.post('/:id',verifyToken,productsController.storeProductToCart);
+//router.post('/:id',verifyToken,productsController.storeProductToCart);
 router.put('/:id/updateCart',verifyToken,productsController.updateCart);
 router.delete('/:id/deleteCart',verifyToken,productsController.deleteCart);
 

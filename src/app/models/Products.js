@@ -7,10 +7,10 @@ const mongooseDelete = require('mongoose-delete');
 const Schema = mongoose.Schema;
 const Product = new Schema({
     tenSanPham :{type :String ,maxLength : 100},
-    image :{type :String,maxLength:255},
-    image1 :{type :String,maxLength:255},
-    image2:{type :String,maxLength:255},
-    image3 :{type :String,maxLength:255},
+    image :{type :String},
+    image1 :{type :String},
+    image2:{type :String},
+    image3 :{type :String},
     moTa :{type :String,maxLength : 500},
     maLoai :{type :String,maxLength:100},
     tinhTrang :{type :String,maxLength:100},

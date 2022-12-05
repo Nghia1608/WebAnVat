@@ -138,6 +138,7 @@ const ProductController={
                 res.redirect('/products/storedProducts');
             })
             .catch(error=>{
+                res.send(error)
             })
 
     },

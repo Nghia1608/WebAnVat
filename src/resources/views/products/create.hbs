@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,17 +65,7 @@
 										</li>
 
 										<script>
-											document.getElementById("logout").onclick = function(){
-    												localStorage.removeItem("username");
-
-													var logoutForm = document.forms['restore-product-form'];
-
-													logoutForm.action = '/auth/logout?_method=POST';
-													logoutForm.submit();
-											}
-										</script>
-										<script>
-											document.getElementById("login").hidden =false;
+document.getElementById("login").hidden =false;
 											if(
 												localStorage.getItem("username")
 											){
@@ -144,11 +132,10 @@
 
 	</header>
 
-    <form id="restore-product-form"name="restore-product-form" method="POST">
-
 	<div class="container single_product_container">
     <div class="mt-4">
     <h3>Thêm sản phẩm mới</h3>
+	<form id="formTong"name="formTong" method="POST">
 
     <div class="form-group">
         <label for="productsName">Tên sản phẩm</label>
@@ -159,56 +146,83 @@
         <input type="text" class="form-control" id="moTa" name="moTa"placeholder="Mô tả sản phẩm">
     </div>
     <div class="form-group">
-        <label for="moTa">Hình ảnh</label>
+        <label for="image">Hình ảnh</label>
         <input type="text" class="form-control" id="image" name="image"placeholder="Liên kết hình ảnh">
     </div>
         <div class="form-group">
-        <label for="moTa">Hình ảnh 1</label>
-        <input type="text" class="form-control" id="image" name="image1"placeholder="Liên kết hình ảnh 1">
+        <label for="image1">Hình ảnh 1</label>
+        <input type="text" class="form-control" id="image1" name="image1"placeholder="Liên kết hình ảnh 1">
     </div>
         <div class="form-group">
-        <label for="moTa">Hình ảnh 2</label>
-        <input type="text" class="form-control" id="image" name="image2"placeholder="Liên kết hình ảnh 2">
+        <label for="image2">Hình ảnh 2</label>
+<input type="text" class="form-control" id="image2" name="image2"placeholder="Liên kết hình ảnh 2">
     </div>
         <div class="form-group">
-        <label for="moTa">Hình ảnh 3</label>
-        <input type="text" class="form-control" id="image" name="image2"placeholder="Liên kết hình ảnh 3">
+        <label for="image3">Hình ảnh 3</label>
+        <input type="text" class="form-control" id="image3" name="image3"placeholder="Liên kết hình ảnh 3">
     </div>
-    {{!-- <div class="form-group">
-        <label for="tinhTrang">Tình trạng</label>
-        <input type="text" class="form-control" id="tinhTrang"name="tinhTrang"placeholder="Trình trạng sản phẩm">
-    </div> --}}
+    <div id="q" class="form-group">
+        <label for="tinhTrang">Phân loai</label>
+
+        <select id="selectPhanLoai" name="maLoai">
+        <option id="optTinhTrang0" value="kho">Khô</option>
+        <option id="optTinhTrang1" value="comChay">Cơm cháy</option>
+        <option id="optTinhTrang1" value="khac">Khác</option>
+        </select>
+    </div>
     <div class="form-group">
         <label for="tinhTrang">Tình trạng</label>
-        <input type="combobox" class="form-control" value="{{productsdetails.tinhTrang}}" id="tinhTrang"name="tinhTrang"placeholder="Trình trạng sản phẩm" hidden>
-
-        <select id="selectTinhTrang" name="selectTinhTrang">
+        <select id="selectTinhTrang" name="tinhTrang">
         <option id="optTinhTrang0" value="Còn hàng">Còn hàng</option>
         <option id="optTinhTrang1" value="Tạm hết hàng">Tạm hết hàng</option>
         <option id="optTinhTrang2" value="Ngừng kinh doanh">Ngừng kinh doanh</option>
         </select>
     </div>
-    <div class="form-group">
-        <label for="soLuongCon">SoLuongCon</label>
-        <input type="text" class="form-control" value="{{products.soLuongCon}}" id="soLuongCon"name="soLuongCon"placeholder="Số lượng còn lại">
-    </div>
-    <button id="btnSubmit"type="button" class="btn btn-primary">Thêm mới</button>
-    </div>
+                <a id="btn-select"href="" class="btn btn-primary" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModalRestore">Thêm mới<i></i></a>
 
-	</div>
     </form>
+    </div>
+	</div>
+<div class="modal fade" id="exampleModalRestore" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xác nhận thêm</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc muốn thêm sản phẩm ?</p>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-restore" type="button" class="btnUpdate1 btn-link">Xác nhận</button>
+        <button type="button" class="btnCancel btn-link" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <script>
-    document.addEventListener('DOMContentLoaded',function(){
-            var restoreForm = document.getElementById('restore-product-form');
-            var btnRestore = document.getElementById("btnSubmit")
+	<script>
 
-            btnRestore.onclick = function(){
-            restoreForm.action = '/products/store?_method=POST';
-            restoreForm.submit(); 
-            }
-        }) 
-    </script>
+		document.getElementById("btn-restore").onclick = function(){
+
+				var logoutForm = document.forms['formTong'];
+				logoutForm.action = '/products/storeProducts?_method=POST';
+				logoutForm.submit();
+		}
+
+		document.getElementById("logout").onclick = function(){
+				localStorage.removeItem("username");
+
+				var logoutForm = document.forms['formTong'];
+
+				logoutForm.action = '/auth/logout?_method=POST';
+				logoutForm.submit();
+		}
+	</script>
+
+
 
 
 
@@ -236,7 +250,7 @@
 							<h6>Miễn Phí Giao Hàng</h6>
 							<p>Cho đơn hàng 300k trên</p>
 						</div>
-					</div>
+</div>
 				</div>
 				<div class="col-lg-3 benefit_col">
 					<div class="benefit_item d-flex flex-row align-items-center">
@@ -311,7 +325,6 @@
 
 
 	</div>
-
 
 <script src="/js/jquery-3.2.1.min.js"></script>
 <script src="/styles/bootstrap4/popper.js"></script>
