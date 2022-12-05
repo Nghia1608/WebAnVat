@@ -1,33 +1,129 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:600|Noto+Sans|Open+Sans:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 *{
   margin: 0;
   padding: 0;
-  border-radius: 5px;
   box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
 }
 body{
-  height: 100vh;
   display: flex;
-  align-items: center;
-  text-align: center;
-  font-family: sans-serif;
   justify-content: center;
+  align-items: center;
+  padding: 10px;
   background: rgb(34,193,195);
   background: linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
-  background-size: cover;
-  background-position: center;
 }
-.container{
+
+
+.container .title{
+  font-size: 25px;
+  font-weight: 500;
   position: relative;
-  width: 450px;
-  background: white;
-  padding: 60px 40px;
 }
-header{
-  font-size: 40px;
-  margin-bottom: 60px;
-  font-family: 'Montserrat', sans-serif;
+.container .title::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 30px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #71b7e6, #9b59b6);
 }
+.content form .user-details{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px 0 12px 0;
+}
+form .user-details .input-box{
+  margin-bottom: 15px;
+  width: calc(100% / 2 - 20px);
+}
+form .input-box span.details{
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.user-details .input-box input{
+  height: 45px;
+  width: 100%;
+  outline: none;
+  font-size: 16px;
+  border-radius: 5px;
+  padding-left: 15px;
+  border: 1px solid #ccc;
+  border-bottom-width: 2px;
+  transition: all 0.3s ease;
+}
+.user-details .input-box input:focus,
+.user-details .input-box input:valid{
+  border-color: #9b59b6;
+}
+ form .button{
+   height: 45px;
+   margin: 35px 0
+ }
+ form .button input{
+   height: 100%;
+   width: 100%;
+   border-radius: 5px;
+   border: none;
+   color: rgb(61, 61, 61);
+   font-size: 18px;
+   font-weight: 500;
+   letter-spacing: 1px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   background: rgb(247, 228, 141);
+   background: linear-gradient(90deg, rgb(251, 157, 207) 0%,     rgba(253,187,45,1) 100%);
+ }
+ form .button button:hover{
+  background: linear-gradient(-135deg, #71b7e6, #9b59b6);
+  }
+
+  form .button button{
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    color: rgb(61, 61, 61);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgb(247, 228, 141);
+    background: linear-gradient(90deg, rgb(251, 157, 207) 0%,     rgba(253,187,45,1) 100%);
+  }
+  form .button button:hover{
+   background: linear-gradient(-135deg, #71b7e6, #9b59b6);
+   }
+ @media(max-width: 584px){
+ .container{
+  max-width: 100%;
+}
+form .user-details .input-box{
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  form .category{
+    width: 100%;
+  }
+  .content form .user-details{
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+  .user-details::-webkit-scrollbar{
+    width: 5px;
+  }
+  }
+  @media(max-width: 459px){
+  .container .content .category{
+    flex-direction: column;
+  }
+}
+
 .form-group, form .button{
   margin: 25px 0;
   position: relative;
@@ -78,48 +174,4 @@ input:valid ~ label{
   font-size: 16px;
   color: #1DA1F2;
 }
-form .button{
-  margin-top: 30px;
-  overflow: hidden;
-  z-index: 111;
-}
-.button .inner{
-  position: absolute;
-  height: 100%;
-  width: 300%;
-  left: -100%;
-  z-index: -1;
-  transition: all .4s;
-  background: rgb(34,193,195);
-  background: linear-gradient(90deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
-}
-.button:hover .inner{
-  left: 0;
-}
-.button button{
-  width: 100%;
-  height: 100%;
-  border: none;
-  background: none;
-  outline: none;
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
-}
-.container .auth{
-  margin: 35px 0 20px 0;
-  font-size: 19px;
-  color: grey;
-}
-.signup{
-  margin-top: 50px;
-  font-family: 'Noto Sans', sans-serif;
-}
-.signup a{
-  color: #3498db;
-  text-decoration: none;
-}
-.signup a:hover{
-  text-decoration: underline;
-}
+
