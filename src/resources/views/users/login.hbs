@@ -88,7 +88,7 @@
          <script>
          document.getElementById("login").onclick = function(){
             var username = document.getElementById("username").value;
-            localStorage.setItem("username",username)
+            sessionStorage.setItem("username",username)
 
             document.getElementById("formCheckout").hidden = false;
          }

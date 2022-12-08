@@ -48,7 +48,6 @@ confirmLogin :async(req,res,next)=>{     //check dang nhap
 
     }
     }
-    
     },                  
 // GET 
 register :async(req,res,next)=>{
@@ -63,20 +62,16 @@ registerUser: async (req, res) => {
     const formData = req.body;
     const user = new Users(formData);
 
-
     user.password=  hashed,
     user.quyen = 'Khach';
     user.trangThai = "Đang hoạt động";
     user.save()
         .then(()=>{
             res.redirect('/auth/login');
-
         })
         .catch(error=>{
           res.send(error)
         })
-
-
   },
 
   generateAccessToken: (user) => {
@@ -106,7 +101,7 @@ registerUser: async (req, res) => {
 
       },
       process.env.JWT_REFRESH_KEY,
-      { expiresIn: "365d" }
+      { expiresIn: "1d" }
     );
   },
 

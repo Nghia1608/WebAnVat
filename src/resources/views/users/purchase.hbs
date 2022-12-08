@@ -66,7 +66,7 @@
 
 										<script>
 											document.getElementById("logout").onclick = function(){
-    												localStorage.removeItem("username");
+    												sessionStorage.removeItem("username");
 
 													var logoutForm = document.forms['restore-product-form'];
 
@@ -77,10 +77,10 @@
 										<script>
 											document.getElementById("login").hidden =false;
 											if(
-												localStorage.getItem("username")
+												sessionStorage.getItem("username")
 											){
 												document.getElementById("username").innerHTML ="Xin chào  " + 
-													localStorage.getItem("username");
+													sessionStorage.getItem("username");
 												document.getElementById("changePassword").hidden =false;
 												document.getElementById("purchase").hidden =false;
 												document.getElementById("login").hidden =true;
@@ -212,13 +212,24 @@
 						date{{this.maHoaDon}} = tempDate{{this.maHoaDon}}.slice(0, 10)
 						hours{{this.maHoaDon}} = tempDate{{this.maHoaDon}}.slice(11,13)
 						//Ngay gio bang nhau va phut chenh lech hon 10
-						if((date{{this.maHoaDon}}==dateCurrent{{this.maHoaDon}})
+						if(
+							//cùng ngày cùng giờ
+							((date{{this.maHoaDon}}==dateCurrent{{this.maHoaDon}})
 							&& (hours{{this.maHoaDon}}==hoursCurrent{{this.maHoaDon}})
 							&& Math.abs(
 								parseInt(minute{{this.maHoaDon}})
 									-
 									parseInt(minuteCurrent{{this.maHoaDon}})
-								)<20 
+								)<20 )
+							||
+							//cùng ngày , sau 1 giờ
+							((date{{this.maHoaDon}}==dateCurrent{{this.maHoaDon}})
+							&& (-parseInt(hours{{this.maHoaDon}})+parseInt(hoursCurrent{{this.maHoaDon}})==1)
+							&& 
+								-parseInt(minute{{this.maHoaDon}})
+									+
+									parseInt(minuteCurrent{{this.maHoaDon}})
+								>-20 )
 						){
 							document.getElementById(tempBtnHuy{{this.maHoaDon}}).hidden = false;
 						}

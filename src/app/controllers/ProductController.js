@@ -381,7 +381,7 @@ const ProductController={
                 }
         }
 
-         res.redirect('/users/cart')
+         res.redirect('/users/purchase')
      },
 
     deleteCartAfterOrder(req,res,next){

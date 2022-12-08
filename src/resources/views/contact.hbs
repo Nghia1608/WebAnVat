@@ -52,7 +52,7 @@
 
 										<li id="login" hidden><a  href="/auth/login"><i class="fa fa-sign-in" aria-hidden="true"></i>Đăng nhập</a></li>
 										
-										<li>
+										<li id="logOut"hidden>
 											<a id="logout"href="#"><i class="fa fa-user-plus" aria-hidden="true">
 											</i>Đăng xuất</a>
     									{{!-- <button type="submit" class="btn btn-primary">Đăng xuất</button> --}}
@@ -60,7 +60,7 @@
 
 										<script>
 											document.getElementById("logout").onclick = function(){
-    												localStorage.removeItem("username");
+    												sessionStorage.removeItem("username");
 
 													var logoutForm = document.forms['restore-product-form'];
 
@@ -71,12 +71,13 @@
 										<script>
 											document.getElementById("login").hidden =false;
 											if(
-												localStorage.getItem("username")
+												sessionStorage.getItem("username")
 											){
 												document.getElementById("username").innerHTML ="Xin chào  " + 
-													localStorage.getItem("username");
+													sessionStorage.getItem("username");
 												document.getElementById("changePassword").hidden =false;
 												document.getElementById("purchase").hidden =false;
+												document.getElementById("logOut").hidden =false;
 												document.getElementById("login").hidden =true;
 
 											}
@@ -105,18 +106,7 @@
 							<ul class="navbar_menu">
 								<li><a href="/">Trang chủ</a></li>
 								<li><a href="/contact">Liên hệ</a></li>
-								<li>
-									<div class="dropdown">
-									<a class="" href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-										Quản lý
-									</a>
-									<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-										<li><a class="dropdown-item" href="/products/storedProducts">Sản phẩm</a></li>
-										<li><a class="dropdown-item" href="/users/storedUsers">Tài khoản</a></li>
-										<li><a class="dropdown-item" href="#">Thống kê</a></li>
-									</ul>
-									</div>
-								</li>
+
 							</ul>
 							<ul class="navbar_user">
 
@@ -139,7 +129,7 @@
 	<div class="fs_menu_overlay"></div>
 
 
-	<div class="container contact_container">
+<div class="container contact_container">
 		<div class="row">
 			<div class="col">
 
@@ -158,13 +148,7 @@
 		<!-- Map Container -->
 
 		<div class="row">
-			<div class="col">
-				<div id="google_map">
-					<div class="map_container">
-						<div id="map"></div>
-					</div>
-				</div>
-			</div>
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.4206639905988!2d106.78291401458975!3d10.855574792267845!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175276e7ea103df%3A0xb6cf10bb7d719327!2zSHV0ZWNoIEtodSBFIC0gVHJ1bmcgVMOibSDEkMOgbyBU4bqhbyBOaMOibiBM4buxYyBDaOG6pXQgTMaw4bujbmcgQ2Fv!5e0!3m2!1svi!2s!4v1669362281307!5m2!1svi!2s" width="1200" height="1000" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 		</div>
 
 		<!-- Contact Us -->
@@ -200,7 +184,7 @@
 
 			</div>
 
-			<div class="col-lg-6 get_in_touch_col">
+			{{!-- <div class="col-lg-6 get_in_touch_col">
 				<div class="get_in_touch_contents">
 					<h1>Get In Touch With Us!</h1>
 					<p>Fill out the form below to recieve a free and confidential.</p>
@@ -216,33 +200,12 @@
 						</div>
 					</form>
 				</div>
-			</div>
+			</div> --}}
 
 		</div>
 	</div>
 
-	{{!-- <!-- Newsletter -->
 
-	<div class="newsletter">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-6">
-					<div class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
-						<h4>Newsletter</h4>
-						<p>Subscribe to our newsletter and get 20% off your first purchase</p>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<form action="post">
-						<div class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
-							<input id="newsletter_email" type="email" placeholder="Your email" required="required" data-error="Valid email is required.">
-							<button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit">subscribe</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div> --}}
 
 <footer class="footer">
 		<div class="container">

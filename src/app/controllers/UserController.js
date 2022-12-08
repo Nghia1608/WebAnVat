@@ -142,23 +142,7 @@ const UserController = {
             })
             .catch(next); 
         }
-
-        // ProductsToOrder.aggregate([
-        //     { $match: { deleted: false } },
-        //     { $group: { _id: { $substr: [ "$thoiGianDatHang", 3, 7 ] }, tongTien: { $sum: "$tongTien" } } },
-        //     { $sort: { _id: +1 } },
-        //   ])
-        //     .then((usersorders)=>{
-        //         var valueForMonth = [0,0,0,0,0,0,0,0,0,0,0,0];
-
-        //         usersorders.forEach(order=>{
-        //             var month = order['_id'].slice(0,2)
-        //             valueForMonth[Number(month)-1] = order['tongTien'];
-        //         })
-        //         res.send(valueForMonth)
-        //     })
-
-                
+        
     },
     purchaseForMonth(req,res,next){
         ProductsToOrder.aggregate([

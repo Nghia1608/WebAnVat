@@ -24,7 +24,12 @@
 </head>
 
 <body>
-
+<script type="text/javascript">
+        window.addEventListener('beforeunload', function (e) {
+            e.preventDefault();
+            e.returnValue = '';
+        });
+        </script>
 <div class="super_container">
 
 	<!-- Header -->
@@ -65,12 +70,12 @@
 										</li>
 
 										<script>
-document.getElementById("login").hidden =false;
+												document.getElementById("login").hidden =false;
 											if(
-												localStorage.getItem("username")
+												sessionStorage.getItem("username")
 											){
 												document.getElementById("username").innerHTML ="Xin chào  " + 
-													localStorage.getItem("username");
+													sessionStorage.getItem("username");
 												document.getElementById("changePassword").hidden =false;
 												document.getElementById("purchase").hidden =false;
 												document.getElementById("login").hidden =true;
@@ -214,7 +219,7 @@ document.getElementById("login").hidden =false;
 		}
 
 		document.getElementById("logout").onclick = function(){
-				localStorage.removeItem("username");
+				sessionStorage.removeItem("username");
 
 				var logoutForm = document.forms['formTong'];
 

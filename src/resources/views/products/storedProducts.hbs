@@ -65,7 +65,7 @@
 										</li>
 										<script>
 											document.getElementById("logout").onclick = function(){
-    												localStorage.removeItem("username");
+    												sessionStorage.removeItem("username");
 													var logoutForm = document.forms['delete-product-form'];
 													logoutForm.action = '/auth/logout?_method=POST';
 													logoutForm.submit();
@@ -74,10 +74,10 @@
 										<script>
 											document.getElementById("login").hidden =false;
 											if(
-												localStorage.getItem("username")
+												sessionStorage.getItem("username")
 											){
 												document.getElementById("username").innerHTML ="Xin chào  " + 
-													localStorage.getItem("username");
+													sessionStorage.getItem("username");
 												document.getElementById("changePassword").hidden =false;
 												document.getElementById("purchase").hidden =false;
 												document.getElementById("login").hidden =true;

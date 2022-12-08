@@ -56,7 +56,7 @@
 										<li id="login" hidden><a  href="/auth/login"><i class="fa fa-sign-in" aria-hidden="true"></i>Đăng nhập</a></li>
 										
 										<form name="logoutForm" method="POST">
-										<li>
+										<li id="logOut" hidden>
 											<a id="logout"href="#"><i class="fa fa-user-plus" aria-hidden="true">
 											</i>Đăng xuất</a>
     									{{!-- <button type="submit" class="btn btn-primary">Đăng xuất</button> --}}
@@ -64,7 +64,7 @@
 
 										<script>
 											document.getElementById("logout").onclick = function(){
-    												localStorage.removeItem("username");
+    												sessionStorage.removeItem("username");
 
 													var logoutForm = document.forms['logoutForm'];
 
@@ -75,12 +75,13 @@
 										<script>
 											document.getElementById("login").hidden =false;
 											if(
-												localStorage.getItem("username")
+												sessionStorage.getItem("username")
 											){
 												document.getElementById("username").innerHTML ="Xin chào  " + 
-													localStorage.getItem("username");
+													sessionStorage.getItem("username");
 												document.getElementById("changePassword").hidden =false;
 												document.getElementById("purchase").hidden =false;
+												document.getElementById("logOut").hidden =false;
 												document.getElementById("login").hidden =true;
 
 											}
