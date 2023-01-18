@@ -8,7 +8,7 @@
   },
   "scripts": {
     "beautiful": "",
-    "start": "nodemon --inspect src/index.js",
+    "start": "node src/index.js",
     "watch": "sass -w src/resources/scss/ --output src/public/css/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
