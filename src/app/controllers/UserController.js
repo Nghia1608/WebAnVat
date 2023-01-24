@@ -18,7 +18,7 @@ const UserController = {
       storedUsers(req,res,next){
         Users.find()
             .then((users)=>{
-                res.render('users/storedUsers',{
+                res.render('users/storedUsers.hbs',{
                     users : multipleMongooseToObject(users),
 
                 }); 
@@ -32,7 +32,7 @@ const UserController = {
 
                 var idUserQuyen = req.user.quyen;
 
-                res.render('users/editUser',{
+                res.render('users/editUser.hbs',{
                     users : mongooseToObject(users),
                     idUserQuyen : idUserQuyen
                 })
@@ -80,7 +80,7 @@ const UserController = {
             ,Users.findOne({username : req.user.username})
             ])
         .then(([carts,users])=>{
-            res.render('users/cart',{
+            res.render('users/cart.hbs',{
                 users : mongooseToObject(users),
                 carts : multipleMongooseToObject(carts),
 
@@ -95,7 +95,7 @@ const UserController = {
                 ,Users.findOne({username : req.user.username})
                 ])
             .then(([usersorders,usersordersdetails,users])=>{
-                res.render('users/purchase',{
+                res.render('users/purchase.hbs',{
                     users : mongooseToObject(users),
                     usersorders : multipleMongooseToObject(usersorders),
                     usersordersdetails : multipleMongooseToObject(usersordersdetails),
@@ -133,7 +133,7 @@ const UserController = {
                 ,Users.findOne({username : req.user.username})
                 ])
             .then(([usersorders,usersordersdetails,users])=>{
-                res.render('users/purchase',{
+                res.render('users/purchase.hbs',{
                     users : mongooseToObject(users),
                     usersorders : multipleMongooseToObject(usersorders),
                     usersordersdetails : multipleMongooseToObject(usersordersdetails),
@@ -167,7 +167,7 @@ const UserController = {
             ,Users.findOne()
             ])
         .then(([usersorders,usersordersdetails,users])=>{
-            res.render('users/canceledPurchase',{
+            res.render('users/canceledPurchase.hbs',{
                 //users : mongooseToObject(users),
                 usersorders : multipleMongooseToObject(usersorders),
                 usersordersdetails : multipleMongooseToObject(usersordersdetails),
@@ -179,7 +179,7 @@ const UserController = {
     purchaseDetail(req,res,next){
         Promise.all([ProductsDetailToOrder.find({maHoaDon : req.params.id}),ProductsToOrder.findOne({maHoaDon : req.params.id})]) 
                 .then(([usersordersdetails,usersorders])=>{
-                        res.render('users/purchaseDetail',{
+                        res.render('users/purchaseDetail.hbs',{
                             usersorders : mongooseToObject(usersorders),
                             usersordersdetails : multipleMongooseToObject(usersordersdetails),
                     }); 
@@ -192,7 +192,7 @@ const UserController = {
     canceledPurchaseDetail(req,res,next){
         Promise.all([ProductsDetailToOrder.findDeleted({maHoaDon : req.params.id}),ProductsToOrder.findDeleted({maHoaDon : req.params.id})]) 
                 .then(([usersordersdetails,usersorders])=>{
-                        res.render('users/canceledPurchaseDetail',{
+                        res.render('users/canceledPurchaseDetail.hbs',{
                             usersorders : multipleMongooseToObject(usersorders),
                             usersordersdetails : multipleMongooseToObject(usersordersdetails),
                     }); 

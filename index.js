@@ -13,7 +13,7 @@ const cookie = require('cookie-parser')
 db.connect();
 // import fetch from 'node-fetch';
 
-app.use(express.static(path.join(__dirname,'/src/public')))
+app.use(express.static(path.join(__dirname,'src/public')))
 
 app.use(express.urlencoded({
   extended : true

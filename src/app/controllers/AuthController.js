@@ -9,20 +9,20 @@ let refreshTokens = [];
 const AuthController = {
   //REGISTER
   login(req,res,next){    //form dang nhap
-    res.render('users/login');
+    res.render('users/login.hbs');
 },
 //POST
 confirmLogin :async(req,res,next)=>{     //check dang nhap
     const user = await Users.findOne({ username: req.body.username });
     if(!user){
-      res.redirect('/auth/login');
+      res.redirect('/auth/login.hbs');
     }else{
       const validPassword = await bcrypt.compare(
         req.body.password,
         user.password
     );
     if(!user || !validPassword){
-        res.redirect('/auth/login');
+        res.redirect('/auth/login.hbs');
     }
     if (user && validPassword) {
         //Generate access token
@@ -51,7 +51,7 @@ confirmLogin :async(req,res,next)=>{     //check dang nhap
     },                  
 // GET 
 register :async(req,res,next)=>{
-    res.render('users/register');
+    res.render('users/register.hbs');
 },
 
 //POST 
@@ -67,7 +67,7 @@ registerUser: async (req, res) => {
     user.trangThai = "Đang hoạt động";
     user.save()
         .then(()=>{
-            res.redirect('/auth/login');
+            res.redirect('/auth/login.hbs');
         })
         .catch(error=>{
           res.send(error)

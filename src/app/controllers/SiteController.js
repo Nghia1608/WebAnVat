@@ -63,7 +63,7 @@ const SiteController={
                     
                                     ])
                                 .then((danhSachHoaDonGanNhat)=>{
-                                    res.render('dashboard',{
+                                    res.render('dashboard.hbs',{
                                         doanhThuTheo2ThangGanNhat : doanhThuTheo2ThangGanNhat, //doanh thu theo tháng gần nhất
                                         soLuongSanPham : soLuongSanPham ,  //sl sản phẩm bán
                                         doanhThuCacThangTrongNam : doanhThuCacThangTrongNam , // dữ liệu biểu đồ

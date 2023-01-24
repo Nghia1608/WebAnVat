@@ -18,7 +18,7 @@ const ProductController={
     show(req,res,next){
         Promise.all([ProductsDetails.find({idProduct : req.params.id}),Products.findOne({_id : req.params.id})]) 
         .then(([productsdetails,products])=>{
-                res.render('products/show',{
+                res.render('products/show.hbs',{
                     products : mongooseToObject(products),
                     productsdetails : multipleMongooseToObject(productsdetails),
             }); 
@@ -29,13 +29,13 @@ const ProductController={
     },
 
     create(req,res,next){
-        res.render('products/create');
+        res.render('products/create.hbs');
     },
     //product detail
     showProductDetail(req,res,next){
         Promise.all([ProductsDetails.find({idProduct : req.params.id}),Products.findOne({_id : req.params.id})]) 
                 .then(([productsdetails,products])=>{
-                        res.render('products/detail',{
+                        res.render('products/detail.hbs',{
                             products : mongooseToObject(products),
                             productsdetails : multipleMongooseToObject(productsdetails),
                     }); 
@@ -48,7 +48,7 @@ const ProductController={
     createDetail(req,res,next){
 
         Products.findById(req.params.id)         
-        .then(products=>res.render('products/createDetail',{
+        .then(products=>res.render('products/createDetail.hbs',{
                 products : mongooseToObject(products)
 
             })) 
@@ -72,7 +72,7 @@ const ProductController={
     },
     editDetail(req,res,next){
         ProductsDetails.findById(req.params.id)         
-            .then(productsdetails=>res.render('products/editDetail',{
+            .then(productsdetails=>res.render('products/editDetail.hbs',{
                 productsdetails : mongooseToObject(productsdetails)
 
                 })) 
@@ -98,7 +98,7 @@ const ProductController={
     storedProducts(req,res,next){
         Promise.all([Products.find({}),Products.countDocumentsDeleted()])
             .then(([products,deletedProducts])=>{
-                res.render('products/storedProducts',{
+                res.render('products/storedProducts.hbs',{
                     deletedProducts,
                     products : multipleMongooseToObject(products),
 
@@ -111,7 +111,7 @@ const ProductController={
     trashProducts(req,res,next){
         Products.findDeleted({})
             .then((products)=>{
-                res.render('products/trashProducts',{
+                res.render('products/trashProducts.hbs',{
                     products : multipleMongooseToObject(products),
 
                 }); 
@@ -146,7 +146,7 @@ const ProductController={
     //[GET]
     edit(req,res,next){
         Products.findById(req.params.id)         
-            .then(products=>res.render('products/edit',{
+            .then(products=>res.render('products/edit.hbs',{
                     products : mongooseToObject(products)
 
                 })) 
