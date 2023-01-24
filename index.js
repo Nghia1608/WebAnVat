@@ -5,16 +5,15 @@ const handlebars = require('express-handlebars');
 const app = express();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-const jwt = require('jsonwebtoken')
+require("dotenv").config();
 const route = require('./src/routes');
-const db = require('./config/db')
-const cookieparser = require('cookie-parser')
-app.user(cookieparser)
+const db = require('./src/config/db')
+const cookie = require('cookie-parser')
 //Connect to DB
 db.connect();
 
 
-app.use(express.static(path.join(__dirname,'/public')))
+app.use(express.static(path.join(__dirname,'/src/public')))
 
 app.use(express.urlencoded({
   extended : true
@@ -25,7 +24,7 @@ app.use(
   }),
 );
 app.use(express.json());
-//app.use(morgan('combined'));
+app.use(morgan('combined'));
 app.use(methodOverride('_method'));
 
 app.engine('hbs', handlebars.engine({
@@ -34,10 +33,11 @@ app.engine('hbs', handlebars.engine({
     sum : (a,b) => a + b,
   }
 }));
+app.use(cookie())
 
 
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname,'resources\\views'));
+app.set('views', path.join(__dirname,'src\\resources\\views'));
 
 
 //routes init
