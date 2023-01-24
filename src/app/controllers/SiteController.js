@@ -93,7 +93,7 @@ const SiteController={
                     soSanPhamTrongGioHang.forEach(order=>{
                         soSanPham[0] = order['soSanPhamTrongGioHang'];
                     })
-                    res.render('home',{
+                    res.render('home.hbs',{
                         soSanPham : soSanPham,
                         idUser : idUser,
                         products : multipleMongooseToObject(products)
@@ -104,7 +104,7 @@ const SiteController={
         }else{
             Products.find({})
             .then(products =>{
-                res.render('home',{
+                res.render('home.hbs',{
                     products : multipleMongooseToObject(products)
                 });
             })
@@ -115,7 +115,7 @@ const SiteController={
 
 
     contact(req,res){
-        res.render('contact');
+        res.render('contact.hbs');
     }
 }
 module.exports = SiteController;

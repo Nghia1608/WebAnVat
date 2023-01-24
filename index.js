@@ -38,6 +38,8 @@ app.use(cookie())
 
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname,'src\\resources\\views'));
+const viewspath = path.join(__dirname);
+console.log(viewspath)
 
 
 //routes init
