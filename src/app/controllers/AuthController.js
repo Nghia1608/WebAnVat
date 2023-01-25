@@ -15,14 +15,14 @@ const AuthController = {
 confirmLogin :async(req,res,next)=>{     //check dang nhap
     const user = await Users.findOne({ username: req.body.username });
     if(!user){
-      res.redirect('/auth/login.hbs');
+      res.redirect('/auth/login');
     }else{
       const validPassword = await bcrypt.compare(
         req.body.password,
         user.password
     );
     if(!user || !validPassword){
-        res.redirect('/auth/login.hbs');
+        res.redirect('/auth/login');
     }
     if (user && validPassword) {
         //Generate access token
