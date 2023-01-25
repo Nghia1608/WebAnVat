@@ -16,19 +16,15 @@
             "dest":"src/routes/index.js"
         },
         {
-            "src":"/(.*)",
+            "src":"/auth/(.*)",
             "dest":"src/routes/auth.js"
         },
         {
-            "src":"/(.*)",
+            "src":"/products/(.*)",
             "dest":"src/routes/products.js"
         },
         {
-            "src":"/(.*)",
-            "dest":"src/routes/site.js"
-        },
-        {
-            "src":"/(.*)",
+            "src":"/users/(.*)",
             "dest":"src/routes/users.js"
         }
     ]
