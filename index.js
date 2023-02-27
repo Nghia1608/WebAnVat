@@ -9,11 +9,28 @@ require("dotenv").config();
 const route = require('./src/routes');
 const db = require('./src/config/db')
 const cookie = require('cookie-parser')
+
+
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const keys = require('./key');
+
+const cookieSession = require('cookie-session')
+//Connect GG
+
 //Connect to DB
 db.connect();
 // import fetch from 'node-fetch';
 
 app.use(express.static(path.join(__dirname,'src/public')))
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [keys.cookieKey]
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(express.urlencoded({
   extended : true
@@ -26,7 +43,6 @@ app.use(
 app.use(express.json());
 app.use(morgan('combined'));
 app.use(methodOverride('_method'));
-
 app.engine('hbs', handlebars.engine({
   extname : '.hbs',
   helpers : {
@@ -34,6 +50,7 @@ app.engine('hbs', handlebars.engine({
   }
 }));
 app.use(cookie())
+
 
 
 app.set('view engine', 'hbs');

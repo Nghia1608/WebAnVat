@@ -3,6 +3,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { json } = require('express');
 const {mongooseToObject, multipleMongooseToObject}= require('../../util/mongoose');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const keys = require('../../.././key');
 
 let refreshTokens = [];
 
@@ -11,6 +14,10 @@ const AuthController = {
   login(req,res,next){    //form dang nhap
     res.render('users/login.hbs');
 },
+login1(req,res,next){    //form dang nhap
+  res.render('users/login1.hbs');
+},
+
 //POST
 confirmLogin :async(req,res,next)=>{     //check dang nhap
     const user = await Users.findOne({ username: req.body.username });
@@ -48,7 +55,59 @@ confirmLogin :async(req,res,next)=>{     //check dang nhap
 
     }
     }
-    },                  
+    },    
+    confirmLoginGoogle :async(err,req,res,next)=>{     //check dang nhap
+      passport.use(
+        new GoogleStrategy(
+          {
+            clientID: keys.googleClientID,
+            clientSecret: keys.googleClientSecret,
+            callbackURL: 'http://localhost:3000/auth/confirmLoginGoogle'
+          },
+          async (accessToken, refreshToken, profile, done) => {
+              console.log(profile);
+              console.log("o day ne 2 controller ne");
+              if (profile.id) {
+
+                Users.findOne({username: profile.id})
+                  .then((existingUser) => {
+                    if (existingUser) {
+                      done(null, existingUser);
+                    } else {
+                      new Users({
+                        username: profile.id,
+                        email: profile.emails[0].value,
+                        hoTen: profile.name.familyName + ' ' + profile.name.givenName
+                      })
+                        .save()
+                        .then(user => done(null, user));
+                    }
+                  })
+                  const user = await Users.findOne({ username: profile.id });
+
+                  const accessToken = AuthController.generateAccessToken(user);
+                  //Generate refresh token
+                  const refreshToken = AuthController.generateRefreshToken(user);
+          
+                  refreshTokens.push(refreshToken);
+          
+                  //STORE REFRESH TOKEN IN COOKIE
+                  res.cookie("refreshToken", refreshToken, {
+                  httpOnly: true,
+                  secure:false,
+                  path: "/",
+                  sameSite: "strict",
+                  });
+                  const { password, ...others } = user._doc;
+                  res.render('home.hbs');
+              }
+          }
+        )
+      );
+      console.error(err.stack)
+      res.status(500).send(err.stack)
+
+      },               
 // GET 
 register :async(req,res,next)=>{
     res.render('users/register.hbs');

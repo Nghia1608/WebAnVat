@@ -110,9 +110,7 @@ const SiteController={
             })
             .catch(next)
         }
-///users/{{this._id}}/edit
     },
-
 
     contact(req,res){
         res.render('contact.hbs');

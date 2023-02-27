@@ -4,8 +4,6 @@ const slug = require('mongoose-slug-generator');
 
 mongoose.plugin(slug);
 
-
-
 const User = new Schema({
     username :{type :String ,maxLength : 50,require:true,unique:true},
     password :{type :String,maxLength:250,require:true},
