@@ -1,4 +1,6 @@
 const express = require('express');
+const Users = require('../app/models/Users');
+
 const router = express.Router();
 const AuthController = require('../app/controllers/AuthController')
 const SiteController = require('../app/controllers/SiteController')
@@ -26,12 +28,43 @@ passport.use(
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
       callbackURL: 'http://localhost:3000/auth/confirmLoginGoogle'
-    },
-    async (accessToken, refreshToken, profile, done) => {
-        console.log(profile);
-        console.log("o day ne");
-
     }
+    ,
+    async (accessToken, refreshToken, profile, done) => {
+      console.log(profile);
+      console.log(profile.emails[0].value);
+      console.log(profile.name.familyName + ' ' + profile.name.givenName);
+      console.log("o day ne 2");
+      
+      if (profile.id) {
+        console.log("o day ne 22222222");
+
+        await Users.findOne({username: profile.id})
+          .then((existingUser,res,req) => {
+             if (existingUser) {
+              done(null, existingUser);
+              console.log("User old");
+              return done(existingUser);
+
+            } else {
+               new Users({
+                username: profile.id,
+                email: profile.emails[0].value,
+                hoTen: profile.name.familyName + ' ' + profile.name.givenName
+              })
+                .save()
+                .then(user => {
+                  done(null, user)
+                  console.log("User new");
+                  return done(user);
+                }
+                  )
+                ;
+            }
+          })
+
+      }
+  }
 
   )
 );
@@ -53,8 +86,11 @@ router.get(
   }),AuthController.login1
 );
 router.get('/confirmLoginGoogle',
-        passport.authenticate('google')//lay token google
-         ,AuthController.confirmLoginGoogle
+        passport.authenticate("google", { 
+          successRedirect: '/', 
+          failureRedirect: "/auth/login" 
+        })//lay token google
+         //,AuthController.confirmLoginGoogle
         );
 
 

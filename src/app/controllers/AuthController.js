@@ -57,56 +57,56 @@ confirmLogin :async(req,res,next)=>{     //check dang nhap
     }
     },    
     confirmLoginGoogle :async(err,req,res,next)=>{     //check dang nhap
-      passport.use(
-        new GoogleStrategy(
-          {
-            clientID: keys.googleClientID,
-            clientSecret: keys.googleClientSecret,
-            callbackURL: 'http://localhost:3000/auth/confirmLoginGoogle'
-          },
-          async (accessToken, refreshToken, profile, done) => {
-              console.log(profile);
-              console.log("o day ne 2 controller ne");
-              if (profile.id) {
+      // passport.serializeUser((user, done) => {
+      //   done(null, user.id);
+      // });
 
-                Users.findOne({username: profile.id})
-                  .then((existingUser) => {
-                    if (existingUser) {
-                      done(null, existingUser);
-                    } else {
-                      new Users({
-                        username: profile.id,
-                        email: profile.emails[0].value,
-                        hoTen: profile.name.familyName + ' ' + profile.name.givenName
-                      })
-                        .save()
-                        .then(user => done(null, user));
-                    }
-                  })
-                  const user = await Users.findOne({ username: profile.id });
+      //   passport.deserializeUser((id, done) => {
+      //   Users.findById(id)
+      //     .then(user => {
+      //       done(null, user);
+      //     })
+      // });
 
-                  const accessToken = AuthController.generateAccessToken(user);
-                  //Generate refresh token
-                  const refreshToken = AuthController.generateRefreshToken(user);
-          
-                  refreshTokens.push(refreshToken);
-          
-                  //STORE REFRESH TOKEN IN COOKIE
-                  res.cookie("refreshToken", refreshToken, {
-                  httpOnly: true,
-                  secure:false,
-                  path: "/",
-                  sameSite: "strict",
-                  });
-                  const { password, ...others } = user._doc;
-                  res.render('home.hbs');
-              }
-          }
-        )
-      );
-      console.error(err.stack)
-      res.status(500).send(err.stack)
+      // passport.use(
+      //   new GoogleStrategy(
+      //     {
+      //       clientID: keys.googleClientID,
+      //       clientSecret: keys.googleClientSecret,
+      //       callbackURL: 'http://localhost:3000/'
+      //     },
+      //     async (accessToken, refreshToken, profile, done) => {
+      //         console.log(profile);
+      //         console.log("Dang o controller");
 
+      //          if (profile.id) {
+      //           await Users.findOne({username: profile.id})
+      //             .then((existingUser) => {
+      //               if (existingUser) {
+      //                 done(null, existingUser);
+      //                 console.log("Dang o authController");
+      //               } else {
+      //                 new Users({
+      //                   username: profile.id,
+      //                   email: profile.emails[0].value,
+      //                   hoTen: profile.name.familyName + ' ' + profile.name.givenName
+      //                 })
+      //                   //.save()
+      //                   .then(user => {
+      //                     done(null, user)
+      //                     console.log("Da them user - auth.js");
+      //                     }
+      //                     )
+      //                   ;
+      //               }
+      //             })
+      //         }
+      //         else{
+      //           res.send("Loi - Hay dang nhap lai");
+      //         }
+      //     }
+      //   )
+      // );
       },               
 // GET 
 register :async(req,res,next)=>{
