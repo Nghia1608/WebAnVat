@@ -49,8 +49,13 @@ passport.use(
             } else {
                new Users({
                 username: profile.id,
+                password :'',
                 email: profile.emails[0].value,
-                hoTen: profile.name.familyName + ' ' + profile.name.givenName
+                hoTen: profile.name.familyName + ' ' + profile.name.givenName,
+                sdt : '',
+                diaChi :'',
+                quyen :'Khach',
+                trangThai:'Đang hoạt động'
               })
                 .save()
                 .then(user => {
